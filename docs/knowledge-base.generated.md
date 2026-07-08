@@ -24,10 +24,10 @@
 | [Notas do Agente Gemini](agents/gemini.md) | `docs/agents/gemini.md` | `4ac664d547aa` |
 | [Guia de Agentes](agents/index.md) | `docs/agents/index.md` | `d5ce6769a8a6` |
 | [Notas do Agente Kiro](agents/kiro.md) | `docs/agents/kiro.md` | `1a421ce0d2de` |
-| [Arquitetura Backend](architecture/backend.md) | `docs/architecture/backend.md` | `a94b69ed4293` |
-| [Arquitetura de Banco de Dados](architecture/database.md) | `docs/architecture/database.md` | `f43dc4eb094d` |
-| [Arquitetura Frontend](architecture/frontend.md) | `docs/architecture/frontend.md` | `7a75b2d44f2f` |
-| [Visão Geral da Arquitetura](architecture/overview.md) | `docs/architecture/overview.md` | `5fd91a54a2de` |
+| [Arquitetura Backend](architecture/backend.md) | `docs/architecture/backend.md` | `6c8d8089688a` |
+| [Arquitetura de Banco de Dados](architecture/database.md) | `docs/architecture/database.md` | `96550698f07a` |
+| [Arquitetura Frontend](architecture/frontend.md) | `docs/architecture/frontend.md` | `a5502859f13b` |
+| [Visão Geral da Arquitetura](architecture/overview.md) | `docs/architecture/overview.md` | `c606a1b9c06b` |
 | [Guia de Commits](guides/commits.md) | `docs/guides/commits.md` | `9c9cecf9f8de` |
 | [Guia de Deploy](guides/deployment.md) | `docs/guides/deployment.md` | `e925bc51beaf` |
 | [Guia de Desenvolvimento](guides/development.md) | `docs/guides/development.md` | `983f29a067f1` |
