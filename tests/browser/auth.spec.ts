@@ -2,15 +2,24 @@ import { test } from '@japa/runner'
 import User from '#models/user'
 import Role from '#models/role'
 import Feature from '#models/feature'
+import Module from '#models/module'
+import FeatureGroup from '#models/feature_group'
+import Plan from '#models/plan'
 import testUtils from '@adonisjs/core/services/test_utils'
 
 test.group('Browser - Autenticação', (group) => {
-  group.each.setup(() => testUtils.db().withGlobalTransaction())
+  group.each.setup(() => testUtils.db().truncate())
 
-  test('faz login com credenciais válidas', async ({ visit, route, assert }) => {
-    const role = await Role.firstOrCreate({ slug: 'owner' }, { name: 'Owner' })
-    await Feature.firstOrCreate({ slug: 'home' }, { name: 'Home', icon: 'Home', route: '/', position: 0 })
+  async function seedBasicData() {
+    const role = await Role.create({ slug: 'owner', name: 'Owner' })
+    const mod = await Module.create({ slug: 'plataforma', name: 'Plataforma', icon: 'LayoutDashboard', position: 0 })
+    const grp = await FeatureGroup.create({ slug: 'geral', name: 'Geral', moduleId: mod.id, position: 0 })
+    await Feature.create({ slug: 'home', name: 'Home', icon: 'Home', route: '/', moduleId: mod.id, featureGroupId: grp.id, position: 0 })
+    return role
+  }
 
+  test('faz login com credenciais válidas', async ({ visit, assert }) => {
+    const role = await seedBasicData()
     await User.create({
       email: 'login-test@test.com',
       password: 'secret123',
@@ -18,63 +27,68 @@ test.group('Browser - Autenticação', (group) => {
       roleId: role.id,
     })
 
-    const page = await visit(route('session.create'))
+    const page = await visit('/login')
 
     await page.getByLabel('Email').fill('login-test@test.com')
     await page.getByLabel('Senha').fill('secret123')
-    await page.getByRole('button', { name: /entrar|login/i }).click()
+    await page.locator('button[type="submit"]').click()
 
-    await page.waitForURL('**/*')
-    const url = page.url()
-    assert.notInclude(url, '/login')
+    await page.waitForURL((url) => !url.pathname.includes('/login'))
+    assert.notInclude(page.url(), '/login')
   })
 
-  test('mostra erro com credenciais inválidas', async ({ visit, route }) => {
-    const page = await visit(route('session.create'))
+  test('mostra erro com credenciais inválidas', async ({ visit }) => {
+    const page = await visit('/login')
 
     await page.getByLabel('Email').fill('naoexiste@test.com')
     await page.getByLabel('Senha').fill('senhaerrada')
-    await page.getByRole('button', { name: /entrar|login/i }).click()
+    await page.locator('button[type="submit"]').click()
 
-    // Deve permanecer na página de login
+    // Deve permanecer na página de login (erro 400 renderiza mesma página)
+    await page.waitForTimeout(1000)
     await page.assertPath('/login')
   })
 
-  test('faz logout com sucesso', async ({ visit, browserContext, assert }) => {
-    const role = await Role.firstOrCreate({ slug: 'owner' }, { name: 'Owner' })
-    await Feature.firstOrCreate({ slug: 'home' }, { name: 'Home', icon: 'Home', route: '/', position: 0 })
-
-    const user = await User.create({
+  test('faz logout com sucesso', async ({ visit, assert }) => {
+    const role = await seedBasicData()
+    await User.create({
       email: 'logout-test@test.com',
       password: 'secret123',
       fullName: 'Logout Test',
       roleId: role.id,
     })
 
-    await browserContext.loginAs(user)
-    const page = await visit('/')
+    // Login via formulário
+    const page = await visit('/login')
+    await page.getByLabel('Email').fill('logout-test@test.com')
+    await page.getByLabel('Senha').fill('secret123')
+    await page.locator('button[type="submit"]').click()
+    await page.waitForURL((url: URL) => !url.pathname.includes('/login'))
 
-    // Clicar no dropdown do usuário e depois em "Sair"
-    await page.getByText('Logout Test').click()
+    // Agora está na home — clicar no dropdown do usuário no header
+    await page.locator('header button').last().click()
+    // Clicar em "Sair" no menu
     await page.getByText('Sair').click()
 
-    await page.waitForURL('**/login**')
+    await page.waitForURL((url: URL) => url.pathname.includes('/login'), { timeout: 5000 })
     assert.include(page.url(), '/login')
   })
 
-  test('signup cria conta e empresa', async ({ visit, route, assert }) => {
-    await Role.firstOrCreate({ slug: 'admin' }, { name: 'Administrador' })
+  test('signup cria conta e empresa', async ({ visit, assert }) => {
+    await Role.create({ slug: 'admin', name: 'Administrador' })
+    await Plan.create({ slug: 'starter', name: 'Starter', price: 100 })
 
-    const page = await visit(route('new_account.create'))
+    const page = await visit('/signup')
+    await page.waitForSelector('#fullName')
 
-    await page.getByLabel('Nome Completo').fill('Novo Usuário')
-    await page.getByLabel('Nome da Empresa').fill('Empresa Teste')
-    await page.getByLabel('Email').fill('signup-test@test.com')
-    await page.getByLabel('Senha').first().fill('secret123')
-    await page.getByLabel('Confirme a Senha').fill('secret123')
-    await page.getByRole('button', { name: /criar conta/i }).click()
+    await page.locator('#fullName').fill('Novo Usuário')
+    await page.locator('#companyName').fill('Empresa Teste')
+    await page.locator('#email').fill('signup-test@test.com')
+    await page.locator('#password').fill('secret1234')
+    await page.locator('#passwordConfirmation').fill('secret1234')
+    await page.locator('button[type="submit"]').click()
 
-    await page.waitForURL('**/*')
+    await page.waitForURL((url) => !url.pathname.includes('/signup'), { timeout: 10000 })
     assert.notInclude(page.url(), '/signup')
   })
 })

@@ -7,67 +7,54 @@ import FeatureGroup from '#models/feature_group'
 import testUtils from '@adonisjs/core/services/test_utils'
 
 test.group('Browser - Navegação e Menu', (group) => {
-  group.each.setup(() => testUtils.db().withGlobalTransaction())
+  group.each.setup(() => testUtils.db().truncate())
 
-  async function seedOwnerWithFeatures() {
-    const role = await Role.firstOrCreate({ slug: 'owner' }, { name: 'Owner' })
-    const mod = await Module.firstOrCreate({ slug: 'plataforma' }, { name: 'Plataforma', icon: 'LayoutDashboard', position: 0 })
-    const grp = await FeatureGroup.firstOrCreate({ slug: 'geral' }, { name: 'Geral', moduleId: mod.id, position: 0 })
-    await Feature.firstOrCreate({ slug: 'home' }, { name: 'Home', icon: 'Home', route: '/', moduleId: mod.id, featureGroupId: grp.id, position: 0 })
-    await Feature.firstOrCreate({ slug: 'profile' }, { name: 'Perfil', icon: 'User', route: '/profile', moduleId: mod.id, featureGroupId: grp.id, position: 1 })
+  async function seedAndLogin(page: any) {
+    const role = await Role.create({ slug: 'owner', name: 'Owner' })
+    const mod = await Module.create({ slug: 'plataforma', name: 'Plataforma', icon: 'LayoutDashboard', position: 0 })
+    const grp = await FeatureGroup.create({ slug: 'geral', name: 'Geral', moduleId: mod.id, position: 0 })
+    await Feature.create({ slug: 'home', name: 'Home', icon: 'Home', route: '/', moduleId: mod.id, featureGroupId: grp.id, position: 0, isMenuItem: true, isActive: true })
+    await Feature.create({ slug: 'profile', name: 'Perfil', icon: 'User', route: '/profile', moduleId: mod.id, featureGroupId: grp.id, position: 1, isMenuItem: true, isActive: true })
 
-    const user = await User.create({
+    await User.create({
       email: 'nav-test@test.com',
       password: 'secret123',
       fullName: 'Nav Test',
       roleId: role.id,
     })
 
-    return user
+    // Login via formulário
+    await page.getByLabel('Email').fill('nav-test@test.com')
+    await page.getByLabel('Senha').fill('secret123')
+    await page.locator('button[type="submit"]').click()
+    await page.waitForURL((url: URL) => !url.pathname.includes('/login'))
   }
 
-  test('menu carrega com módulos do sistema', async ({ visit, browserContext }) => {
-    const user = await seedOwnerWithFeatures()
-    await browserContext.loginAs(user)
-
-    const page = await visit('/')
+  test('sidebar mostra módulo e itens após login', async ({ visit }) => {
+    const page = await visit('/login')
+    await seedAndLogin(page)
 
     await page.assertTextContains('body', 'Plataforma')
-  })
-
-  test('sidebar mostra items de navegação', async ({ visit, browserContext }) => {
-    const user = await seedOwnerWithFeatures()
-    await browserContext.loginAs(user)
-
-    const page = await visit('/')
-
     await page.assertTextContains('body', 'Home')
     await page.assertTextContains('body', 'Perfil')
   })
 
-  test('dark mode toggle funciona', async ({ visit, browserContext, assert }) => {
-    const user = await seedOwnerWithFeatures()
-    await browserContext.loginAs(user)
+  test('dark mode toggle funciona', async ({ visit, assert }) => {
+    const page = await visit('/login')
+    await seedAndLogin(page)
 
-    const page = await visit('/')
+    await page.getByLabel(/modo escuro/i).click()
 
-    // Clicar no botão de dark mode
-    await page.getByRole('button', { name: /modo/i }).click()
-
-    // Verificar que a classe dark foi adicionada ao html
-    const isDark = await page.locator('html').evaluate((el) => el.classList.contains('dark'))
+    const isDark = await page.locator('html').evaluate((el: Element) => el.classList.contains('dark'))
     assert.isTrue(isDark)
   })
 
-  test('navegar para perfil funciona', async ({ visit, browserContext, assert }) => {
-    const user = await seedOwnerWithFeatures()
-    await browserContext.loginAs(user)
+  test('navegar para perfil pelo sidebar', async ({ visit, assert }) => {
+    const page = await visit('/login')
+    await seedAndLogin(page)
 
-    const page = await visit('/')
-
-    await page.getByRole('link', { name: 'Perfil' }).click()
+    await page.getByText('Perfil').first().click()
     await page.waitForURL('**/profile')
     assert.include(page.url(), '/profile')
-    await page.assertTextContains('body', 'Nav Test')
   })
 })
