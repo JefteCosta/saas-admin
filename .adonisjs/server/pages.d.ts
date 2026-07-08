@@ -20,5 +20,6 @@ declare module '@adonisjs/inertia/types' {
     'home': ExtractProps<(typeof import('../../inertia/pages/home.vue'))['default']>
     'placeholder': ExtractProps<(typeof import('../../inertia/pages/placeholder.vue'))['default']>
     'profile': ExtractProps<(typeof import('../../inertia/pages/profile.vue'))['default']>
+    'workspace': ExtractProps<(typeof import('../../inertia/pages/workspace.vue'))['default']>
   }
 }

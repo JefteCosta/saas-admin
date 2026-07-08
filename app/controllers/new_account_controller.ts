@@ -5,6 +5,7 @@ import Plan from '#models/plan'
 import SlugService from '#services/slug_service'
 import { signupValidator } from '#validators/user'
 import type { HttpContext } from '@adonisjs/core/http'
+import env from '#start/env'
 
 export default class NewAccountController {
   async create({ inertia }: HttpContext) {
@@ -41,6 +42,11 @@ export default class NewAccountController {
     await company.related('members').attach({ [user.id]: { role_id: null } })
 
     await auth.use('web').login(user)
-    response.redirect().toRoute('profile')
+
+    // Redirecionar para o subdomínio da company
+    const domain = env.get('APP_DOMAIN', 'localhost')
+    const port = env.get('PORT', 3333)
+    const portStr = port !== 80 && port !== 443 ? `:${port}` : ''
+    return response.redirect(`http://${slug}.${domain}${portStr}/`)
   }
 }

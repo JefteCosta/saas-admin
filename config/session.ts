@@ -49,6 +49,12 @@ const sessionConfig = defineConfig({
      * Cross-site policy for cookie sending.
      */
     sameSite: 'lax',
+
+    /**
+     * Domain for cookie sharing between subdomains.
+     * Prefixed with dot to share across all subdomains.
+     */
+    domain: `.${env.get('APP_DOMAIN', 'localhost')}`,
   },
 
   /**
