@@ -136,7 +136,26 @@ export default class MainSeeder extends BaseSeeder {
       }
     )
 
+    // 8. Criar company SaaS Admin
+    const Company = (await import('#models/company')).default
+    const saasCompany = await Company.updateOrCreate(
+      { slug: 'admin' },
+      {
+        slug: 'admin',
+        name: 'SaaS Admin',
+        planId: unlimitedPlan.id,
+        ownerUserId: owner.id,
+      }
+    )
+
+    // Adicionar owner como membro da company SaaS Admin
+    const existingMember = await saasCompany.related('members').query().where('user_id', owner.id).first()
+    if (!existingMember) {
+      await saasCompany.related('members').attach({ [owner.id]: { role_id: null } })
+    }
+
     console.log(`Owner criado/atualizado: ${owner.email} (role: owner)`)
+    console.log(`Company SaaS Admin: ${saasCompany.slug}`)
     console.log(`Planos: ${plans.map((p) => p.slug).join(', ')}`)
     console.log(`Módulos: ${modules.map((m) => m.slug).join(', ')}`)
     console.log(`Features: ${features.length} registros`)

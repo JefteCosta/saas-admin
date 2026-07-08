@@ -6,6 +6,7 @@ import { compose } from '@adonisjs/core/helpers'
 import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
 import Role from '#models/role'
 import Team from '#models/team'
+import Company from '#models/company'
 
 const AuthFinder = withAuthFinder(hash)
 
@@ -39,6 +40,13 @@ export default class User extends compose(BaseModel, AuthFinder) {
     pivotTimestamps: { createdAt: 'created_at', updatedAt: false },
   })
   declare teams: ManyToMany<typeof Team>
+
+  @manyToMany(() => Company, {
+    pivotTable: 'company_members',
+    pivotColumns: ['role_id'],
+    pivotTimestamps: { createdAt: 'created_at', updatedAt: false },
+  })
+  declare companies: ManyToMany<typeof Company>
 
   get initials() {
     const [first, last] = this.fullName ? this.fullName.split(' ') : this.email.split('@')

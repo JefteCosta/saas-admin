@@ -3,6 +3,7 @@ import { DateTime } from 'luxon'
 import type { BelongsTo, ManyToMany } from '@adonisjs/lucid/types/relations'
 import Role from '#models/role'
 import User from '#models/user'
+import Company from '#models/company'
 
 export default class Team extends BaseModel {
   @column({ isPrimary: true })
@@ -17,11 +18,17 @@ export default class Team extends BaseModel {
   @column()
   declare roleId: number
 
+  @column()
+  declare companyId: number | null
+
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime | null
+
+  @belongsTo(() => Company)
+  declare company: BelongsTo<typeof Company>
 
   @belongsTo(() => Role)
   declare role: BelongsTo<typeof Role>
