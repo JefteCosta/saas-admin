@@ -66,11 +66,23 @@ const routes = {
     tokens: [{"old":"/roles","type":0,"val":"roles","end":""}],
     types: placeholder as Registry['roles']['types'],
   },
+  'roles.store': {
+    methods: ["POST"],
+    pattern: '/roles',
+    tokens: [{"old":"/roles","type":0,"val":"roles","end":""}],
+    types: placeholder as Registry['roles.store']['types'],
+  },
   'roles.update_features': {
     methods: ["PATCH"],
     pattern: '/roles/:id/features',
     tokens: [{"old":"/roles/:id/features","type":0,"val":"roles","end":""},{"old":"/roles/:id/features","type":1,"val":"id","end":""},{"old":"/roles/:id/features","type":0,"val":"features","end":""}],
     types: placeholder as Registry['roles.update_features']['types'],
+  },
+  'roles.destroy': {
+    methods: ["DELETE"],
+    pattern: '/roles/:id',
+    tokens: [{"old":"/roles/:id","type":0,"val":"roles","end":""},{"old":"/roles/:id","type":1,"val":"id","end":""}],
+    types: placeholder as Registry['roles.destroy']['types'],
   },
   'teams': {
     methods: ["GET","HEAD"],

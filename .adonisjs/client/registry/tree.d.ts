@@ -19,7 +19,9 @@ export interface ApiDefinition {
     updateRole: typeof routes['users.update_role']
   }
   roles: typeof routes['roles'] & {
+    store: typeof routes['roles.store']
     updateFeatures: typeof routes['roles.update_features']
+    destroy: typeof routes['roles.destroy']
   }
   teams: typeof routes['teams'] & {
     store: typeof routes['teams.store']

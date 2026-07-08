@@ -14,7 +14,9 @@ export type ScannedRoutes = {
     'users': { paramsTuple?: []; params?: {} }
     'users.update_role': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'roles': { paramsTuple?: []; params?: {} }
+    'roles.store': { paramsTuple?: []; params?: {} }
     'roles.update_features': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'roles.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'teams': { paramsTuple?: []; params?: {} }
     'teams.store': { paramsTuple?: []; params?: {} }
     'teams.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
@@ -50,6 +52,7 @@ export type ScannedRoutes = {
   POST: {
     'new_account.store': { paramsTuple?: []; params?: {} }
     'session.store': { paramsTuple?: []; params?: {} }
+    'roles.store': { paramsTuple?: []; params?: {} }
     'teams.store': { paramsTuple?: []; params?: {} }
     'features.store': { paramsTuple?: []; params?: {} }
     'session.destroy': { paramsTuple?: []; params?: {} }
@@ -62,6 +65,7 @@ export type ScannedRoutes = {
     'features.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
   DELETE: {
+    'roles.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'teams.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
 }

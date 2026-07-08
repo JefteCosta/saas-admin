@@ -330,56 +330,60 @@ async store({ request, auth, response }) {
 
 ## Fases de implementação
 
-### Fase 1: Banco de dados
+### Fase 1: Banco de dados ✅
 
-- [ ] Migration `create_roles_table`
-- [ ] Migration `create_features_table`
-- [ ] Migration `create_role_features_table`
-- [ ] Migration `create_teams_table`
-- [ ] Migration `create_team_members_table`
-- [ ] Migration `add_role_id_to_users_table`
+- [x] Migration `create_roles_table`
+- [x] Migration `create_features_table`
+- [x] Migration `create_role_features_table`
+- [x] Migration `create_teams_table`
+- [x] Migration `create_team_members_table`
+- [x] Migration `add_role_id_to_users_table`
 
-### Fase 2: Models
+### Fase 2: Models ✅
 
-- [ ] Model `Role` (hasMany RoleFeature, hasMany Team)
-- [ ] Model `Feature` (hasMany RoleFeature)
-- [ ] Model `RoleFeature` (belongsTo Role, belongsTo Feature)
-- [ ] Model `Team` (belongsTo Role, manyToMany User via team_members)
-- [ ] Model `TeamMember` (belongsTo Team, belongsTo User)
-- [ ] Atualizar `User` (belongsTo Role, manyToMany Team via team_members)
+- [x] Model `Role` (manyToMany Feature)
+- [x] Model `Feature`
+- [x] Model `Team` (belongsTo Role, manyToMany User via team_members)
+- [x] Atualizar `User` (belongsTo Role, manyToMany Team via team_members)
 
-### Fase 3: Service + Bouncer
+### Fase 3: Service + Bouncer ✅
 
-- [ ] `FeatureService` com métodos:
+- [x] `FeatureService` com métodos:
   - `getUserFeatures(user)` — resolve todas as features do usuário
   - `getUserMenu(user)` — retorna menu agrupado e ordenado
   - `userCanAccess(user, featureSlug)` — verifica acesso a uma feature
-- [ ] Ability `accessFeature` em `app/abilities/main.ts`
+- [x] Ability `accessFeature` em `app/abilities/main.ts`
 
-### Fase 4: Middleware e integração
+### Fase 4: Middleware e integração ✅
 
-- [ ] `feature_middleware.ts` — protege rotas por slug de feature
-- [ ] Atualizar `inertia_middleware.ts` — compartilhar menu dinâmico
-- [ ] Aplicar middleware nas rotas existentes
+- [x] `feature_middleware.ts` — protege rotas por slug de feature
+- [x] `menu_middleware.ts` — resolve menu dinâmico após auth
+- [x] Aplicar middleware nas rotas existentes
 
-### Fase 5: Seeds
+### Fase 5: Seeds ✅
 
-- [ ] Seeder de roles (admin, member, viewer)
-- [ ] Seeder de features (páginas existentes)
-- [ ] Seeder de role_features (admin = todas, member = básicas)
-- [ ] Atribuir role admin ao signup ou ao primeiro usuário
+- [x] Seeder de roles (owner, admin, member, viewer)
+- [x] Seeder de features (home, profile, users, roles, teams, features, settings)
+- [x] Seeder de role_features (admin = todas exceto SaaS, member = home+profile)
+- [x] Seeder do owner (jefteamorim@gmail.com)
+- [x] Signup atribui role admin automaticamente
 
-### Fase 6: Frontend
+### Fase 6: Frontend ✅
 
-- [ ] Atualizar `app_sidebar.vue` para consumir `menu` dos shared props
-- [ ] Criar mapa de ícones Lucide para resolução dinâmica
-- [ ] Marcar item ativo baseado na rota atual
+- [x] Atualizar `app_sidebar.vue` para consumir `menu` dos shared props
+- [x] Criar mapa de ícones Lucide para resolução dinâmica
+- [x] Marcar item ativo baseado na rota atual
+- [x] Dark mode com toggle no header
+- [x] Dropdown de usuário no header
 
-### Fase 7: CRUD administrativo (futuro)
+### Fase 7: CRUD administrativo ✅
 
-- [ ] Páginas de gerenciamento de features, roles e teams
-- [ ] Atribuição de role a usuários
-- [ ] Atribuição de features a roles
+- [x] `/users` — listagem com alteração de role via select inline
+- [x] `/roles` — listagem, criação, edição de permissões e remoção
+- [x] `/teams` — listagem, criação, gerenciamento de membros e remoção
+- [x] `/features` — listagem, criação e edição (restrito a owner)
+- [x] `/profile` — edição de nome do usuário
+- [x] `/settings` — placeholder
 
 ## Decisões técnicas
 

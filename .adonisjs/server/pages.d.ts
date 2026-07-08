@@ -9,11 +9,16 @@ type ExtractProps<T> = Omit<
 
 declare module '@adonisjs/inertia/types' {
   export interface InertiaPages {
+    'admin/features': ExtractProps<(typeof import('../../inertia/pages/admin/features.vue'))['default']>
+    'admin/roles': ExtractProps<(typeof import('../../inertia/pages/admin/roles.vue'))['default']>
+    'admin/teams': ExtractProps<(typeof import('../../inertia/pages/admin/teams.vue'))['default']>
+    'admin/users': ExtractProps<(typeof import('../../inertia/pages/admin/users.vue'))['default']>
     'auth/login': ExtractProps<(typeof import('../../inertia/pages/auth/login.vue'))['default']>
     'auth/register': ExtractProps<(typeof import('../../inertia/pages/auth/register.vue'))['default']>
     'errors/not_found': ExtractProps<(typeof import('../../inertia/pages/errors/not_found.vue'))['default']>
     'errors/server_error': ExtractProps<(typeof import('../../inertia/pages/errors/server_error.vue'))['default']>
     'home': ExtractProps<(typeof import('../../inertia/pages/home.vue'))['default']>
+    'placeholder': ExtractProps<(typeof import('../../inertia/pages/placeholder.vue'))['default']>
     'profile': ExtractProps<(typeof import('../../inertia/pages/profile.vue'))['default']>
   }
 }

@@ -4,7 +4,11 @@
  */
 
 export const controllers = {
+  Features: () => import('#controllers/features_controller'),
   NewAccount: () => import('#controllers/new_account_controller'),
   Profile: () => import('#controllers/profile_controller'),
+  Roles: () => import('#controllers/roles_controller'),
   Session: () => import('#controllers/session_controller'),
+  Teams: () => import('#controllers/teams_controller'),
+  Users: () => import('#controllers/users_controller'),
 }

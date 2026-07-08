@@ -38,7 +38,7 @@
 | [Backlog](planning/backlog.md) | `docs/planning/backlog.md` | `c05b45afa062` |
 | [Decisões de Planejamento](planning/decisions.md) | `docs/planning/decisions.md` | `348535ea5d84` |
 | [Plano de Estrutura de Documentação Multiagente](planning/documentation-structure-plan.md) | `docs/planning/documentation-structure-plan.md` | `331d073d1abe` |
-| [Plano: Sistema de Features, Roles, Teams e Permissões](planning/features-roles-permissions-plan.md) | `docs/planning/features-roles-permissions-plan.md` | `5b1debd86b30` |
+| [Plano: Sistema de Features, Roles, Teams e Permissões](planning/features-roles-permissions-plan.md) | `docs/planning/features-roles-permissions-plan.md` | `cf62d8af9734` |
 | [Implementação da Base de Conhecimento](planning/knowledge-base-sync-implementation.md) | `docs/planning/knowledge-base-sync-implementation.md` | `51717616da26` |
 | [Plano de Sincronização da Base de Conhecimento](planning/knowledge-base-sync-plan.md) | `docs/planning/knowledge-base-sync-plan.md` | `cd2e12020a86` |
 | [Metas do Produto](planning/product-goals.md) | `docs/planning/product-goals.md` | `3bc9d71ba7db` |

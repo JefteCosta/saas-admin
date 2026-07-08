@@ -127,6 +127,18 @@ export interface Registry {
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/roles_controller').default['index']>>>
     }
   }
+  'roles.store': {
+    methods: ["POST"]
+    pattern: '/roles'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/roles_controller').default['store']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/roles_controller').default['store']>>>
+    }
+  }
   'roles.update_features': {
     methods: ["PATCH"]
     pattern: '/roles/:id/features'
@@ -137,6 +149,18 @@ export interface Registry {
       query: {}
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/roles_controller').default['updateFeatures']>>>
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/roles_controller').default['updateFeatures']>>>
+    }
+  }
+  'roles.destroy': {
+    methods: ["DELETE"]
+    pattern: '/roles/:id'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/roles_controller').default['destroy']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/roles_controller').default['destroy']>>>
     }
   }
   'teams': {
