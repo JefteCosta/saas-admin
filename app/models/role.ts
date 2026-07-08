@@ -1,7 +1,8 @@
-import { BaseModel, column, manyToMany } from '@adonisjs/lucid/orm'
+import { BaseModel, belongsTo, column, manyToMany } from '@adonisjs/lucid/orm'
 import { DateTime } from 'luxon'
-import type { ManyToMany } from '@adonisjs/lucid/types/relations'
+import type { BelongsTo, ManyToMany } from '@adonisjs/lucid/types/relations'
 import Feature from '#models/feature'
+import Company from '#models/company'
 
 export default class Role extends BaseModel {
   @column({ isPrimary: true })
@@ -19,11 +20,17 @@ export default class Role extends BaseModel {
   @column()
   declare isDefault: boolean
 
+  @column()
+  declare companyId: number | null
+
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime | null
+
+  @belongsTo(() => Company)
+  declare company: BelongsTo<typeof Company>
 
   @manyToMany(() => Feature, {
     pivotTable: 'role_features',

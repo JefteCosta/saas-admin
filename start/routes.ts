@@ -3,60 +3,120 @@
 | Routes file
 |--------------------------------------------------------------------------
 |
-| The routes file is used for defining the HTTP routes.
+| Quando APP_DOMAIN != localhost → rotas por subdomínio.
+| Quando APP_DOMAIN = localhost → rotas flat (dev/test simples).
 |
 */
 
 import { middleware } from '#start/kernel'
 import { controllers } from '#generated/controllers'
 import router from '@adonisjs/core/services/router'
+import env from '#start/env'
 
-router
-  .group(() => {
-    router.get('signup', [controllers.NewAccount, 'create'])
-    router.post('signup', [controllers.NewAccount, 'store'])
+const domain = env.get('APP_DOMAIN', 'localhost')
+const useSubdomains = domain !== 'localhost'
 
-    router.get('login', [controllers.Session, 'create'])
-    router.post('login', [controllers.Session, 'store'])
-  })
-  .use(middleware.guest())
+/*
+|--------------------------------------------------------------------------
+| Páginas públicas (login, signup)
+|--------------------------------------------------------------------------
+*/
+const publicRoutes = router.group(() => {
+  router.get('signup', [controllers.NewAccount, 'create'])
+  router.post('signup', [controllers.NewAccount, 'store'])
+  router.get('login', [controllers.Session, 'create'])
+  router.post('login', [controllers.Session, 'store'])
+})
+if (useSubdomains) publicRoutes.domain(domain)
+publicRoutes.use(middleware.guest())
 
-router
-  .group(() => {
-    router.on('/').renderInertia('home', {}).as('home').use(middleware.feature({ slug: 'home' }))
+/*
+|--------------------------------------------------------------------------
+| Rotas autenticadas
+|--------------------------------------------------------------------------
+*/
+if (useSubdomains) {
+  // ── Workspace switcher ──
+  router
+    .group(() => {
+      router.get('workspace', [controllers.Session, 'workspace']).as('workspace')
+      router.post('logout', [controllers.Session, 'destroy']).as('logout')
+    })
+    .domain(domain)
+    .use(middleware.auth())
 
-    // Profile
-    router.get('profile', [controllers.Profile, 'show']).as('profile').use(middleware.feature({ slug: 'profile' }))
-    router.patch('profile', [controllers.Profile, 'update']).use(middleware.feature({ slug: 'profile' }))
+  // ── Painel SaaS Admin (admin.domain) ──
+  router
+    .group(() => {
+      router.on('/').renderInertia('home', {}).as('admin.home')
+      router.get('profile', [controllers.Profile, 'show']).as('admin.profile')
+      router.patch('profile', [controllers.Profile, 'update']).as('admin.profile.update')
+      router.get('users', [controllers.Users, 'index']).as('admin.users')
+      router.patch('users/:id/role', [controllers.Users, 'updateRole']).as('admin.users.updateRole')
+      router.get('roles', [controllers.Roles, 'index']).as('admin.roles')
+      router.post('roles', [controllers.Roles, 'store']).as('admin.roles.store')
+      router.patch('roles/:id/features', [controllers.Roles, 'updateFeatures']).as('admin.roles.updateFeatures')
+      router.delete('roles/:id', [controllers.Roles, 'destroy']).as('admin.roles.destroy')
+      router.get('teams', [controllers.Teams, 'index']).as('admin.teams')
+      router.post('teams', [controllers.Teams, 'store']).as('admin.teams.store')
+      router.patch('teams/:id', [controllers.Teams, 'update']).as('admin.teams.update')
+      router.delete('teams/:id', [controllers.Teams, 'destroy']).as('admin.teams.destroy')
+      router.get('features', [controllers.Features, 'index']).as('admin.features')
+      router.post('features', [controllers.Features, 'store']).as('admin.features.store')
+      router.patch('features/:id', [controllers.Features, 'update']).as('admin.features.update')
+      router.get('settings', ({ inertia }) => inertia.render('placeholder', { featureName: 'Configurações' })).as('admin.settings')
+      router.post('logout', [controllers.Session, 'destroy']).as('admin.logout')
+    })
+    .domain(`admin.${domain}`)
+    .use(middleware.auth())
+    .use(middleware.saasAdmin())
 
-    // Users
-    router.get('users', [controllers.Users, 'index']).as('users').use(middleware.feature({ slug: 'users' }))
-    router.patch('users/:id/role', [controllers.Users, 'updateRole']).use(middleware.feature({ slug: 'users' }))
-
-    // Roles
-    router.get('roles', [controllers.Roles, 'index']).as('roles').use(middleware.feature({ slug: 'roles' }))
-    router.post('roles', [controllers.Roles, 'store']).use(middleware.feature({ slug: 'roles' }))
-    router.patch('roles/:id/features', [controllers.Roles, 'updateFeatures']).use(middleware.feature({ slug: 'roles' }))
-    router.delete('roles/:id', [controllers.Roles, 'destroy']).use(middleware.feature({ slug: 'roles' }))
-
-    // Teams
-    router.get('teams', [controllers.Teams, 'index']).as('teams').use(middleware.feature({ slug: 'teams' }))
-    router.post('teams', [controllers.Teams, 'store']).use(middleware.feature({ slug: 'teams' }))
-    router.patch('teams/:id', [controllers.Teams, 'update']).use(middleware.feature({ slug: 'teams' }))
-    router.delete('teams/:id', [controllers.Teams, 'destroy']).use(middleware.feature({ slug: 'teams' }))
-
-    // Features (restrito a owner via ability)
-    router.get('features', [controllers.Features, 'index']).as('features').use(middleware.feature({ slug: 'features' }))
-    router.post('features', [controllers.Features, 'store']).use(middleware.feature({ slug: 'features.create' }))
-    router.patch('features/:id', [controllers.Features, 'update']).use(middleware.feature({ slug: 'features.edit' }))
-
-    // Settings (placeholder)
-    router
-      .get('settings', ({ inertia }) => inertia.render('placeholder', { featureName: 'Configurações', featureDescription: 'Configurações gerais do sistema.' }))
-      .as('settings')
-      .use(middleware.feature({ slug: 'settings' }))
-
-    // Logout
-    router.post('logout', [controllers.Session, 'destroy'])
-  })
-  .use(middleware.auth())
+  // ── Workspace da company (:tenant.domain) ──
+  router
+    .group(() => {
+      router.on('/').renderInertia('home', {}).as('tenant.home')
+      router.get('profile', [controllers.Profile, 'show']).as('tenant.profile')
+      router.patch('profile', [controllers.Profile, 'update']).as('tenant.profile.update')
+      router.get('users', [controllers.Users, 'index']).as('tenant.users')
+      router.patch('users/:id/role', [controllers.Users, 'updateRole']).as('tenant.users.updateRole')
+      router.get('roles', [controllers.Roles, 'index']).as('tenant.roles')
+      router.post('roles', [controllers.Roles, 'store']).as('tenant.roles.store')
+      router.patch('roles/:id/features', [controllers.Roles, 'updateFeatures']).as('tenant.roles.updateFeatures')
+      router.delete('roles/:id', [controllers.Roles, 'destroy']).as('tenant.roles.destroy')
+      router.get('teams', [controllers.Teams, 'index']).as('tenant.teams')
+      router.post('teams', [controllers.Teams, 'store']).as('tenant.teams.store')
+      router.patch('teams/:id', [controllers.Teams, 'update']).as('tenant.teams.update')
+      router.delete('teams/:id', [controllers.Teams, 'destroy']).as('tenant.teams.destroy')
+      router.get('company', ({ inertia }) => inertia.render('placeholder', { featureName: 'Dados da Empresa' })).as('tenant.company')
+      router.get('settings', ({ inertia }) => inertia.render('placeholder', { featureName: 'Configurações' })).as('tenant.settings')
+      router.post('logout', [controllers.Session, 'destroy']).as('tenant.logout')
+    })
+    .domain(`:tenant.${domain}`)
+    .use(middleware.auth())
+    .use(middleware.companyContext())
+} else {
+  // ── Modo localhost (sem subdomínio) — testes e dev simples ──
+  router
+    .group(() => {
+      router.on('/').renderInertia('home', {}).as('home')
+      router.get('workspace', [controllers.Session, 'workspace']).as('workspace')
+      router.get('profile', [controllers.Profile, 'show']).as('profile')
+      router.patch('profile', [controllers.Profile, 'update']).as('profile.update')
+      router.get('users', [controllers.Users, 'index']).as('users')
+      router.patch('users/:id/role', [controllers.Users, 'updateRole']).as('users.updateRole')
+      router.get('roles', [controllers.Roles, 'index']).as('roles')
+      router.post('roles', [controllers.Roles, 'store']).as('roles.store')
+      router.patch('roles/:id/features', [controllers.Roles, 'updateFeatures']).as('roles.updateFeatures')
+      router.delete('roles/:id', [controllers.Roles, 'destroy']).as('roles.destroy')
+      router.get('teams', [controllers.Teams, 'index']).as('teams')
+      router.post('teams', [controllers.Teams, 'store']).as('teams.store')
+      router.patch('teams/:id', [controllers.Teams, 'update']).as('teams.update')
+      router.delete('teams/:id', [controllers.Teams, 'destroy']).as('teams.destroy')
+      router.get('features', [controllers.Features, 'index']).as('features')
+      router.post('features', [controllers.Features, 'store']).as('features.store')
+      router.patch('features/:id', [controllers.Features, 'update']).as('features.update')
+      router.get('settings', ({ inertia }) => inertia.render('placeholder', { featureName: 'Configurações' })).as('settings')
+      router.post('logout', [controllers.Session, 'destroy']).as('logout')
+    })
+    .use(middleware.auth())
+}

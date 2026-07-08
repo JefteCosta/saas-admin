@@ -17,11 +17,16 @@ const props = defineProps<{
     description: string | null
     icon: string | null
     route: string
-    group: string | null
+    moduleName: string
+    moduleId: number | null
+    featureGroupId: number | null
+    featureGroupName: string
     position: number
     isMenuItem: boolean
     isActive: boolean
   }[]
+  modules: { id: number; slug: string; name: string }[]
+  featureGroups: { id: number; slug: string; name: string; moduleId: number }[]
 }>()
 
 const showCreate = ref(false)
@@ -33,7 +38,8 @@ const form = useForm({
   description: '',
   icon: '',
   route: '',
-  group: '',
+  moduleId: '' as string | number,
+  featureGroupId: '' as string | number,
   position: 0,
   isMenuItem: true,
   isActive: true,
@@ -56,7 +62,8 @@ function startEdit(feature: typeof props.features[0]) {
   form.description = feature.description || ''
   form.icon = feature.icon || ''
   form.route = feature.route
-  form.group = feature.group || ''
+  form.moduleId = feature.moduleId || ''
+  form.featureGroupId = feature.featureGroupId || ''
   form.position = feature.position
   form.isMenuItem = feature.isMenuItem
   form.isActive = feature.isActive
@@ -115,8 +122,17 @@ function cancelEdit() {
             </div>
             <div class="grid grid-cols-2 gap-4">
               <Field>
-                <FieldLabel>Grupo</FieldLabel>
-                <Input v-model="form.group" placeholder="Plataforma" />
+                <FieldLabel>Módulo</FieldLabel>
+                <Select v-model="form.moduleId">
+                  <SelectTrigger>
+                    <SelectValue placeholder="Selecionar módulo" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem v-for="m in modules" :key="m.id" :value="String(m.id)">
+                      {{ m.name }}
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
               </Field>
               <Field>
                 <FieldLabel>Posição</FieldLabel>
@@ -141,7 +157,7 @@ function cancelEdit() {
           <TableHead>Slug</TableHead>
           <TableHead>Nome</TableHead>
           <TableHead>Rota</TableHead>
-          <TableHead>Grupo</TableHead>
+          <TableHead>Módulo</TableHead>
           <TableHead>Status</TableHead>
           <TableHead>Ações</TableHead>
         </TableRow>
@@ -152,7 +168,16 @@ function cancelEdit() {
             <TableCell><Input v-model="form.name" class="h-8" /></TableCell>
             <TableCell><Input v-model="form.route" class="h-8" /></TableCell>
             <TableCell><Input v-model="form.icon" class="h-8" /></TableCell>
-            <TableCell><Input v-model="form.group" class="h-8" /></TableCell>
+            <TableCell>
+              <Select :model-value="String(form.moduleId)" @update:model-value="(v) => form.moduleId = Number(v)">
+                <SelectTrigger class="h-8">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem v-for="m in modules" :key="m.id" :value="String(m.id)">{{ m.name }}</SelectItem>
+                </SelectContent>
+              </Select>
+            </TableCell>
             <TableCell>
               <Select :model-value="form.isActive ? 'true' : 'false'" @update:model-value="(v) => form.isActive = v === 'true'">
                 <SelectTrigger class="h-8 w-24">
@@ -176,7 +201,7 @@ function cancelEdit() {
             <TableCell class="font-medium">{{ feature.name }}</TableCell>
             <TableCell class="text-muted-foreground">{{ feature.route }}</TableCell>
             <TableCell>
-              <Badge variant="outline">{{ feature.group || 'Geral' }}</Badge>
+              <Badge variant="outline">{{ feature.moduleName || 'Geral' }}</Badge>
             </TableCell>
             <TableCell>
               <Badge :variant="feature.isActive ? 'default' : 'secondary'">

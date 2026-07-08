@@ -3,13 +3,18 @@ import type { SidebarProps } from '~/components/ui/sidebar'
 import { usePage } from '@inertiajs/vue3'
 import { computed } from 'vue'
 import {
+  Building2,
   Home,
   Layers,
+  LayoutDashboard,
+  MapPin,
+  Megaphone,
   Pencil,
   Plus,
   Settings,
   Shield,
   User,
+  UserPlus,
   Users,
   UsersRound,
 } from '@lucide/vue'
@@ -32,15 +37,20 @@ const props = withDefaults(defineProps<SidebarProps>(), {
 
 // Mapa de ícones Lucide por nome
 const iconMap: Record<string, LucideIcon> = {
+  Building2,
   Home,
+  Layers,
+  LayoutDashboard,
+  MapPin,
+  Megaphone,
+  Pencil,
+  Plus,
+  Settings,
+  Shield,
   User,
+  UserPlus,
   Users,
   UsersRound,
-  Shield,
-  Layers,
-  Settings,
-  Plus,
-  Pencil,
 }
 
 const page = usePage()
@@ -67,14 +77,24 @@ interface MenuGroup {
   items: MenuItem[]
 }
 
-const navItems = computed(() => {
-  const menu = (page.props.menu || []) as MenuGroup[]
-  return menu.map((group) => ({
-    title: group.group,
-    items: group.items.map((item) => ({
-      title: item.name,
-      url: item.route,
-      icon: item.icon ? iconMap[item.icon] : undefined,
+interface MenuModule {
+  module: string
+  moduleIcon: string | null
+  groups: MenuGroup[]
+}
+
+const navModules = computed(() => {
+  const menu = (page.props.menu || []) as MenuModule[]
+  return menu.map((mod) => ({
+    title: mod.module,
+    icon: mod.moduleIcon ? iconMap[mod.moduleIcon] : undefined,
+    groups: mod.groups.map((group) => ({
+      title: group.group,
+      items: group.items.map((item) => ({
+        title: item.name,
+        url: item.route,
+        icon: item.icon ? iconMap[item.icon] : undefined,
+      })),
     })),
   }))
 })
@@ -91,7 +111,13 @@ const navItems = computed(() => {
       </div>
     </SidebarHeader>
     <SidebarContent>
-      <NavMain v-for="group in navItems" :key="group.title" :label="group.title" :items="group.items" />
+      <NavMain
+        v-for="mod in navModules"
+        :key="mod.title"
+        :module-title="mod.title"
+        :module-icon="mod.icon"
+        :groups="mod.groups"
+      />
     </SidebarContent>
     <SidebarFooter>
       <NavUser :user="user" />

@@ -35,4 +35,6 @@ export const middleware = router.named({
   guest: () => import('#middleware/guest_middleware'),
   auth: () => import('#middleware/auth_middleware'),
   feature: () => import('#middleware/feature_middleware'),
+  saasAdmin: () => import('#middleware/saas_admin_middleware'),
+  companyContext: () => import('#middleware/company_context_middleware'),
 })

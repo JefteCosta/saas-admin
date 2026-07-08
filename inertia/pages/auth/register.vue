@@ -27,6 +27,7 @@ const form = ref({
   email: '',
   password: '',
   passwordConfirmation: '',
+  companyName: '',
 })
 </script>
 
@@ -56,6 +57,21 @@ const form = ref({
           :data-invalid="errors.fullName ? 'true' : undefined"
         />
         <div v-if="errors.fullName">{{ errors.fullName }}</div>
+      </Field>
+      <Field>
+        <FieldLabel for="companyName">Nome da Empresa</FieldLabel>
+        <Input
+          id="companyName"
+          type="text"
+          name="companyName"
+          placeholder="Ex: Minha Empresa"
+          v-model="form.companyName"
+          :data-invalid="errors.companyName ? 'true' : undefined"
+        />
+        <div v-if="errors.companyName">{{ errors.companyName }}</div>
+        <FieldDescription>
+          O nome da sua empresa. Você poderá editar os dados completos depois.
+        </FieldDescription>
       </Field>
       <Field>
         <FieldLabel for="email">Email</FieldLabel>

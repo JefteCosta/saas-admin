@@ -16,7 +16,7 @@ const props = defineProps<{
     description: string | null
     featureIds: number[]
   }[]
-  features: { id: number; slug: string; name: string; group: string | null }[]
+  features: { id: number; slug: string; name: string; moduleName: string | null }[]
 }>()
 
 // Criar role
@@ -75,7 +75,7 @@ function deleteRole(roleId: number) {
 
 // Agrupar features por grupo
 const featureGroups = props.features.reduce((acc, f) => {
-  const group = f.group || 'Geral'
+  const group = f.moduleName || 'Geral'
   if (!acc[group]) acc[group] = []
   acc[group].push(f)
   return acc

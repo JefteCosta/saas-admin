@@ -1,4 +1,5 @@
 import Feature from '#models/feature'
+import Module from '#models/module'
 import User from '#models/user'
 
 export interface MenuItem {
@@ -11,6 +12,12 @@ export interface MenuItem {
 export interface MenuGroup {
   group: string
   items: MenuItem[]
+}
+
+export interface MenuModule {
+  module: string
+  moduleIcon: string | null
+  groups: MenuGroup[]
 }
 
 export default class FeatureService {
@@ -51,39 +58,57 @@ export default class FeatureService {
   }
 
   /**
-   * Retorna o menu agrupado e ordenado para o sidebar.
-   * Para owner: retorna TODAS as features ativas.
-   * Para admin: retorna TODAS exceto features restritas ao SaaS.
-   * Para demais: retorna apenas features com permissão.
+   * Retorna o menu hierárquico: módulo → grupo → items.
+   * Para owner: retorna TODAS as features ativas de módulos ativos.
+   * Para admin: retorna TODAS exceto módulo 'saas'.
+   * Para demais: retorna apenas features com permissão via role+teams.
    */
-  async getUserMenu(user: User): Promise<MenuGroup[]> {
+  async getUserMenu(user: User): Promise<MenuModule[]> {
     let features: Feature[]
 
     const roleSlug = user.role?.slug ?? (await this.loadUserRoleSlug(user))
 
     if (roleSlug === 'owner') {
-      // Owner vê tudo
+      // Owner vê todos os módulos ativos
       features = await Feature.query()
         .where('is_active', true)
         .where('is_menu_item', true)
+        .preload('module')
+        .preload('featureGroup')
         .orderBy('position', 'asc')
     } else if (roleSlug === 'admin') {
-      // Admin vê tudo exceto features do grupo SaaS restritas
-      const restrictedSlugs = ['features.create', 'features.edit']
-      features = await Feature.query()
+      // Admin vê tudo exceto módulo 'saas'
+      const saasModule = await Module.findBy('slug', 'saas')
+      const query = Feature.query()
         .where('is_active', true)
         .where('is_menu_item', true)
-        .whereNotIn('slug', restrictedSlugs)
+        .preload('module')
+        .preload('featureGroup')
         .orderBy('position', 'asc')
+
+      if (saasModule) {
+        query.whereNot('module_id', saasModule.id)
+      }
+
+      features = await query
     } else {
       // Demais: apenas features com permissão
       const userFeatures = await this.getUserFeatures(user)
       features = userFeatures
         .filter((f) => f.isMenuItem && f.isActive)
         .sort((a, b) => a.position - b.position)
+      // Preload module e featureGroup para features já carregadas
+      for (const feature of features) {
+        if (!feature.$preloaded.module) {
+          await feature.load('module')
+        }
+        if (!feature.$preloaded.featureGroup) {
+          await feature.load('featureGroup')
+        }
+      }
     }
 
-    return this.groupFeatures(features)
+    return this.groupFeaturesByModule(features)
   }
 
   /**
@@ -95,17 +120,39 @@ export default class FeatureService {
   }
 
   /**
-   * Agrupa features por grupo para o menu.
+   * Agrupa features em hierarquia: módulo → grupo → items.
    */
-  private groupFeatures(features: Feature[]): MenuGroup[] {
-    const groups = new Map<string, MenuItem[]>()
+  private groupFeaturesByModule(features: Feature[]): MenuModule[] {
+    const moduleMap = new Map<
+      number,
+      { name: string; icon: string | null; position: number; groups: Map<string, { position: number; items: MenuItem[] }> }
+    >()
 
     for (const feature of features) {
-      const groupName = feature.group || 'Geral'
-      if (!groups.has(groupName)) {
-        groups.set(groupName, [])
+      const mod = feature.module
+      const moduleId = mod?.id ?? 0
+      const moduleName = mod?.name ?? 'Geral'
+      const moduleIcon = mod?.icon ?? null
+      const modulePosition = mod?.position ?? 999
+
+      if (!moduleMap.has(moduleId)) {
+        moduleMap.set(moduleId, {
+          name: moduleName,
+          icon: moduleIcon,
+          position: modulePosition,
+          groups: new Map(),
+        })
       }
-      groups.get(groupName)!.push({
+
+      const moduleEntry = moduleMap.get(moduleId)!
+      const groupName = feature.featureGroup?.name ?? 'Geral'
+      const groupPosition = feature.featureGroup?.position ?? 999
+
+      if (!moduleEntry.groups.has(groupName)) {
+        moduleEntry.groups.set(groupName, { position: groupPosition, items: [] })
+      }
+
+      moduleEntry.groups.get(groupName)!.items.push({
         slug: feature.slug,
         name: feature.name,
         icon: feature.icon,
@@ -113,7 +160,24 @@ export default class FeatureService {
       })
     }
 
-    return Array.from(groups.entries()).map(([group, items]) => ({ group, items }))
+    // Ordenar módulos por position
+    const sortedModules = Array.from(moduleMap.values()).sort((a, b) => a.position - b.position)
+
+    return sortedModules.map((mod) => {
+      // Ordenar grupos por position
+      const sortedGroups = Array.from(mod.groups.entries())
+        .sort(([, a], [, b]) => a.position - b.position)
+        .map(([groupName, groupData]) => ({
+          group: groupName,
+          items: groupData.items,
+        }))
+
+      return {
+        module: mod.name,
+        moduleIcon: mod.icon,
+        groups: sortedGroups,
+      }
+    })
   }
 
   /**

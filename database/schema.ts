@@ -7,15 +7,117 @@
 import { BaseModel, column } from '@adonisjs/lucid/orm'
 import { DateTime } from 'luxon'
 
+export class CompanySchema extends BaseModel {
+  static $columns = ['createdAt', 'document', 'id', 'isActive', 'legalName', 'logoUrl', 'name', 'ownerUserId', 'phone', 'planId', 'slug', 'stateRegistration', 'updatedAt'] as const
+  $columns = CompanySchema.$columns
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column()
+  declare document: string | null
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare isActive: boolean | null
+  @column()
+  declare legalName: string | null
+  @column()
+  declare logoUrl: string | null
+  @column()
+  declare name: string
+  @column()
+  declare ownerUserId: number
+  @column()
+  declare phone: string | null
+  @column()
+  declare planId: number | null
+  @column()
+  declare slug: string
+  @column()
+  declare stateRegistration: string | null
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+}
+
+export class CompanyAddressSchema extends BaseModel {
+  static $columns = ['city', 'companyId', 'complement', 'country', 'createdAt', 'id', 'isPrimary', 'label', 'neighborhood', 'number', 'state', 'street', 'updatedAt', 'zipCode'] as const
+  $columns = CompanyAddressSchema.$columns
+  @column()
+  declare city: string
+  @column()
+  declare companyId: number
+  @column()
+  declare complement: string | null
+  @column()
+  declare country: string | null
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare isPrimary: boolean | null
+  @column()
+  declare label: string | null
+  @column()
+  declare neighborhood: string | null
+  @column()
+  declare number: string | null
+  @column()
+  declare state: string
+  @column()
+  declare street: string
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+  @column()
+  declare zipCode: string
+}
+
+export class CompanyMemberSchema extends BaseModel {
+  static $columns = ['companyId', 'createdAt', 'id', 'roleId', 'userId'] as const
+  $columns = CompanyMemberSchema.$columns
+  @column()
+  declare companyId: number
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare roleId: number | null
+  @column()
+  declare userId: number
+}
+
+export class FeatureGroupSchema extends BaseModel {
+  static $columns = ['createdAt', 'icon', 'id', 'isActive', 'moduleId', 'name', 'position', 'slug', 'updatedAt'] as const
+  $columns = FeatureGroupSchema.$columns
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column()
+  declare icon: string | null
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare isActive: boolean | null
+  @column()
+  declare moduleId: number
+  @column()
+  declare name: string
+  @column()
+  declare position: number | null
+  @column()
+  declare slug: string
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+}
+
 export class FeatureSchema extends BaseModel {
-  static $columns = ['createdAt', 'description', 'group', 'icon', 'id', 'isActive', 'isMenuItem', 'name', 'position', 'route', 'slug', 'updatedAt'] as const
+  static $columns = ['createdAt', 'description', 'featureGroupId', 'icon', 'id', 'isActive', 'isMenuItem', 'moduleId', 'name', 'position', 'route', 'slug', 'updatedAt'] as const
   $columns = FeatureSchema.$columns
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
   @column()
   declare description: string | null
   @column()
-  declare group: string | null
+  declare featureGroupId: number | null
   @column()
   declare icon: string | null
   @column({ isPrimary: true })
@@ -25,11 +127,70 @@ export class FeatureSchema extends BaseModel {
   @column()
   declare isMenuItem: boolean | null
   @column()
+  declare moduleId: number | null
+  @column()
   declare name: string
   @column()
   declare position: number | null
   @column()
   declare route: string
+  @column()
+  declare slug: string
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+}
+
+export class ModuleSchema extends BaseModel {
+  static $columns = ['createdAt', 'icon', 'id', 'isActive', 'name', 'position', 'slug', 'updatedAt'] as const
+  $columns = ModuleSchema.$columns
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column()
+  declare icon: string | null
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare isActive: boolean | null
+  @column()
+  declare name: string
+  @column()
+  declare position: number | null
+  @column()
+  declare slug: string
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+}
+
+export class PlanModuleSchema extends BaseModel {
+  static $columns = ['createdAt', 'id', 'limits', 'moduleId', 'planId'] as const
+  $columns = PlanModuleSchema.$columns
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare limits: any | null
+  @column()
+  declare moduleId: number
+  @column()
+  declare planId: number
+}
+
+export class PlanSchema extends BaseModel {
+  static $columns = ['createdAt', 'description', 'id', 'isActive', 'name', 'price', 'slug', 'updatedAt'] as const
+  $columns = PlanSchema.$columns
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column()
+  declare description: string | null
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare isActive: boolean | null
+  @column()
+  declare name: string
+  @column()
+  declare price: number | null
   @column()
   declare slug: string
   @column.dateTime({ autoCreate: true, autoUpdate: true })
@@ -50,8 +211,10 @@ export class RoleFeatureSchema extends BaseModel {
 }
 
 export class RoleSchema extends BaseModel {
-  static $columns = ['createdAt', 'description', 'id', 'isDefault', 'name', 'slug', 'updatedAt'] as const
+  static $columns = ['companyId', 'createdAt', 'description', 'id', 'isDefault', 'name', 'slug', 'updatedAt'] as const
   $columns = RoleSchema.$columns
+  @column()
+  declare companyId: number | null
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
   @column()
@@ -82,8 +245,10 @@ export class TeamMemberSchema extends BaseModel {
 }
 
 export class TeamSchema extends BaseModel {
-  static $columns = ['createdAt', 'id', 'name', 'roleId', 'slug', 'updatedAt'] as const
+  static $columns = ['companyId', 'createdAt', 'id', 'name', 'roleId', 'slug', 'updatedAt'] as const
   $columns = TeamSchema.$columns
+  @column()
+  declare companyId: number | null
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
   @column({ isPrimary: true })
