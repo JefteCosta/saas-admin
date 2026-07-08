@@ -1,0 +1,400 @@
+[
+  {
+    "category": "Basics",
+    "children": [
+      {
+        "title": "Routing",
+        "permalink": "guides/basics/routing",
+        "contentPath": "./basics/routing.md"
+      },
+      {
+        "title": "Controllers",
+        "permalink": "guides/basics/controllers",
+        "contentPath": "./basics/controllers.md"
+      },
+      {
+        "title": "HTTP context",
+        "permalink": "guides/basics/http-context",
+        "oldUrls": [
+          "guides/concepts/http-context",
+          "guides/concepts/async-local-storage",
+          "guides/concepts/http-overview"
+        ],
+        "contentPath": "./basics/http_context.md"
+      },
+      {
+        "title": "Middleware",
+        "permalink": "guides/basics/middleware",
+        "contentPath": "./basics/middleware.md"
+      },
+      {
+        "title": "Request",
+        "permalink": "guides/basics/request",
+        "oldUrls": ["guides/basics/cookies"],
+        "contentPath": "./basics/request.md"
+      },
+      {
+        "title": "Response",
+        "permalink": "guides/basics/response",
+        "contentPath": "./basics/response.md"
+      },
+      {
+        "title": "Body parser",
+        "permalink": "guides/basics/body-parser",
+        "contentPath": "./basics/body_parser.md"
+      },
+      {
+        "title": "Validation",
+        "permalink": "guides/basics/validation",
+        "contentPath": "./basics/validation.md"
+      },
+      {
+        "title": "File uploads",
+        "permalink": "guides/basics/file-uploads",
+        "contentPath": "./basics/file_uploads.md"
+      },
+      {
+        "title": "Session",
+        "permalink": "guides/basics/session",
+        "contentPath": "./basics/session.md"
+      },
+      {
+        "title": "URL builder",
+        "permalink": "guides/basics/url-builder",
+        "contentPath": "./basics/url_builder.md"
+      },
+      {
+        "title": "Exception handling",
+        "permalink": "guides/basics/exception-handling",
+        "contentPath": "./basics/exception_handling.md"
+      },
+      {
+        "title": "Debugging",
+        "permalink": "guides/basics/debugging",
+        "contentPath": "./basics/debugging.md"
+      },
+      {
+        "title": "Static file server",
+        "permalink": "guides/basics/static-file-server",
+        "contentPath": "./basics/static_file_server.md"
+      }
+    ]
+  },
+  {
+    "category": "Frontend",
+    "children": [
+      {
+        "title": "EdgeJS",
+        "permalink": "guides/frontend/edgejs",
+        "oldUrls": ["guides/views-and-templates/edgejs"],
+        "contentPath": "./frontend/edgejs.md"
+      },
+      {
+        "title": "Inertia",
+        "permalink": "guides/frontend/inertia",
+        "oldUrls": ["guides/views-and-templates/inertia"],
+        "contentPath": "./frontend/inertia.md"
+      },
+      {
+        "title": "Transformers",
+        "permalink": "guides/frontend/transformers",
+        "contentPath": "./frontend/transformers.md"
+      },
+      {
+        "title": "Type-safe API Client",
+        "permalink": "guides/frontend/api-client",
+        "contentPath": "./frontend/api_client.md"
+      },
+      {
+        "title": "TanStack query",
+        "permalink": "guides/frontend/tanstack-query",
+        "contentPath": "./frontend/tanstack_query.md"
+      },
+      {
+        "title": "Vite",
+        "permalink": "guides/frontend/vite",
+        "oldUrls": ["guides/basics/vite"],
+        "contentPath": "./frontend/vite.md"
+      }
+    ]
+  },
+  {
+    "category": "Data Layer",
+    "children": [
+      {
+        "title": "SQL ORM",
+        "permalink": "guides/database/lucid",
+        "oldUrls": ["guides/database/introduction"],
+        "contentPath": "./database/lucid.md"
+      },
+      {
+        "title": "Redis",
+        "permalink": "guides/database/redis",
+        "contentPath": "./database/redis.md"
+      }
+    ]
+  },
+  {
+    "category": "Auth",
+    "children": [
+      {
+        "title": "Introduction",
+        "permalink": "guides/auth/introduction",
+        "contentPath": "./auth/introduction.md"
+      },
+      {
+        "title": "Verifying user credentials",
+        "permalink": "guides/auth/verifying-user-credentials",
+        "contentPath": "./auth/verifying_user_credentials.md"
+      },
+      {
+        "title": "Session guard",
+        "permalink": "guides/auth/session-guard",
+        "contentPath": "./auth/session_guard.md"
+      },
+      {
+        "title": "Access tokens guard",
+        "permalink": "guides/auth/access-tokens-guard",
+        "contentPath": "./auth/access_tokens_guard.md"
+      },
+      {
+        "title": "Basic auth guard",
+        "permalink": "guides/auth/basic-auth-guard",
+        "contentPath": "./auth/basic_auth_guard.md"
+      },
+      {
+        "title": "Custom auth guard",
+        "permalink": "guides/auth/custom-auth-guard",
+        "contentPath": "./auth/custom_auth_guard.md"
+      },
+      {
+        "title": "Social authentication",
+        "permalink": "guides/auth/social-authentication",
+        "contentPath": "./auth/social_authentication.md"
+      },
+      {
+        "title": "Authorization",
+        "permalink": "guides/auth/authorization",
+        "contentPath": "./auth/authorization.md"
+      }
+    ]
+  },
+  {
+    "category": "Security",
+    "children": [
+      {
+        "title": "Hashing",
+        "permalink": "guides/security/hashing",
+        "contentPath": "./security/hashing.md"
+      },
+      {
+        "title": "Encryption",
+        "permalink": "guides/security/encryption",
+        "contentPath": "./security/encryption.md"
+      },
+      {
+        "title": "CORS",
+        "permalink": "guides/security/cors",
+        "contentPath": "./security/cors.md"
+      },
+      {
+        "title": "Securing SSR apps",
+        "permalink": "guides/security/securing-ssr-applications",
+        "contentPath": "./security/securing_ssr_applications.md"
+      },
+      {
+        "title": "Rate limiting",
+        "permalink": "guides/security/rate-limiting",
+        "contentPath": "./security/rate_limiting.md"
+      }
+    ]
+  },
+  {
+    "category": "Core Concepts",
+    "children": [
+      {
+        "title": "Application lifecycle",
+        "permalink": "guides/concepts/application-lifecycle",
+        "contentPath": "./concepts/application_lifecycle.md"
+      },
+      {
+        "title": "Dependency injection",
+        "permalink": "guides/concepts/dependency-injection",
+        "contentPath": "./concepts/dependency_injection.md"
+      },
+      {
+        "title": "Service providers",
+        "permalink": "guides/concepts/service-providers",
+        "contentPath": "./concepts/service_providers.md"
+      },
+      {
+        "title": "Container services",
+        "permalink": "guides/concepts/container-services",
+        "contentPath": "./concepts/container_services.md"
+      },
+      {
+        "title": "Barrel files",
+        "permalink": "guides/concepts/barrel-files",
+        "contentPath": "./concepts/barrel_files.md"
+      },
+      {
+        "title": "Assembler hooks",
+        "permalink": "guides/concepts/assembler-hooks",
+        "contentPath": "./concepts/assembler_hooks.md"
+      },
+      {
+        "title": "Scaffolding and codemods",
+        "permalink": "guides/concepts/scaffolding",
+        "contentPath": "./concepts/scaffolding.md"
+      },
+      {
+        "title": "Extending AdonisJS",
+        "permalink": "guides/concepts/extending-adonisjs",
+        "contentPath": "./concepts/extending_adonisjs.md"
+      }
+    ]
+  },
+  {
+    "category": "Digging Deeper",
+    "children": [
+      {
+        "title": "Cache",
+        "permalink": "guides/digging-deeper/cache",
+        "contentPath": "./digging_deeper/cache.md"
+      },
+      {
+        "title": "Drive",
+        "permalink": "guides/digging-deeper/drive",
+        "contentPath": "./digging_deeper/drive.md"
+      },
+      {
+        "title": "Emitter",
+        "permalink": "guides/digging-deeper/emitter",
+        "contentPath": "./digging_deeper/emitter.md"
+      },
+      {
+        "title": "Health checks",
+        "permalink": "guides/digging-deeper/health-checks",
+        "contentPath": "./digging_deeper/health_checks.md"
+      },
+      {
+        "title": "I18n",
+        "permalink": "guides/digging-deeper/i18n",
+        "contentPath": "./digging_deeper/i18n.md"
+      },
+      {
+        "title": "Atomic locks",
+        "permalink": "guides/digging-deeper/locks",
+        "contentPath": "./digging_deeper/locks.md"
+      },
+      {
+        "title": "Logger",
+        "permalink": "guides/digging-deeper/logger",
+        "contentPath": "./digging_deeper/logger.md"
+      },
+      {
+        "title": "Mail",
+        "permalink": "guides/digging-deeper/mail",
+        "contentPath": "./digging_deeper/mail.md"
+      },
+      {
+        "title": "Queues",
+        "permalink": "guides/digging-deeper/queues",
+        "contentPath": "./digging_deeper/queues.md"
+      },
+      {
+        "title": "Server-Sent Events",
+        "permalink": "guides/digging-deeper/server-sent-events",
+        "oldUrls": ["guides/digging-deeper/transmit"],
+        "contentPath": "./digging_deeper/server_sent_events.md"
+      },
+      {
+        "title": "OpenTelemetry",
+        "permalink": "guides/digging-deeper/opentelemetry",
+        "contentPath": "./digging_deeper/opentelemetry.md"
+      }
+    ]
+  },
+  {
+    "category": "Command line",
+    "children": [
+      {
+        "title": "Introduction",
+        "permalink": "guides/ace/introduction",
+        "contentPath": "./ace/introduction.md"
+      },
+      {
+        "title": "Creating commands",
+        "permalink": "guides/ace/creating-commands",
+        "contentPath": "./ace/creating_commands.md"
+      },
+      {
+        "title": "Command arguments",
+        "permalink": "guides/ace/arguments",
+        "contentPath": "./ace/args.md"
+      },
+      {
+        "title": "Command flags",
+        "permalink": "guides/ace/flags",
+        "contentPath": "./ace/flags.md"
+      },
+      {
+        "title": "Prompts",
+        "permalink": "guides/ace/prompts",
+        "contentPath": "./ace/prompts.md"
+      },
+      {
+        "title": "Terminal UI",
+        "permalink": "guides/ace/terminal-ui",
+        "contentPath": "./ace/tui.md"
+      },
+      {
+        "title": "Repl",
+        "permalink": "guides/ace/repl",
+        "contentPath": "./ace/repl.md"
+      }
+    ]
+  },
+  {
+    "category": "Testing",
+    "children": [
+      {
+        "title": "Introduction",
+        "permalink": "guides/testing/introduction",
+        "contentPath": "./testing/introduction.md"
+      },
+      {
+        "title": "API tests",
+        "permalink": "guides/testing/api-tests",
+        "contentPath": "./testing/api_tests.md"
+      },
+      {
+        "title": "Browser tests",
+        "permalink": "guides/testing/browser-tests",
+        "contentPath": "./testing/browser_tests.md"
+      },
+      {
+        "title": "Console tests",
+        "permalink": "guides/testing/console-tests",
+        "contentPath": "./testing/console_tests.md"
+      },
+      {
+        "title": "Resetting state between tests",
+        "permalink": "guides/testing/resetting-state-between-tests",
+        "oldUrls": ["guides/testing/database"],
+        "contentPath": "./testing/resetting_state_between_tests.md"
+      },
+      {
+        "title": "Database assertions",
+        "permalink": "guides/testing/database-assertions",
+        "contentPath": "./testing/database_assertions.md"
+      },
+      {
+        "title": "Test doubles",
+        "permalink": "guides/testing/test-doubles",
+        "oldUrls": ["guides/basics/mocks-and-fakes"],
+        "contentPath": "./testing/test_doubles.md"
+      }
+    ]
+  }
+]

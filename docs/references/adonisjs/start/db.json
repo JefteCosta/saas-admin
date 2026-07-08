@@ -1,0 +1,204 @@
+[
+  {
+    "category": "Getting started",
+    "children": [
+      {
+        "title": "Introduction",
+        "permalink": "introduction",
+        "oldUrls": ["guides/preface/introduction", "guides/introduction"],
+        "contentPath": "./introduction.md"
+      },
+      {
+        "title": "Pick your path",
+        "permalink": "stacks-and-starter-kits",
+        "oldUrls": ["guides/views-and-templates/introduction"],
+        "contentPath": "./pick_your_path.md"
+      },
+      {
+        "title": "Installation",
+        "permalink": "installation",
+        "oldUrls": [
+          "guides/getting-started/installation",
+          "guides/concepts/hot-module-replacement"
+        ],
+        "contentPath": "./installation.md"
+      },
+      {
+        "title": "Folder structure",
+        "permalink": "folder-structure",
+        "oldUrls": ["guides/getting-started/folder-structure"],
+        "contentPath": "./folder_structure.md"
+      },
+      {
+        "title": "Development environment setup",
+        "permalink": "dev-environment",
+        "oldUrls": ["guides/concepts/tooling-config"],
+        "contentPath": "./dev_environment.md"
+      },
+      {
+        "title": "Configuration & Environment",
+        "permalink": "configuration",
+        "oldUrls": [
+          "guides/getting-started/configuration",
+          "guides/getting-started/environment-variables",
+          "guides/concepts/config-providers"
+        ],
+        "contentPath": "./configuration.md"
+      },
+      {
+        "title": "Deployment",
+        "permalink": "deployment",
+        "oldUrls": [
+          "guides/getting-started/deployment",
+          "guides/concepts/typescript-build-process"
+        ],
+        "contentPath": "./deployment.md"
+      },
+      {
+        "title": "FAQs",
+        "permalink": "faqs",
+        "oldUrls": ["guides/preface/faqs"],
+        "contentPath": "./faqs.md"
+      }
+    ]
+  },
+  {
+    "category": "FullStack tutorial",
+    "children": [
+      {
+        "title": "Overview",
+        "variations": [
+          {
+            "name": "Hypermedia",
+            "permalink": "tutorial/hypermedia/overview",
+            "contentPath": "./tutorial/hypermedia/overview.md"
+          },
+          {
+            "name": "React",
+            "permalink": "tutorial/react/overview",
+            "contentPath": "./tutorial/react/overview.md"
+          }
+        ]
+      },
+      {
+        "title": "Commandline and REPL",
+        "variations": [
+          {
+            "name": "Hypermedia",
+            "permalink": "tutorial/hypermedia/cli-and-repl",
+            "contentPath": "./tutorial/hypermedia/cli_and_repl.md"
+          },
+          {
+            "name": "React",
+            "permalink": "tutorial/react/cli-and-repl",
+            "contentPath": "./tutorial/react/cli_and_repl.md"
+          }
+        ]
+      },
+      {
+        "title": "Database and models",
+        "variations": [
+          {
+            "name": "Hypermedia",
+            "permalink": "tutorial/hypermedia/database-and-models",
+            "contentPath": "./tutorial/hypermedia/database_and_models.md"
+          },
+          {
+            "name": "React",
+            "permalink": "tutorial/react/database-and-models",
+            "contentPath": "./tutorial/react/database_and_models.md"
+          }
+        ]
+      },
+      {
+        "title": "Routes, controllers and views",
+        "variations": [
+          {
+            "name": "Hypermedia",
+            "permalink": "tutorial/hypermedia/routes-controller-views",
+            "contentPath": "./tutorial/hypermedia/routes_controllers_and_views.md"
+          },
+          {
+            "name": "React",
+            "permalink": "tutorial/react/routes-controller-views",
+            "contentPath": "./tutorial/react/routes_controllers_and_views.md"
+          }
+        ]
+      },
+      {
+        "title": "Forms and validation",
+        "variations": [
+          {
+            "name": "Hypermedia",
+            "permalink": "tutorial/hypermedia/forms-and-validation",
+            "contentPath": "./tutorial/hypermedia/forms_and_validation.md"
+          },
+          {
+            "name": "React",
+            "permalink": "tutorial/react/forms-and-validation",
+            "contentPath": "./tutorial/react/forms_and_validation.md"
+          }
+        ]
+      },
+      {
+        "title": "Styling and cleanup",
+        "variations": [
+          {
+            "name": "Hypermedia",
+            "permalink": "tutorial/hypermedia/styling-and-cleanup",
+            "contentPath": "./tutorial/hypermedia/styling_and_cleanup.md"
+          },
+          {
+            "name": "React",
+            "permalink": "tutorial/react/styling-and-cleanup",
+            "contentPath": "./tutorial/react/styling_and_cleanup.md"
+          }
+        ]
+      },
+      {
+        "title": "Authorization",
+        "variations": [
+          {
+            "name": "Hypermedia",
+            "permalink": "tutorial/hypermedia/authorization",
+            "contentPath": "./tutorial/hypermedia/authorization.md"
+          },
+          {
+            "name": "React",
+            "permalink": "tutorial/react/authorization",
+            "contentPath": "./tutorial/react/authorization.md"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Resources",
+    "children": [
+      {
+        "title": "Contributing",
+        "permalink": "contributing",
+        "oldUrls": ["guides/preface/contribution-guide"],
+        "contentPath": "./resources/contributing.md"
+      },
+      {
+        "title": "Releases",
+        "permalink": "releases",
+        "oldUrls": ["guides/preface/releases"],
+        "contentPath": "./resources/releases.md",
+        "toc": false
+      },
+      {
+        "title": "Governance",
+        "permalink": "governance",
+        "oldUrls": ["guides/preface/governance"],
+        "contentPath": "./resources/governance.md"
+      },
+      {
+        "title": "Upgrade guide",
+        "permalink": "v6-to-v7",
+        "contentPath": "./resources/upgrade_guide.md"
+      }
+    ]
+  }
+]

@@ -1,0 +1,63 @@
+name: docs-sync
+
+on:
+  pull_request:
+    paths:
+      - 'docs/**'
+      - 'AGENTS.md'
+      - 'CLAUDE.md'
+      - 'GEMINI.md'
+      - '.kiro/**'
+      - '.github/**'
+      - '.agents/**'
+      - '.claude/**'
+      - 'ace'
+      - 'commands/**'
+      - 'package.json'
+      - 'package-lock.json'
+  push:
+    branches: [main]
+    paths:
+      - 'docs/**'
+      - 'AGENTS.md'
+      - 'CLAUDE.md'
+      - 'GEMINI.md'
+      - '.kiro/**'
+      - '.github/**'
+      - '.agents/**'
+      - '.claude/**'
+      - 'ace'
+      - 'commands/**'
+      - 'package.json'
+      - 'package-lock.json'
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run docs:sync
+      - name: Commit synchronized knowledge base
+        run: |
+          if git diff --quiet; then
+            echo "Knowledge base is already synchronized."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add AGENTS.md CLAUDE.md GEMINI.md .github .kiro .agents .claude docs/knowledge-base.generated.md
+          HUSKY=0 git commit -m "docs: sincroniza base de conhecimento"
+          git push
