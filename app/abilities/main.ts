@@ -12,7 +12,7 @@ import FeatureService from '#services/feature_service'
  */
 export const accessFeature = Bouncer.ability(async (user: User, featureSlug: string) => {
   // Garante que a role está carregada
-  if (!user.role && user.roleId) {
+  if (!user.$preloaded.role && user.roleId) {
     await user.load('role')
   }
 
