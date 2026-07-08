@@ -36,7 +36,8 @@
 | [shadcn-vue](guides/shadcn-vue.md) | `docs/guides/shadcn-vue.md` | `3c2ddcc79853` |
 | [Guia de Testes](guides/testing.md) | `docs/guides/testing.md` | `dfaa7b8979e6` |
 | [Backlog](planning/backlog.md) | `docs/planning/backlog.md` | `c05b45afa062` |
-| [Plano: Companies, Planos, Módulos e Subdomínios](planning/companies-modules-limits-plan.md) | `docs/planning/companies-modules-limits-plan.md` | `ff81ce6f2a02` |
+| [Plano: Testes de Browser (E2E)](planning/browser-tests-plan.md) | `docs/planning/browser-tests-plan.md` | `1e67ba29aac1` |
+| [Plano: Companies, Planos, Módulos e Subdomínios](planning/companies-modules-limits-plan.md) | `docs/planning/companies-modules-limits-plan.md` | `5aa35f98028f` |
 | [Decisões de Planejamento](planning/decisions.md) | `docs/planning/decisions.md` | `348535ea5d84` |
 | [Plano de Estrutura de Documentação Multiagente](planning/documentation-structure-plan.md) | `docs/planning/documentation-structure-plan.md` | `331d073d1abe` |
 | [Plano: Sistema de Features, Roles, Teams e Permissões](planning/features-roles-permissions-plan.md) | `docs/planning/features-roles-permissions-plan.md` | `cf62d8af9734` |
@@ -158,6 +159,34 @@
 | [Building DevShow - A Community showcase website](references/adonisjs/start/tutorial/react/overview.md) | `docs/references/adonisjs/start/tutorial/react/overview.md` | `8d8d6573c233` |
 | [Routes, controllers and views](references/adonisjs/start/tutorial/react/routes_controllers_and_views.md) | `docs/references/adonisjs/start/tutorial/react/routes_controllers_and_views.md` | `73be3269a1d5` |
 | [Styling and Cleanup](references/adonisjs/start/tutorial/react/styling_and_cleanup.md) | `docs/references/adonisjs/start/tutorial/react/styling_and_cleanup.md` | `b653a314710f` |
+| [Bail mode](references/japa/guides/bail_mode.md) | `docs/references/japa/guides/bail_mode.md` | `da539986cf6c` |
+| [Code Coverage](references/japa/guides/coverage.md) | `docs/references/japa/guides/coverage.md` | `c17f9bc5fb99` |
+| [Datasets](references/japa/guides/datasets.md) | `docs/references/japa/guides/datasets.md` | `225fa97b3118` |
+| [Exceptions](references/japa/guides/exceptions.md) | `docs/references/japa/guides/exceptions.md` | `feb14db0a9af` |
+| [Filtering tests](references/japa/guides/filtering_tests.md) | `docs/references/japa/guides/filtering_tests.md` | `71147e17f898` |
+| [Grouping tests](references/japa/guides/grouping_tests.md) | `docs/references/japa/guides/grouping_tests.md` | `558f981488c7` |
+| [Installation](references/japa/guides/installation_and_usage.md) | `docs/references/japa/guides/installation_and_usage.md` | `0827b62ad19d` |
+| [A simple yet powerful testing framework for Node.js](references/japa/guides/introduction.md) | `docs/references/japa/guides/introduction.md` | `7cd499976e97` |
+| [Lifecycle hooks](references/japa/guides/lifecycle_hooks.md) | `docs/references/japa/guides/lifecycle_hooks.md` | `18784bbc6211` |
+| [Skipping tests](references/japa/guides/skipping_tests.md) | `docs/references/japa/guides/skipping_tests.md` | `e04e1a17900f` |
+| [Test macros](references/japa/guides/test_macros.md) | `docs/references/japa/guides/test_macros.md` | `963aae05309c` |
+| [Test reporters](references/japa/guides/test_reporters.md) | `docs/references/japa/guides/test_reporters.md` | `d75acfa89ac5` |
+| [Test resources](references/japa/guides/test_resources.md) | `docs/references/japa/guides/test_resources.md` | `0a09f084cc91` |
+| [Test suites](references/japa/guides/test_suites.md) | `docs/references/japa/guides/test_suites.md` | `e6cb33b1d4f8` |
+| [Testing asynchronous code](references/japa/guides/testing_async_code.md) | `docs/references/japa/guides/testing_async_code.md` | `320d46675254` |
+| [API client](references/japa/plugins/api_client.md) | `docs/references/japa/plugins/api_client.md` | `0aa48df38358` |
+| [Assert](references/japa/plugins/assert.md) | `docs/references/japa/plugins/assert.md` | `36c805f3ae8f` |
+| [Browser client](references/japa/plugins/browser_client.md) | `docs/references/japa/plugins/browser_client.md` | `d7c61ec9ac08` |
+| [Expect types](references/japa/plugins/expect_type.md) | `docs/references/japa/plugins/expect_type.md` | `ca7c32de42ee` |
+| [Expect](references/japa/plugins/expect.md) | `docs/references/japa/plugins/expect.md` | `374f68eda14a` |
+| [File System](references/japa/plugins/file_system.md) | `docs/references/japa/plugins/file_system.md` | `44f2f49fe2ed` |
+| [OpenAPI Assertions](references/japa/plugins/openapi-assertions.md) | `docs/references/japa/plugins/openapi-assertions.md` | `5b0104264340` |
+| [Snapshot](references/japa/plugins/snapshot.md) | `docs/references/japa/plugins/snapshot.md` | `2a90f7dacbda` |
+| [Creating Japa plugins](references/japa/reference/plugins.md) | `docs/references/japa/reference/plugins.md` | `cfd2f7ab74c5` |
+| [Runner config](references/japa/reference/runner_config.md) | `docs/references/japa/reference/runner_config.md` | `a020d4d71717` |
+| [Test context](references/japa/reference/test_context.md) | `docs/references/japa/reference/test_context.md` | `5bdce7978e1a` |
+| [Test class](references/japa/reference/test.md) | `docs/references/japa/reference/test.md` | `2b90e8ea3fa6` |
+| [Releases](references/japa/releases.md) | `docs/references/japa/releases.md` | `30b70101fe53` |
 | [Commands](references/lucid/guides/commands.md) | `docs/references/lucid/guides/commands.md` | `8337561c79c6` |
 | [Configuration](references/lucid/guides/configuration.md) | `docs/references/lucid/guides/configuration.md` | `f6f198dca249` |
 | [Connection manager](references/lucid/guides/connection_manager.md) | `docs/references/lucid/guides/connection_manager.md` | `54dcab864040` |
@@ -193,4 +222,4 @@
 | [Testing utilities](references/lucid/testing/introduction.md) | `docs/references/lucid/testing/introduction.md` | `174460ebadb0` |
 | [Model factories](references/lucid/testing/model_factories.md) | `docs/references/lucid/testing/model_factories.md` | `79419cada9b4` |
 | [Database seeders](references/lucid/testing/seeders.md) | `docs/references/lucid/testing/seeders.md` | `2b37b9055cc5` |
-| [Referências Técnicas](references/README.md) | `docs/references/README.md` | `0f25edcac0e2` |
+| [Referências Técnicas](references/README.md) | `docs/references/README.md` | `de2b0f7adf5e` |

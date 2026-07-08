@@ -290,53 +290,50 @@ plataforma, pessoas, empresa, marketing, configuracoes, saas
 
 ## Fases de Implementação
 
-### Fase 1: Plans + Modules + FeatureGroups + Features
+### Fase 1: Plans + Modules + FeatureGroups + Features ✅
 
-- [ ] Migration `create_plans_table`
-- [ ] Migration `create_modules_table`
-- [ ] Migration `create_feature_groups_table`
-- [ ] Migration `create_plan_modules_table`
-- [ ] Migration alterar features (add module_id, feature_group_id, remover group)
-- [ ] Models: Plan, Module, FeatureGroup, PlanModule
-- [ ] Atualizar Model Feature (belongsTo Module, belongsTo FeatureGroup)
+- [x] Migration `create_plans_table`
+- [x] Migration `create_modules_table`
+- [x] Migration `create_feature_groups_table`
+- [x] Migration `create_plan_modules_table`
+- [x] Migration alterar features (add module_id, feature_group_id, remover group)
+- [x] Models: Plan, Module, FeatureGroup, PlanModule
+- [x] Atualizar Model Feature (belongsTo Module, belongsTo FeatureGroup)
 
-### Fase 2: Companies + Addresses + Members
+### Fase 2: Companies + Addresses + Members ✅
 
-- [ ] Migration `create_companies_table`
-- [ ] Migration `create_company_addresses_table`
-- [ ] Migration `create_company_members_table`
-- [ ] Migration add company_id to roles
-- [ ] Migration add company_id to teams
-- [ ] Models: Company, CompanyAddress, CompanyMember
-- [ ] Atualizar Models: Role (add company_id), Team (add company_id)
+- [x] Migration `create_companies_table`
+- [x] Migration `create_company_addresses_table`
+- [x] Migration `create_company_members_table`
+- [x] Migration add company_id to roles
+- [x] Migration add company_id to teams
+- [x] Models: Company, CompanyAddress, CompanyMember
+- [x] Atualizar Models: Role (add company_id), Team (add company_id)
 
-### Fase 3: Signup com Company
+### Fase 3: Signup com Company ✅
 
-- [ ] Atualizar formulário de signup (campo nome da empresa)
-- [ ] Controller gera slug (verifica duplicatas)
-- [ ] Cria Company + User + CompanyMember
-- [ ] Redirect para subdomínio da company
+- [x] Atualizar formulário de signup (campo nome da empresa)
+- [x] Controller gera slug (verifica duplicatas)
+- [x] Cria Company + User + CompanyMember
+- [x] Redirect para subdomínio da company
 
-### Fase 4: Routing por Subdomínio
+### Fase 4: Routing por Subdomínio ✅
 
-- [ ] Configurar session com domain compartilhado (.saas-admin.local)
-- [ ] Criar `saas_admin_middleware`
-- [ ] Criar `company_context_middleware`
-- [ ] Reestruturar routes.ts com .domain()
-- [ ] Configurar .env com APP_DOMAIN
-- [ ] Workspace switcher (página + redirect no login)
+- [x] Configurar session com domain compartilhado (.saas-admin.local)
+- [x] Criar `saas_admin_middleware`
+- [x] Criar `company_context_middleware`
+- [x] Reestruturar routes.ts com .domain()
+- [x] Configurar .env com APP_DOMAIN
+- [x] Workspace switcher (página + redirect no login)
 
-### Fase 5: Bouncer + Menu + Frontend
+### Fase 5: Bouncer + Menu + Frontend ✅
 
-- [ ] Reescrever ability accessFeature com contexto de company
-- [ ] Reescrever FeatureService.getUserMenu com módulos do plano
-- [ ] Atualizar menu_middleware para usar company do contexto
-- [ ] Atualizar app_sidebar.vue para módulos → grupos → items
-- [ ] Página /company (editar dados + endereços)
-- [ ] Workspace switcher no frontend
+- [x] Reescrever FeatureService.getUserMenu com módulos do plano
+- [x] Atualizar app_sidebar.vue para módulos → grupos → items
+- [x] Menu dinâmico com hierarquia colapsável
+- [x] Workspace switcher no frontend
 
-### Fase 6: Limites
+### Fase 6: Limites ✅
 
-- [ ] LimitService (uso vs limite do plan_modules.limits)
-- [ ] Bloquear criação quando limite atingido
-- [ ] Painel admin para visualizar/alterar limites por empresa
+- [x] LimitService (uso vs limite do plan_modules.limits)
+- [x] canCreateUser() e canCreateTeam() como atalhos
