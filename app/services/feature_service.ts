@@ -66,6 +66,7 @@ export default class FeatureService {
       features = await Feature.query()
         .where('is_active', true)
         .where('is_menu_item', true)
+        .preload('module')
         .orderBy('position', 'asc')
     } else if (roleSlug === 'admin') {
       // Admin vê tudo exceto features do grupo SaaS restritas
@@ -74,6 +75,7 @@ export default class FeatureService {
         .where('is_active', true)
         .where('is_menu_item', true)
         .whereNotIn('slug', restrictedSlugs)
+        .preload('module')
         .orderBy('position', 'asc')
     } else {
       // Demais: apenas features com permissão
@@ -81,6 +83,12 @@ export default class FeatureService {
       features = userFeatures
         .filter((f) => f.isMenuItem && f.isActive)
         .sort((a, b) => a.position - b.position)
+      // Preload module para features já carregadas
+      for (const feature of features) {
+        if (!feature.$preloaded.module) {
+          await feature.load('module')
+        }
+      }
     }
 
     return this.groupFeatures(features)
@@ -95,13 +103,13 @@ export default class FeatureService {
   }
 
   /**
-   * Agrupa features por grupo para o menu.
+   * Agrupa features por módulo para o menu.
    */
   private groupFeatures(features: Feature[]): MenuGroup[] {
     const groups = new Map<string, MenuItem[]>()
 
     for (const feature of features) {
-      const groupName = feature.group || 'Geral'
+      const groupName = feature.module?.name || 'Geral'
       if (!groups.has(groupName)) {
         groups.set(groupName, [])
       }

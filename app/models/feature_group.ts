@@ -1,18 +1,15 @@
-import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
+import { BaseModel, belongsTo, column, hasMany } from '@adonisjs/lucid/orm'
 import { DateTime } from 'luxon'
-import type { BelongsTo } from '@adonisjs/lucid/types/relations'
+import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
 import Module from '#models/module'
-import FeatureGroup from '#models/feature_group'
+import Feature from '#models/feature'
 
-export default class Feature extends BaseModel {
+export default class FeatureGroup extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
 
   @column()
-  declare moduleId: number | null
-
-  @column()
-  declare featureGroupId: number | null
+  declare moduleId: number
 
   @column()
   declare slug: string
@@ -21,19 +18,10 @@ export default class Feature extends BaseModel {
   declare name: string
 
   @column()
-  declare description: string | null
-
-  @column()
   declare icon: string | null
 
   @column()
-  declare route: string
-
-  @column()
   declare position: number
-
-  @column()
-  declare isMenuItem: boolean
 
   @column()
   declare isActive: boolean
@@ -47,6 +35,6 @@ export default class Feature extends BaseModel {
   @belongsTo(() => Module)
   declare module: BelongsTo<typeof Module>
 
-  @belongsTo(() => FeatureGroup)
-  declare featureGroup: BelongsTo<typeof FeatureGroup>
+  @hasMany(() => Feature)
+  declare features: HasMany<typeof Feature>
 }

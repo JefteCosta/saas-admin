@@ -1,9 +1,13 @@
 import Feature from '#models/feature'
+import Module from '#models/module'
+import FeatureGroup from '#models/feature_group'
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class FeaturesController {
   async index({ inertia }: HttpContext) {
-    const features = await Feature.query().orderBy('position')
+    const features = await Feature.query().preload('module').preload('featureGroup').orderBy('position')
+    const modules = await Module.query().where('is_active', true).orderBy('position')
+    const featureGroups = await FeatureGroup.query().where('is_active', true).orderBy('position')
 
     return inertia.render('admin/features', {
       features: features.map((f) => ({
@@ -13,16 +17,21 @@ export default class FeaturesController {
         description: f.description,
         icon: f.icon,
         route: f.route,
-        group: f.group,
+        moduleName: f.module?.name || '—',
+        moduleId: f.moduleId,
+        featureGroupId: f.featureGroupId,
+        featureGroupName: f.featureGroup?.name || '—',
         position: f.position,
         isMenuItem: f.isMenuItem,
         isActive: f.isActive,
       })),
+      modules: modules.map((m) => ({ id: m.id, slug: m.slug, name: m.name })),
+      featureGroups: featureGroups.map((g) => ({ id: g.id, slug: g.slug, name: g.name, moduleId: g.moduleId })),
     })
   }
 
   async store({ request, response, session }: HttpContext) {
-    const data = request.only(['slug', 'name', 'description', 'icon', 'route', 'group', 'position', 'isMenuItem', 'isActive'])
+    const data = request.only(['slug', 'name', 'description', 'icon', 'route', 'moduleId', 'featureGroupId', 'position', 'isMenuItem', 'isActive'])
 
     await Feature.create({
       ...data,
@@ -37,7 +46,7 @@ export default class FeaturesController {
 
   async update({ params, request, response, session }: HttpContext) {
     const feature = await Feature.findOrFail(params.id)
-    const data = request.only(['name', 'description', 'icon', 'route', 'group', 'position', 'isMenuItem', 'isActive'])
+    const data = request.only(['name', 'description', 'icon', 'route', 'moduleId', 'featureGroupId', 'position', 'isMenuItem', 'isActive'])
 
     feature.merge(data)
     await feature.save()

@@ -1,0 +1,24 @@
+import { BaseSchema } from '@adonisjs/lucid/schema'
+
+export default class extends BaseSchema {
+  protected tableName = 'feature_groups'
+
+  async up() {
+    this.schema.createTable(this.tableName, (table) => {
+      table.increments('id').notNullable()
+      table.integer('module_id').unsigned().notNullable().references('id').inTable('modules').onDelete('CASCADE')
+      table.string('slug').notNullable().unique()
+      table.string('name').notNullable()
+      table.string('icon').nullable()
+      table.integer('position').defaultTo(0)
+      table.boolean('is_active').defaultTo(true)
+
+      table.timestamp('created_at').notNullable()
+      table.timestamp('updated_at').nullable()
+    })
+  }
+
+  async down() {
+    this.schema.dropTable(this.tableName)
+  }
+}

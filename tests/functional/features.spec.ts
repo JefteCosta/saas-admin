@@ -16,8 +16,8 @@ test.group('Features - Permissões por role', (group) => {
   }
 
   async function getOrCreateFeatures() {
-    const home = await Feature.firstOrCreate({ slug: 'home' }, { name: 'Home', icon: 'Home', route: '/', group: 'Plataforma', position: 0 })
-    const profile = await Feature.firstOrCreate({ slug: 'profile' }, { name: 'Perfil', icon: 'User', route: '/profile', group: 'Plataforma', position: 1 })
+    const home = await Feature.firstOrCreate({ slug: 'home' }, { name: 'Home', icon: 'Home', route: '/', position: 0 })
+    const profile = await Feature.firstOrCreate({ slug: 'profile' }, { name: 'Perfil', icon: 'User', route: '/profile', position: 1 })
     return { home, profile }
   }
 
@@ -118,8 +118,8 @@ test.group('Features - Team herda permissões', (group) => {
     const memberRole = await Role.firstOrCreate({ slug: 'member' }, { name: 'Membro' })
     const teamRole = await Role.firstOrCreate({ slug: 'team-role' }, { name: 'Team Role' })
 
-    const home = await Feature.firstOrCreate({ slug: 'home' }, { name: 'Home', icon: 'Home', route: '/', group: 'Plataforma', position: 0 })
-    const profile = await Feature.firstOrCreate({ slug: 'profile' }, { name: 'Perfil', icon: 'User', route: '/profile', group: 'Plataforma', position: 1 })
+    const home = await Feature.firstOrCreate({ slug: 'home' }, { name: 'Home', icon: 'Home', route: '/', position: 0 })
+    const profile = await Feature.firstOrCreate({ slug: 'profile' }, { name: 'Perfil', icon: 'User', route: '/profile', position: 1 })
 
     // Member role: apenas home
     await memberRole.related('features').sync([home.id])
@@ -148,8 +148,8 @@ test.group('Features - Team herda permissões', (group) => {
   test('member sem team não acessa feature que só existe no team', async ({ client, assert }) => {
     const memberRole = await Role.firstOrCreate({ slug: 'member' }, { name: 'Membro' })
 
-    const home = await Feature.firstOrCreate({ slug: 'home' }, { name: 'Home', icon: 'Home', route: '/', group: 'Plataforma', position: 0 })
-    await Feature.firstOrCreate({ slug: 'profile' }, { name: 'Perfil', icon: 'User', route: '/profile', group: 'Plataforma', position: 1 })
+    const home = await Feature.firstOrCreate({ slug: 'home' }, { name: 'Home', icon: 'Home', route: '/', position: 0 })
+    await Feature.firstOrCreate({ slug: 'profile' }, { name: 'Perfil', icon: 'User', route: '/profile', position: 1 })
 
     // Member role: apenas home (sem profile)
     await memberRole.related('features').sync([home.id])
