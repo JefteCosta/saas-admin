@@ -8,6 +8,7 @@ As referências desta pasta complementam a documentação autoral em `docs/`. El
 
 - `docs/references/adonisjs/`: documentação de referência do AdonisJS.
 - `docs/references/lucid/`: documentação de referência do Lucid.
+- `docs/references/japa/`: documentação de referência do Japa.
 
 ## Como usar
 
