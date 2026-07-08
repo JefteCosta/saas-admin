@@ -2,7 +2,6 @@ import type { HttpContext } from '@adonisjs/core/http'
 import type { NextFn } from '@adonisjs/core/types/http'
 import UserTransformer from '#transformers/user_transformer'
 import BaseInertiaMiddleware from '@adonisjs/inertia/inertia_middleware'
-import FeatureService from '#services/feature_service'
 
 export default class InertiaMiddleware extends BaseInertiaMiddleware {
   share(ctx: HttpContext) {
@@ -24,13 +23,6 @@ export default class InertiaMiddleware extends BaseInertiaMiddleware {
 
   async handle(ctx: HttpContext, next: NextFn) {
     await this.init(ctx)
-
-    // Resolve menu dinâmico após inicialização (auth disponível)
-    if (ctx.auth?.user) {
-      const service = new FeatureService()
-      const menu = await service.getUserMenu(ctx.auth.user)
-      ctx.inertia.share({ menu } as any)
-    }
 
     const output = await next()
     this.dispose(ctx)
