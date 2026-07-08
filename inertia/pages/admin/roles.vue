@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import { Head, router } from '@inertiajs/vue3'
+import { Head, router, useForm } from '@inertiajs/vue3'
 import { ref } from 'vue'
 import { Badge } from '~/components/ui/badge'
 import { Button } from '~/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card'
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '~/components/ui/dialog'
+import { Field, FieldLabel } from '~/components/ui/field'
+import { Input } from '~/components/ui/input'
 
 const props = defineProps<{
   roles: {
@@ -16,6 +19,25 @@ const props = defineProps<{
   features: { id: number; slug: string; name: string; group: string | null }[]
 }>()
 
+// Criar role
+const showCreate = ref(false)
+const createForm = useForm({
+  name: '',
+  slug: '',
+  description: '',
+})
+
+function createRole() {
+  createForm.post('/roles', {
+    preserveScroll: true,
+    onSuccess: () => {
+      showCreate.value = false
+      createForm.reset()
+    },
+  })
+}
+
+// Editar permissões
 const editingRole = ref<number | null>(null)
 const selectedFeatures = ref<number[]>([])
 
@@ -45,6 +67,12 @@ function saveFeatures(roleId: number) {
   })
 }
 
+function deleteRole(roleId: number) {
+  if (confirm('Tem certeza que deseja remover esta role?')) {
+    router.delete(`/roles/${roleId}`, { preserveScroll: true })
+  }
+}
+
 // Agrupar features por grupo
 const featureGroups = props.features.reduce((acc, f) => {
   const group = f.group || 'Geral'
@@ -58,7 +86,36 @@ const featureGroups = props.features.reduce((acc, f) => {
   <Head title="Papéis" />
 
   <div class="flex flex-col gap-6">
-    <h1 class="text-2xl font-semibold">Papéis e Permissões</h1>
+    <div class="flex items-center justify-between">
+      <h1 class="text-2xl font-semibold">Papéis e Permissões</h1>
+      <Dialog v-model:open="showCreate">
+        <DialogTrigger as-child>
+          <Button>Nova role</Button>
+        </DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Criar role</DialogTitle>
+          </DialogHeader>
+          <form class="flex flex-col gap-4" @submit.prevent="createRole">
+            <Field>
+              <FieldLabel>Nome</FieldLabel>
+              <Input v-model="createForm.name" placeholder="Marketing" />
+            </Field>
+            <Field>
+              <FieldLabel>Slug</FieldLabel>
+              <Input v-model="createForm.slug" placeholder="marketing" />
+            </Field>
+            <Field>
+              <FieldLabel>Descrição</FieldLabel>
+              <Input v-model="createForm.description" placeholder="Acesso ao módulo de marketing" />
+            </Field>
+            <DialogFooter>
+              <Button type="submit" :disabled="createForm.processing">Criar</Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
+    </div>
 
     <div class="grid gap-4">
       <Card v-for="role in roles" :key="role.id">
@@ -71,7 +128,7 @@ const featureGroups = props.features.reduce((acc, f) => {
               </CardTitle>
               <CardDescription>{{ role.description || 'Sem descrição' }}</CardDescription>
             </div>
-            <div v-if="role.slug !== 'owner'">
+            <div v-if="role.slug !== 'owner'" class="flex items-center gap-2">
               <Button
                 v-if="editingRole !== role.id"
                 variant="outline"
@@ -84,6 +141,14 @@ const featureGroups = props.features.reduce((acc, f) => {
                 <Button size="sm" @click="saveFeatures(role.id)">Salvar</Button>
                 <Button variant="ghost" size="sm" @click="cancelEdit">Cancelar</Button>
               </div>
+              <Button
+                v-if="!['owner', 'admin', 'member', 'viewer'].includes(role.slug)"
+                variant="ghost"
+                size="sm"
+                @click="deleteRole(role.id)"
+              >
+                Remover
+              </Button>
             </div>
             <Badge v-else>Acesso irrestrito</Badge>
           </div>

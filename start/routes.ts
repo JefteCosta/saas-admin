@@ -35,7 +35,9 @@ router
 
     // Roles
     router.get('roles', [controllers.Roles, 'index']).as('roles').use(middleware.feature({ slug: 'roles' }))
+    router.post('roles', [controllers.Roles, 'store']).use(middleware.feature({ slug: 'roles' }))
     router.patch('roles/:id/features', [controllers.Roles, 'updateFeatures']).use(middleware.feature({ slug: 'roles' }))
+    router.delete('roles/:id', [controllers.Roles, 'destroy']).use(middleware.feature({ slug: 'roles' }))
 
     // Teams
     router.get('teams', [controllers.Teams, 'index']).as('teams').use(middleware.feature({ slug: 'teams' }))

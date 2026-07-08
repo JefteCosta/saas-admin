@@ -19,11 +19,19 @@ export default class RolesController {
     })
   }
 
+  async store({ request, response, session }: HttpContext) {
+    const { name, slug, description } = request.only(['name', 'slug', 'description'])
+
+    await Role.create({ name, slug, description })
+
+    session.flash('success', `Role "${name}" criada com sucesso.`)
+    return response.redirect().back()
+  }
+
   async updateFeatures({ params, request, response, session }: HttpContext) {
     const role = await Role.findOrFail(params.id)
     const { featureIds } = request.only(['featureIds'])
 
-    // Não permite editar role owner (tem bypass)
     if (role.slug === 'owner') {
       session.flash('error', 'A role owner tem acesso irrestrito e não precisa de permissões.')
       return response.redirect().back()
@@ -32,6 +40,19 @@ export default class RolesController {
     await role.related('features').sync(featureIds || [])
 
     session.flash('success', `Permissões da role "${role.name}" atualizadas.`)
+    return response.redirect().back()
+  }
+
+  async destroy({ params, response, session }: HttpContext) {
+    const role = await Role.findOrFail(params.id)
+
+    if (['owner', 'admin'].includes(role.slug)) {
+      session.flash('error', 'Não é possível remover roles do sistema.')
+      return response.redirect().back()
+    }
+
+    await role.delete()
+    session.flash('success', 'Role removida.')
     return response.redirect().back()
   }
 }
