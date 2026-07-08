@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { LucideIcon } from '@lucide/vue'
-import { Link } from '@inertiajs/vue3'
+import { Link, usePage } from '@inertiajs/vue3'
+import { computed } from 'vue'
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -9,7 +10,7 @@ import {
   SidebarMenuItem,
 } from '~/components/ui/sidebar'
 
-defineProps<{
+const props = defineProps<{
   label: string
   items: {
     title: string
@@ -17,6 +18,9 @@ defineProps<{
     icon?: LucideIcon
   }[]
 }>()
+
+const page = usePage()
+const currentPath = computed(() => page.url)
 </script>
 
 <template>
@@ -24,7 +28,11 @@ defineProps<{
     <SidebarGroupLabel>{{ label }}</SidebarGroupLabel>
     <SidebarMenu>
       <SidebarMenuItem v-for="item in items" :key="item.title">
-        <SidebarMenuButton as-child :tooltip="item.title">
+        <SidebarMenuButton
+          as-child
+          :tooltip="item.title"
+          :is-active="currentPath === item.url"
+        >
           <Link :href="item.url">
             <component :is="item.icon" v-if="item.icon" />
             <span>{{ item.title }}</span>

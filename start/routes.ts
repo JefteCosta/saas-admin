@@ -25,34 +25,36 @@ router
   .group(() => {
     router.on('/').renderInertia('home', {}).as('home').use(middleware.feature({ slug: 'home' }))
 
+    // Profile
     router.get('profile', [controllers.Profile, 'show']).as('profile').use(middleware.feature({ slug: 'profile' }))
     router.patch('profile', [controllers.Profile, 'update']).use(middleware.feature({ slug: 'profile' }))
 
-    router
-      .get('users', ({ inertia }) => inertia.render('placeholder', { featureName: 'Usuários', featureDescription: 'Gerenciamento de usuários do sistema.' }))
-      .as('users')
-      .use(middleware.feature({ slug: 'users' }))
+    // Users
+    router.get('users', [controllers.Users, 'index']).as('users').use(middleware.feature({ slug: 'users' }))
+    router.patch('users/:id/role', [controllers.Users, 'updateRole']).use(middleware.feature({ slug: 'users' }))
 
-    router
-      .get('roles', ({ inertia }) => inertia.render('placeholder', { featureName: 'Papéis', featureDescription: 'Gerenciamento de roles e permissões.' }))
-      .as('roles')
-      .use(middleware.feature({ slug: 'roles' }))
+    // Roles
+    router.get('roles', [controllers.Roles, 'index']).as('roles').use(middleware.feature({ slug: 'roles' }))
+    router.patch('roles/:id/features', [controllers.Roles, 'updateFeatures']).use(middleware.feature({ slug: 'roles' }))
 
-    router
-      .get('teams', ({ inertia }) => inertia.render('placeholder', { featureName: 'Times', featureDescription: 'Gerenciamento de times e membros.' }))
-      .as('teams')
-      .use(middleware.feature({ slug: 'teams' }))
+    // Teams
+    router.get('teams', [controllers.Teams, 'index']).as('teams').use(middleware.feature({ slug: 'teams' }))
+    router.post('teams', [controllers.Teams, 'store']).use(middleware.feature({ slug: 'teams' }))
+    router.patch('teams/:id', [controllers.Teams, 'update']).use(middleware.feature({ slug: 'teams' }))
+    router.delete('teams/:id', [controllers.Teams, 'destroy']).use(middleware.feature({ slug: 'teams' }))
 
-    router
-      .get('features', ({ inertia }) => inertia.render('placeholder', { featureName: 'Features', featureDescription: 'Cadastro e edição de features do sistema (painel SaaS).' }))
-      .as('features')
-      .use(middleware.feature({ slug: 'features' }))
+    // Features (restrito a owner via ability)
+    router.get('features', [controllers.Features, 'index']).as('features').use(middleware.feature({ slug: 'features' }))
+    router.post('features', [controllers.Features, 'store']).use(middleware.feature({ slug: 'features.create' }))
+    router.patch('features/:id', [controllers.Features, 'update']).use(middleware.feature({ slug: 'features.edit' }))
 
+    // Settings (placeholder)
     router
       .get('settings', ({ inertia }) => inertia.render('placeholder', { featureName: 'Configurações', featureDescription: 'Configurações gerais do sistema.' }))
       .as('settings')
       .use(middleware.feature({ slug: 'settings' }))
 
+    // Logout
     router.post('logout', [controllers.Session, 'destroy'])
   })
   .use(middleware.auth())
