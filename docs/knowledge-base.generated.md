@@ -36,6 +36,7 @@
 | [shadcn-vue](guides/shadcn-vue.md) | `docs/guides/shadcn-vue.md` | `3c2ddcc79853` |
 | [Guia de Testes](guides/testing.md) | `docs/guides/testing.md` | `dfaa7b8979e6` |
 | [Backlog](planning/backlog.md) | `docs/planning/backlog.md` | `c05b45afa062` |
+| [Plano: Companies, Planos, Módulos e Subdomínios](planning/companies-modules-limits-plan.md) | `docs/planning/companies-modules-limits-plan.md` | `ff81ce6f2a02` |
 | [Decisões de Planejamento](planning/decisions.md) | `docs/planning/decisions.md` | `348535ea5d84` |
 | [Plano de Estrutura de Documentação Multiagente](planning/documentation-structure-plan.md) | `docs/planning/documentation-structure-plan.md` | `331d073d1abe` |
 | [Plano: Sistema de Features, Roles, Teams e Permissões](planning/features-roles-permissions-plan.md) | `docs/planning/features-roles-permissions-plan.md` | `cf62d8af9734` |
