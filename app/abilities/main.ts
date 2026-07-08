@@ -11,8 +11,8 @@ import FeatureService from '#services/feature_service'
  * 3. Outros → verifica permissões via FeatureService (role + teams)
  */
 export const accessFeature = Bouncer.ability(async (user: User, featureSlug: string) => {
-  // Garante que a role está carregada
-  if (!user.$preloaded.role && user.roleId) {
+  // Sempre carrega a role se o user tem roleId
+  if (user.roleId) {
     await user.load('role')
   }
 
