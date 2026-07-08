@@ -15,4 +15,20 @@ export interface ApiDefinition {
   profile: typeof routes['profile'] & {
     update: typeof routes['profile.update']
   }
+  users: typeof routes['users'] & {
+    updateRole: typeof routes['users.update_role']
+  }
+  roles: typeof routes['roles'] & {
+    updateFeatures: typeof routes['roles.update_features']
+  }
+  teams: typeof routes['teams'] & {
+    store: typeof routes['teams.store']
+    update: typeof routes['teams.update']
+    destroy: typeof routes['teams.destroy']
+  }
+  features: typeof routes['features'] & {
+    store: typeof routes['features.store']
+    update: typeof routes['features.update']
+  }
+  settings: typeof routes['settings']
 }

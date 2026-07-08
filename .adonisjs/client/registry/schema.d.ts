@@ -91,6 +91,150 @@ export interface Registry {
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/profile_controller').default['update']>>>
     }
   }
+  'users': {
+    methods: ["GET","HEAD"]
+    pattern: '/users'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/users_controller').default['index']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/users_controller').default['index']>>>
+    }
+  }
+  'users.update_role': {
+    methods: ["PATCH"]
+    pattern: '/users/:id/role'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/users_controller').default['updateRole']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/users_controller').default['updateRole']>>>
+    }
+  }
+  'roles': {
+    methods: ["GET","HEAD"]
+    pattern: '/roles'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/roles_controller').default['index']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/roles_controller').default['index']>>>
+    }
+  }
+  'roles.update_features': {
+    methods: ["PATCH"]
+    pattern: '/roles/:id/features'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/roles_controller').default['updateFeatures']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/roles_controller').default['updateFeatures']>>>
+    }
+  }
+  'teams': {
+    methods: ["GET","HEAD"]
+    pattern: '/teams'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/teams_controller').default['index']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/teams_controller').default['index']>>>
+    }
+  }
+  'teams.store': {
+    methods: ["POST"]
+    pattern: '/teams'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/teams_controller').default['store']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/teams_controller').default['store']>>>
+    }
+  }
+  'teams.update': {
+    methods: ["PATCH"]
+    pattern: '/teams/:id'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/teams_controller').default['update']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/teams_controller').default['update']>>>
+    }
+  }
+  'teams.destroy': {
+    methods: ["DELETE"]
+    pattern: '/teams/:id'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/teams_controller').default['destroy']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/teams_controller').default['destroy']>>>
+    }
+  }
+  'features': {
+    methods: ["GET","HEAD"]
+    pattern: '/features'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/features_controller').default['index']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/features_controller').default['index']>>>
+    }
+  }
+  'features.store': {
+    methods: ["POST"]
+    pattern: '/features'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/features_controller').default['store']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/features_controller').default['store']>>>
+    }
+  }
+  'features.update': {
+    methods: ["PATCH"]
+    pattern: '/features/:id'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/features_controller').default['update']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/features_controller').default['update']>>>
+    }
+  }
+  'settings': {
+    methods: ["GET","HEAD"]
+    pattern: '/settings'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: unknown
+      errorResponse: unknown
+    }
+  }
   'session.destroy': {
     methods: ["POST"]
     pattern: '/logout'
