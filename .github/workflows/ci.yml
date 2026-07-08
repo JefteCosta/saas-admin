@@ -1,0 +1,28 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: cp .env.example .env
+      - run: sed -i 's/^NODE_ENV=.*/NODE_ENV=test/' .env
+      - run: sed -i 's/^SESSION_DRIVER=.*/SESSION_DRIVER=memory/' .env
+      - run: node ace generate:key
+      - run: npx playwright install --with-deps chromium
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+        env:
+          NODE_ENV: test
+          SESSION_DRIVER: memory
