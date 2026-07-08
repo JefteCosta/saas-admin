@@ -9,4 +9,5 @@ export const signupValidator = vine.create({
   password: password().confirmed({
     confirmationField: 'passwordConfirmation',
   }),
+  companyName: vine.string().minLength(2).maxLength(100),
 })
