@@ -36,11 +36,7 @@ export default class SessionController {
 
     await auth.use('web').login(user)
 
-    // Resolver para onde redirecionar
-    // Se o request veio de localhost (dev), usar paths locais
-    const requestHost = request.host() || ''
-    const isLocalRequest = requestHost.includes('localhost') || requestHost.includes('127.0.0.1')
-    const redirectUrl = await this.resolveRedirect(user, isLocalRequest)
+    const redirectUrl = await this.resolveRedirect(user)
     return response.redirect(redirectUrl)
   }
 
@@ -93,9 +89,9 @@ export default class SessionController {
   /**
    * Resolve para onde redirecionar o usuário após login.
    */
-  private async resolveRedirect(user: User, isLocalRequest: boolean = false): Promise<string> {
-    // Modo localhost: redirect simples sem subdomínios
-    if (!this.useSubdomains || isLocalRequest) {
+  private async resolveRedirect(user: User): Promise<string> {
+    // Em modo teste (NODE_ENV=test sem subdomínios), redirect simples
+    if (!this.useSubdomains) {
       return '/'
     }
 
