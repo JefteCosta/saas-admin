@@ -7,7 +7,7 @@ import FeatureGroup from '#models/feature_group'
 import Company from '#models/company'
 import testUtils from '@adonisjs/core/services/test_utils'
 
-test.group('Browser - Navegação e Menu', (group) => {
+test.group('Browser - CRUD Teams', (group) => {
   group.each.setup(() => testUtils.db().truncate())
 
   async function seedAndLogin(page: any) {
@@ -15,54 +15,46 @@ test.group('Browser - Navegação e Menu', (group) => {
     const mod = await Module.create({ slug: 'plataforma', name: 'Plataforma', icon: 'LayoutDashboard', position: 0 })
     const grp = await FeatureGroup.create({ slug: 'geral', name: 'Geral', moduleId: mod.id, position: 0 })
     await Feature.create({ slug: 'home', name: 'Home', icon: 'Home', route: '/', moduleId: mod.id, featureGroupId: grp.id, position: 0, isMenuItem: true, isActive: true })
-    await Feature.create({ slug: 'profile', name: 'Perfil', icon: 'User', route: '/profile', moduleId: mod.id, featureGroupId: grp.id, position: 1, isMenuItem: true, isActive: true })
 
-    const user = await User.create({
-      email: 'nav-test@test.com',
-      password: 'secret123',
-      fullName: 'Nav Test',
-      roleId: role.id,
-    })
+    const pessoasMod = await Module.create({ slug: 'pessoas', name: 'Pessoas', icon: 'Users', position: 10 })
+    const timesGrp = await FeatureGroup.create({ slug: 'times', name: 'Times', moduleId: pessoasMod.id, position: 1 })
+    await Feature.create({ slug: 'teams.list', name: 'Times', icon: 'UsersRound', route: '/teams', moduleId: pessoasMod.id, featureGroupId: timesGrp.id, position: 0, isMenuItem: true, isActive: true })
 
-    // Criar company SaaS Admin para o redirect funcionar
+    const user = await User.create({ email: 'teams@test.com', password: 'secret123', fullName: 'Teams Test', roleId: role.id })
     const company = await Company.create({ slug: 'admin', name: 'SaaS Admin', ownerUserId: user.id })
     await company.related('members').attach({ [user.id]: { role_id: null } })
 
-    // Login via formulário
-    await page.getByLabel('Email').fill('nav-test@test.com')
+    await page.getByLabel('Email').fill('teams@test.com')
     await page.getByLabel('Senha').fill('secret123')
     await page.locator('button[type="submit"]').click()
-
-    // Aguardar o fluxo completo: login → token → callback → home
-    // O auth/callback cria sessão e redireciona para /
     await page.waitForURL((url: URL) => url.pathname === '/' && !url.search.includes('token'), { timeout: 10000 })
   }
 
-  test('sidebar mostra módulo e itens após login', async ({ visit }) => {
+  test('exibe mensagem quando não há times', async ({ visit }) => {
     const page = await visit('/login')
     await seedAndLogin(page)
 
-    await page.assertTextContains('body', 'Plataforma')
-    await page.assertTextContains('body', 'Home')
-    await page.assertTextContains('body', 'Perfil')
+    await page.goto(page.url().replace(/\/$/, '') + '/teams')
+    await page.waitForTimeout(1000)
+
+    await page.assertTextContains('body', 'Nenhum time')
   })
 
-  test('dark mode toggle funciona', async ({ visit, assert }) => {
+  test('criar novo time', async ({ visit }) => {
     const page = await visit('/login')
     await seedAndLogin(page)
 
-    await page.getByLabel(/modo escuro/i).click()
+    await page.goto(page.url().replace(/\/$/, '') + '/teams')
+    await page.waitForTimeout(1000)
 
-    const isDark = await page.locator('html').evaluate((el) => el.classList.contains('dark'))
-    assert.isTrue(isDark)
-  })
+    await page.getByRole('button', { name: 'Novo time' }).click()
+    await page.waitForTimeout(500)
 
-  test('navegar para perfil pelo sidebar', async ({ visit, assert }) => {
-    const page = await visit('/login')
-    await seedAndLogin(page)
+    await page.getByLabel('Nome').fill('Desenvolvimento')
+    await page.getByLabel('Slug').fill('dev')
+    await page.getByRole('button', { name: 'Criar' }).click()
 
-    await page.getByText('Perfil').first().click()
-    await page.waitForURL('**/profile')
-    assert.include(page.url(), '/profile')
+    await page.waitForTimeout(2000)
+    await page.assertTextContains('body', 'Desenvolvimento')
   })
 })

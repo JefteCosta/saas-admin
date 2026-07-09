@@ -21,64 +21,46 @@ test.group('Browser - Autenticação', (group) => {
 
   test('faz login com credenciais válidas', async ({ visit, assert }) => {
     const role = await seedBasicData()
-    await User.create({
-      email: 'login-test@test.com',
-      password: 'secret123',
-      fullName: 'Login Test',
-      roleId: role.id,
-    })
+    const user = await User.create({ email: 'login@test.com', password: 'secret123', fullName: 'Login Test', roleId: role.id })
+    const company = await Company.create({ slug: 'admin', name: 'SaaS Admin', ownerUserId: user.id })
+    await company.related('members').attach({ [user.id]: { role_id: null } })
 
     const page = await visit('/login')
-
-    await page.getByLabel('Email').fill('login-test@test.com')
+    await page.getByLabel('Email').fill('login@test.com')
     await page.getByLabel('Senha').fill('secret123')
     await page.locator('button[type="submit"]').click()
 
-    await page.waitForURL((url) => !url.pathname.includes('/login'))
+    // Aguardar fluxo token → callback → home
+    await page.waitForURL((url: URL) => url.pathname === '/' && !url.search.includes('token'), { timeout: 10000 })
     assert.notInclude(page.url(), '/login')
   })
 
   test('mostra erro com credenciais inválidas', async ({ visit }) => {
     const page = await visit('/login')
-
     await page.getByLabel('Email').fill('naoexiste@test.com')
     await page.getByLabel('Senha').fill('senhaerrada')
     await page.locator('button[type="submit"]').click()
-
-    // Deve permanecer na página de login (erro 400 renderiza mesma página)
     await page.waitForTimeout(1000)
     await page.assertPath('/login')
   })
 
   test('faz logout com sucesso', async ({ visit, assert }) => {
     const role = await seedBasicData()
-    const user = await User.create({
-      email: 'logout-test@test.com',
-      password: 'secret123',
-      fullName: 'Logout Test',
-      roleId: role.id,
-    })
-
-    // Criar company para o user (senão redireciona para /workspace)
+    const user = await User.create({ email: 'logout@test.com', password: 'secret123', fullName: 'Logout Test', roleId: role.id })
     const company = await Company.create({ slug: 'admin', name: 'SaaS Admin', ownerUserId: user.id })
     await company.related('members').attach({ [user.id]: { role_id: null } })
 
-    // Login via formulário
     const page = await visit('/login')
-    await page.getByLabel('Email').fill('logout-test@test.com')
+    await page.getByLabel('Email').fill('logout@test.com')
     await page.getByLabel('Senha').fill('secret123')
     await page.locator('button[type="submit"]').click()
-    await page.waitForURL((url: URL) => !url.pathname.includes('/login'))
+    await page.waitForURL((url: URL) => url.pathname === '/' && !url.search.includes('token'), { timeout: 10000 })
 
-    // Navegar para home
-    await page.goto(page.url().replace(/\/workspace.*/, '/'))
-    await page.waitForLoadState('networkidle')
-
-    // Abrir dropdown do usuário no header e clicar Sair
+    // Abrir dropdown do usuário e clicar Sair
     await page.locator('header button').last().click()
     await page.getByText('Sair').click()
 
-    await page.waitForURL((url: URL) => url.pathname.includes('/login'), { timeout: 5000 })
+    await page.waitForURL((url: URL) => url.pathname.includes('/login'), { timeout: 10000 })
     assert.include(page.url(), '/login')
   })
 
@@ -88,15 +70,14 @@ test.group('Browser - Autenticação', (group) => {
 
     const page = await visit('/signup')
     await page.waitForTimeout(1000)
-
     await page.locator('#fullName').fill('Novo Usuário')
     await page.locator('#companyName').fill('Empresa Teste')
-    await page.locator('#email').fill('signup-test@test.com')
+    await page.locator('#email').fill('signup@test.com')
     await page.locator('#password').fill('secret1234')
     await page.locator('#passwordConfirmation').fill('secret1234')
     await page.locator('button[type="submit"]').click()
 
-    await page.waitForTimeout(3000)
+    await page.waitForTimeout(5000)
     assert.notInclude(page.url(), '/signup')
   })
 })
