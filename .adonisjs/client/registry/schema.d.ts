@@ -55,6 +55,30 @@ export interface Registry {
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/session_controller').default['store']>>>
     }
   }
+  'auth.callback': {
+    methods: ["GET","HEAD"]
+    pattern: '/auth/callback'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: ExtractQueryForGet<InferInput<(typeof import('#services/auth_token_service').default)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/session_controller').default['callback']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/session_controller').default['callback']>>> | { status: 422; response: { errors: SimpleError[] } }
+    }
+  }
+  'logout.global': {
+    methods: ["GET","HEAD"]
+    pattern: '/logout'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/session_controller').default['destroyGlobal']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/session_controller').default['destroyGlobal']>>>
+    }
+  }
   'home': {
     methods: ["GET","HEAD"]
     pattern: '/'
@@ -65,6 +89,18 @@ export interface Registry {
       query: {}
       response: unknown
       errorResponse: unknown
+    }
+  }
+  'workspace': {
+    methods: ["GET","HEAD"]
+    pattern: '/workspace'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/session_controller').default['workspace']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/session_controller').default['workspace']>>>
     }
   }
   'profile': {
@@ -103,7 +139,7 @@ export interface Registry {
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/users_controller').default['index']>>>
     }
   }
-  'users.update_role': {
+  'users.updateRole': {
     methods: ["PATCH"]
     pattern: '/users/:id/role'
     types: {
@@ -139,7 +175,7 @@ export interface Registry {
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/roles_controller').default['store']>>>
     }
   }
-  'roles.update_features': {
+  'roles.updateFeatures': {
     methods: ["PATCH"]
     pattern: '/roles/:id/features'
     types: {
@@ -259,7 +295,7 @@ export interface Registry {
       errorResponse: unknown
     }
   }
-  'session.destroy': {
+  'logout': {
     methods: ["POST"]
     pattern: '/logout'
     types: {

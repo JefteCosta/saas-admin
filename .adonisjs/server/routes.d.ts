@@ -8,14 +8,17 @@ export type ScannedRoutes = {
     'new_account.store': { paramsTuple?: []; params?: {} }
     'session.create': { paramsTuple?: []; params?: {} }
     'session.store': { paramsTuple?: []; params?: {} }
+    'auth.callback': { paramsTuple?: []; params?: {} }
+    'logout.global': { paramsTuple?: []; params?: {} }
     'home': { paramsTuple?: []; params?: {} }
+    'workspace': { paramsTuple?: []; params?: {} }
     'profile': { paramsTuple?: []; params?: {} }
     'profile.update': { paramsTuple?: []; params?: {} }
     'users': { paramsTuple?: []; params?: {} }
-    'users.update_role': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'users.updateRole': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'roles': { paramsTuple?: []; params?: {} }
     'roles.store': { paramsTuple?: []; params?: {} }
-    'roles.update_features': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'roles.updateFeatures': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'roles.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'teams': { paramsTuple?: []; params?: {} }
     'teams.store': { paramsTuple?: []; params?: {} }
@@ -25,12 +28,15 @@ export type ScannedRoutes = {
     'features.store': { paramsTuple?: []; params?: {} }
     'features.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'settings': { paramsTuple?: []; params?: {} }
-    'session.destroy': { paramsTuple?: []; params?: {} }
+    'logout': { paramsTuple?: []; params?: {} }
   }
   GET: {
     'new_account.create': { paramsTuple?: []; params?: {} }
     'session.create': { paramsTuple?: []; params?: {} }
+    'auth.callback': { paramsTuple?: []; params?: {} }
+    'logout.global': { paramsTuple?: []; params?: {} }
     'home': { paramsTuple?: []; params?: {} }
+    'workspace': { paramsTuple?: []; params?: {} }
     'profile': { paramsTuple?: []; params?: {} }
     'users': { paramsTuple?: []; params?: {} }
     'roles': { paramsTuple?: []; params?: {} }
@@ -41,7 +47,10 @@ export type ScannedRoutes = {
   HEAD: {
     'new_account.create': { paramsTuple?: []; params?: {} }
     'session.create': { paramsTuple?: []; params?: {} }
+    'auth.callback': { paramsTuple?: []; params?: {} }
+    'logout.global': { paramsTuple?: []; params?: {} }
     'home': { paramsTuple?: []; params?: {} }
+    'workspace': { paramsTuple?: []; params?: {} }
     'profile': { paramsTuple?: []; params?: {} }
     'users': { paramsTuple?: []; params?: {} }
     'roles': { paramsTuple?: []; params?: {} }
@@ -55,12 +64,12 @@ export type ScannedRoutes = {
     'roles.store': { paramsTuple?: []; params?: {} }
     'teams.store': { paramsTuple?: []; params?: {} }
     'features.store': { paramsTuple?: []; params?: {} }
-    'session.destroy': { paramsTuple?: []; params?: {} }
+    'logout': { paramsTuple?: []; params?: {} }
   }
   PATCH: {
     'profile.update': { paramsTuple?: []; params?: {} }
-    'users.update_role': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'roles.update_features': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'users.updateRole': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'roles.updateFeatures': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'teams.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'features.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }

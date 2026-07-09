@@ -30,11 +30,29 @@ const routes = {
     tokens: [{"old":"/login","type":0,"val":"login","end":""}],
     types: placeholder as Registry['session.store']['types'],
   },
+  'auth.callback': {
+    methods: ["GET","HEAD"],
+    pattern: '/auth/callback',
+    tokens: [{"old":"/auth/callback","type":0,"val":"auth","end":""},{"old":"/auth/callback","type":0,"val":"callback","end":""}],
+    types: placeholder as Registry['auth.callback']['types'],
+  },
+  'logout.global': {
+    methods: ["GET","HEAD"],
+    pattern: '/logout',
+    tokens: [{"old":"/logout","type":0,"val":"logout","end":""}],
+    types: placeholder as Registry['logout.global']['types'],
+  },
   'home': {
     methods: ["GET","HEAD"],
     pattern: '/',
     tokens: [{"old":"/","type":0,"val":"/","end":""}],
     types: placeholder as Registry['home']['types'],
+  },
+  'workspace': {
+    methods: ["GET","HEAD"],
+    pattern: '/workspace',
+    tokens: [{"old":"/workspace","type":0,"val":"workspace","end":""}],
+    types: placeholder as Registry['workspace']['types'],
   },
   'profile': {
     methods: ["GET","HEAD"],
@@ -54,11 +72,11 @@ const routes = {
     tokens: [{"old":"/users","type":0,"val":"users","end":""}],
     types: placeholder as Registry['users']['types'],
   },
-  'users.update_role': {
+  'users.updateRole': {
     methods: ["PATCH"],
     pattern: '/users/:id/role',
     tokens: [{"old":"/users/:id/role","type":0,"val":"users","end":""},{"old":"/users/:id/role","type":1,"val":"id","end":""},{"old":"/users/:id/role","type":0,"val":"role","end":""}],
-    types: placeholder as Registry['users.update_role']['types'],
+    types: placeholder as Registry['users.updateRole']['types'],
   },
   'roles': {
     methods: ["GET","HEAD"],
@@ -72,11 +90,11 @@ const routes = {
     tokens: [{"old":"/roles","type":0,"val":"roles","end":""}],
     types: placeholder as Registry['roles.store']['types'],
   },
-  'roles.update_features': {
+  'roles.updateFeatures': {
     methods: ["PATCH"],
     pattern: '/roles/:id/features',
     tokens: [{"old":"/roles/:id/features","type":0,"val":"roles","end":""},{"old":"/roles/:id/features","type":1,"val":"id","end":""},{"old":"/roles/:id/features","type":0,"val":"features","end":""}],
-    types: placeholder as Registry['roles.update_features']['types'],
+    types: placeholder as Registry['roles.updateFeatures']['types'],
   },
   'roles.destroy': {
     methods: ["DELETE"],
@@ -132,11 +150,11 @@ const routes = {
     tokens: [{"old":"/settings","type":0,"val":"settings","end":""}],
     types: placeholder as Registry['settings']['types'],
   },
-  'session.destroy': {
+  'logout': {
     methods: ["POST"],
     pattern: '/logout',
     tokens: [{"old":"/logout","type":0,"val":"logout","end":""}],
-    types: placeholder as Registry['session.destroy']['types'],
+    types: placeholder as Registry['logout']['types'],
   },
 } as const satisfies Record<string, AdonisEndpoint>
 

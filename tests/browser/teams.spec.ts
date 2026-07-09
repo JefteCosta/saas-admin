@@ -50,9 +50,16 @@ test.group('Browser - CRUD Teams', (group) => {
     await page.getByRole('button', { name: 'Novo time' }).click()
     await page.waitForTimeout(500)
 
-    await page.getByPlaceholder('Nome do time').fill('Desenvolvimento')
-    await page.getByPlaceholder('slug-do-time').fill('dev')
-    await page.getByRole('button', { name: 'Criar' }).click()
+    // Preencher dentro do dialog
+    const dialog = page.locator('[role="dialog"]')
+    await dialog.getByPlaceholder('Nome do time').fill('Desenvolvimento')
+    await dialog.getByPlaceholder('slug-do-time').fill('dev')
+
+    // Selecionar role (clicar no select trigger e depois no item)
+    await dialog.getByRole('combobox').click()
+    await page.getByRole('option', { name: 'Owner' }).click()
+
+    await dialog.getByRole('button', { name: 'Criar' }).click()
 
     await page.waitForTimeout(2000)
     await page.assertTextContains('body', 'Desenvolvimento')
