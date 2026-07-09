@@ -115,6 +115,22 @@ export default class SessionController {
 
   async destroy({ auth, response }: HttpContext) {
     await auth.use('web').logout()
+
+    // Redirecionar para o domínio principal para destruir sessão lá também
+    if (this.useSubdomains) {
+      const port = this.port !== 80 && this.port !== 443 ? `:${this.port}` : ''
+      return response.redirect(`http://${this.domain}${port}/logout`)
+    }
+
+    return response.redirect('/login')
+  }
+
+  /**
+   * Logout global — destrói sessão no domínio principal e redireciona para login.
+   * Chamado pelo logout dos subdomínios.
+   */
+  async destroyGlobal({ auth, response }: HttpContext) {
+    await auth.use('web').logout()
     return response.redirect('/login')
   }
 

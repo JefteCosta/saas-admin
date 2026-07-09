@@ -33,6 +33,9 @@ publicRoutes.use(middleware.guest())
 // Auth callback — funciona sem autenticação e sem guest middleware
 router.get('auth/callback', [controllers.Session, 'callback']).as('auth.callback')
 
+// Logout global — destrói sessão no domínio principal
+router.get('logout', [controllers.Session, 'destroyGlobal']).as('logout.global')
+
 /*
 |--------------------------------------------------------------------------
 | Rotas autenticadas
