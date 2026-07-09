@@ -50,8 +50,8 @@ test.group('Browser - CRUD Teams', (group) => {
     await page.getByRole('button', { name: 'Novo time' }).click()
     await page.waitForTimeout(500)
 
-    await page.getByLabel('Nome').fill('Desenvolvimento')
-    await page.getByLabel('Slug').fill('dev')
+    await page.getByPlaceholder('Nome do time').fill('Desenvolvimento')
+    await page.getByPlaceholder('slug-do-time').fill('dev')
     await page.getByRole('button', { name: 'Criar' }).click()
 
     await page.waitForTimeout(2000)

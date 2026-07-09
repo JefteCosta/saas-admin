@@ -50,9 +50,9 @@ test.group('Browser - CRUD Roles', (group) => {
     await page.getByRole('button', { name: 'Nova role' }).click()
     await page.waitForTimeout(500)
 
-    await page.getByLabel('Nome').fill('Marketing')
-    await page.getByLabel('Slug').fill('marketing')
-    await page.getByLabel('Descrição').fill('Equipe de marketing')
+    await page.getByPlaceholder('Marketing').fill('Marketing')
+    await page.getByPlaceholder('marketing').fill('marketing')
+    await page.getByPlaceholder('Acesso ao módulo de marketing').fill('Equipe de marketing')
     await page.getByRole('button', { name: 'Criar' }).click()
 
     await page.waitForTimeout(2000)

@@ -45,8 +45,8 @@ test.group('Browser - Perfil', (group) => {
     await page.getByText('Perfil').first().click()
     await page.waitForURL('**/profile')
 
-    await page.getByLabel('Nome completo').clear()
-    await page.getByLabel('Nome completo').fill('Nome Alterado')
+    await page.getByPlaceholder('Seu nome').clear()
+    await page.getByPlaceholder('Seu nome').fill('Nome Alterado')
     await page.getByRole('button', { name: 'Salvar' }).click()
 
     await page.waitForTimeout(1000)

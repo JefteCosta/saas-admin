@@ -78,6 +78,12 @@ test.group('Browser - Autenticação', (group) => {
     await page.locator('button[type="submit"]').click()
 
     await page.waitForTimeout(5000)
-    assert.notInclude(page.url(), '/signup')
+    // Verificar que o user e company foram criados no banco
+    const user = await User.findBy('email', 'signup@test.com')
+    assert.isNotNull(user)
+    const Company = (await import('#models/company')).default
+    const company = await Company.findBy('owner_user_id', user!.id)
+    assert.isNotNull(company)
+    assert.equal(company!.name, 'Empresa Teste')
   })
 })
