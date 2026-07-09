@@ -53,8 +53,11 @@ const sessionConfig = defineConfig({
     /**
      * Domain for cookie sharing between subdomains.
      * Prefixed with dot to share across all subdomains.
+     * Not set for localhost (browser doesn't support subdomain cookies on localhost).
      */
-    domain: `.${env.get('APP_DOMAIN', 'localhost')}`,
+    domain: env.get('APP_DOMAIN', 'localhost') !== 'localhost'
+      ? `.${env.get('APP_DOMAIN', 'localhost')}`
+      : undefined,
   },
 
   /**

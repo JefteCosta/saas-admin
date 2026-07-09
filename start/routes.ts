@@ -27,7 +27,7 @@ const publicRoutes = router.group(() => {
   router.get('login', [controllers.Session, 'create'])
   router.post('login', [controllers.Session, 'store'])
 })
-if (useSubdomains) publicRoutes.domain(domain)
+// Rotas públicas funcionam em qualquer domínio (sem .domain())
 publicRoutes.use(middleware.guest())
 
 /*
@@ -119,4 +119,19 @@ if (useSubdomains) {
       router.post('logout', [controllers.Session, 'destroy']).as('logout')
     })
     .use(middleware.auth())
+}
+
+/*
+|--------------------------------------------------------------------------
+| Rota fallback: / redireciona para workspace (funciona em qualquer host)
+| Só registrada quando useSubdomains=true (pois no modo localhost o bloco else já tem /)
+|--------------------------------------------------------------------------
+*/
+if (useSubdomains) {
+  router.get('/', async ({ auth, response }) => {
+    if (!auth.user) return response.redirect('/login')
+    return response.redirect('/workspace')
+  }).as('root.fallback')
+
+  router.get('/workspace', [controllers.Session, 'workspace']).as('workspace.fallback').use(middleware.auth())
 }

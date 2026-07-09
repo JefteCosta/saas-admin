@@ -58,7 +58,7 @@ test.group('Browser - Navegação e Menu', (group) => {
 
     await page.getByLabel(/modo escuro/i).click()
 
-    const isDark = await page.locator('html').evaluate((el: Element) => el.classList.contains('dark'))
+    const isDark = await page.locator('html').evaluate((el) => el.classList.contains('dark'))
     assert.isTrue(isDark)
   })
 

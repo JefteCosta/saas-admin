@@ -87,7 +87,7 @@ test.group('Browser - Autenticação', (group) => {
     await Plan.create({ slug: 'starter', name: 'Starter', price: 100 })
 
     const page = await visit('/signup')
-    await page.waitForSelector('#fullName')
+    await page.waitForTimeout(1000)
 
     await page.locator('#fullName').fill('Novo Usuário')
     await page.locator('#companyName').fill('Empresa Teste')
@@ -96,7 +96,7 @@ test.group('Browser - Autenticação', (group) => {
     await page.locator('#passwordConfirmation').fill('secret1234')
     await page.locator('button[type="submit"]').click()
 
-    await page.waitForURL((url) => !url.pathname.includes('/signup'), { timeout: 10000 })
+    await page.waitForTimeout(3000)
     assert.notInclude(page.url(), '/signup')
   })
 })

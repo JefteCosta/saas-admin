@@ -12,7 +12,16 @@ export default class SessionController {
     return env.get('PORT', 3333)
   }
 
+  private get useSubdomains() {
+    return this.domain !== 'localhost'
+  }
+
   private buildUrl(subdomain: string, path: string = '/') {
+    if (!this.useSubdomains) {
+      // Modo localhost — usar paths em vez de subdomínios
+      if (subdomain === 'admin') return `/admin${path}`
+      return `/t/${subdomain}${path}`
+    }
     const port = this.port !== 80 && this.port !== 443 ? `:${this.port}` : ''
     return `http://${subdomain}.${this.domain}${port}${path}`
   }
@@ -28,7 +37,10 @@ export default class SessionController {
     await auth.use('web').login(user)
 
     // Resolver para onde redirecionar
-    const redirectUrl = await this.resolveRedirect(user)
+    // Se o request veio de localhost (dev), usar paths locais
+    const requestHost = request.host() || ''
+    const isLocalRequest = requestHost.includes('localhost') || requestHost.includes('127.0.0.1')
+    const redirectUrl = await this.resolveRedirect(user, isLocalRequest)
     return response.redirect(redirectUrl)
   }
 
@@ -71,6 +83,9 @@ export default class SessionController {
 
   async destroy({ auth, response }: HttpContext) {
     await auth.use('web').logout()
+    if (!this.useSubdomains) {
+      return response.redirect('/login')
+    }
     const port = this.port !== 80 && this.port !== 443 ? `:${this.port}` : ''
     return response.redirect(`http://${this.domain}${port}/login`)
   }
@@ -78,7 +93,12 @@ export default class SessionController {
   /**
    * Resolve para onde redirecionar o usuário após login.
    */
-  private async resolveRedirect(user: User): Promise<string> {
+  private async resolveRedirect(user: User, isLocalRequest: boolean = false): Promise<string> {
+    // Modo localhost: redirect simples sem subdomínios
+    if (!this.useSubdomains || isLocalRequest) {
+      return '/'
+    }
+
     // Verificar se pertence à company SaaS Admin
     const saasCompany = await Company.findBy('slug', 'admin')
     if (saasCompany) {
@@ -100,12 +120,10 @@ export default class SessionController {
     }
 
     if (allCompanies.length > 1) {
-      // Múltiplas companies → workspace switcher
       const port = this.port !== 80 && this.port !== 443 ? `:${this.port}` : ''
       return `http://${this.domain}${port}/workspace`
     }
 
-    // Sem company — não deveria acontecer após signup
     const port = this.port !== 80 && this.port !== 443 ? `:${this.port}` : ''
     return `http://${this.domain}${port}/workspace`
   }
