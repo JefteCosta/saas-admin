@@ -4,6 +4,7 @@ import Role from '#models/role'
 import Feature from '#models/feature'
 import Module from '#models/module'
 import FeatureGroup from '#models/feature_group'
+import Company from '#models/company'
 import Plan from '#models/plan'
 import testUtils from '@adonisjs/core/services/test_utils'
 
@@ -51,12 +52,16 @@ test.group('Browser - Autenticação', (group) => {
 
   test('faz logout com sucesso', async ({ visit, assert }) => {
     const role = await seedBasicData()
-    await User.create({
+    const user = await User.create({
       email: 'logout-test@test.com',
       password: 'secret123',
       fullName: 'Logout Test',
       roleId: role.id,
     })
+
+    // Criar company para o user (senão redireciona para /workspace)
+    const company = await Company.create({ slug: 'admin', name: 'SaaS Admin', ownerUserId: user.id })
+    await company.related('members').attach({ [user.id]: { role_id: null } })
 
     // Login via formulário
     const page = await visit('/login')
@@ -65,9 +70,12 @@ test.group('Browser - Autenticação', (group) => {
     await page.locator('button[type="submit"]').click()
     await page.waitForURL((url: URL) => !url.pathname.includes('/login'))
 
-    // Agora está na home — clicar no dropdown do usuário no header
+    // Navegar para home
+    await page.goto(page.url().replace(/\/workspace.*/, '/'))
+    await page.waitForLoadState('networkidle')
+
+    // Abrir dropdown do usuário no header e clicar Sair
     await page.locator('header button').last().click()
-    // Clicar em "Sair" no menu
     await page.getByText('Sair').click()
 
     await page.waitForURL((url: URL) => url.pathname.includes('/login'), { timeout: 5000 })
