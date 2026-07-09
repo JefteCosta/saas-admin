@@ -51,11 +51,9 @@ const sessionConfig = defineConfig({
     sameSite: 'lax',
 
     /**
-     * Domain for cookie sharing between subdomains.
-     * Prefixed with dot to share across all subdomains.
-     * Dev: use lvh.me (resolves to 127.0.0.1, supports subdomain cookies)
+     * No domain set — each subdomain manages its own session.
+     * Cross-domain auth is handled via auth tokens (GET /auth/callback?token=xxx).
      */
-    domain: `.${env.get('APP_DOMAIN', 'localhost')}`,
   },
 
   /**

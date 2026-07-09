@@ -14,7 +14,7 @@ import router from '@adonisjs/core/services/router'
 import env from '#start/env'
 
 const domain = env.get('APP_DOMAIN', 'localhost')
-const useSubdomains = process.env.NODE_ENV !== 'test'
+const useSubdomains = domain !== 'localhost'
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +29,9 @@ const publicRoutes = router.group(() => {
 })
 // Rotas públicas funcionam em qualquer domínio (sem .domain())
 publicRoutes.use(middleware.guest())
+
+// Auth callback — funciona sem autenticação e sem guest middleware
+router.get('auth/callback', [controllers.Session, 'callback']).as('auth.callback')
 
 /*
 |--------------------------------------------------------------------------

@@ -1,5 +1,6 @@
 import User from '#models/user'
 import Company from '#models/company'
+import AuthTokenService from '#services/auth_token_service'
 import type { HttpContext } from '@adonisjs/core/http'
 import env from '#start/env'
 
@@ -18,7 +19,6 @@ export default class SessionController {
 
   private buildUrl(subdomain: string, path: string = '/') {
     if (!this.useSubdomains) {
-      // Modo localhost — usar paths em vez de subdomínios
       if (subdomain === 'admin') return `/admin${path}`
       return `/t/${subdomain}${path}`
     }
@@ -36,22 +36,52 @@ export default class SessionController {
 
     await auth.use('web').login(user)
 
-    const redirectUrl = await this.resolveRedirect(user)
+    // Resolver destino
+    const destinationUrl = await this.resolveRedirect(user)
 
-    // Para redirects cross-origin (subdomínio diferente), usar Inertia location
-    // que força um full page reload no browser
-    if (redirectUrl.startsWith('http')) {
+    // Se o destino é cross-origin (URL absoluta), usar token
+    if (destinationUrl.startsWith('http')) {
+      const callbackUrl = `${destinationUrl.replace(/\/$/, '')}/auth/callback`
+      const token = await AuthTokenService.generate(user, callbackUrl)
+      const redirectUrl = `${callbackUrl}?token=${token}`
+
+      // Inertia: usar X-Inertia-Location para full page redirect
       response.header('X-Inertia-Location', redirectUrl)
       return response.status(409).send('')
     }
 
-    return response.redirect(redirectUrl)
+    // Redirect local (mesmo domínio)
+    return response.redirect(destinationUrl)
+  }
+
+  /**
+   * Auth callback — valida token e cria sessão local no subdomínio.
+   * Rota: GET /auth/callback?token=xxx
+   */
+  async callback({ request, auth, response }: HttpContext) {
+    const token = request.input('token')
+
+    if (!token) {
+      return response.redirect('/login')
+    }
+
+    const user = await AuthTokenService.validate(token)
+
+    if (!user) {
+      // Token inválido, expirado ou já usado
+      return response.redirect('/login')
+    }
+
+    // Criar sessão local neste subdomínio
+    await auth.use('web').login(user)
+
+    // Redirecionar para home do subdomínio
+    return response.redirect('/')
   }
 
   async workspace({ auth, inertia }: HttpContext) {
     const user = auth.user!
 
-    // Buscar companies do user
     await user.load('companies')
     const companies = user.companies.map((c) => ({
       id: c.id,
@@ -59,14 +89,12 @@ export default class SessionController {
       slug: c.slug,
     }))
 
-    // Se tem uma company, verificar se é a SaaS Admin
     const saasCompany = await Company.findBy('slug', 'admin')
     const isInSaas = saasCompany
       ? await saasCompany.related('members').query().where('user_id', user.id).first()
         || saasCompany.ownerUserId === user.id
       : false
 
-    // Buscar companies onde é owner
     const ownedCompanies = await Company.query().where('owner_user_id', user.id)
 
     const allCompanies = [
@@ -87,18 +115,10 @@ export default class SessionController {
 
   async destroy({ auth, response }: HttpContext) {
     await auth.use('web').logout()
-    if (!this.useSubdomains) {
-      return response.redirect('/login')
-    }
-    const port = this.port !== 80 && this.port !== 443 ? `:${this.port}` : ''
-    return response.redirect(`http://${this.domain}${port}/login`)
+    return response.redirect('/login')
   }
 
-  /**
-   * Resolve para onde redirecionar o usuário após login.
-   */
   private async resolveRedirect(user: User): Promise<string> {
-    // Em modo teste (NODE_ENV=test sem subdomínios), redirect simples
     if (!this.useSubdomains) {
       return '/'
     }
@@ -112,7 +132,7 @@ export default class SessionController {
       }
     }
 
-    // Buscar companies do user (owner ou member)
+    // Buscar companies do user
     const ownedCompanies = await Company.query().where('owner_user_id', user.id).where('slug', '!=', 'admin')
     await user.load('companies')
     const memberCompanies = user.companies.filter((c) => c.slug !== 'admin')
@@ -121,11 +141,6 @@ export default class SessionController {
 
     if (allCompanies.length === 1) {
       return this.buildUrl(allCompanies[0].slug)
-    }
-
-    if (allCompanies.length > 1) {
-      const port = this.port !== 80 && this.port !== 443 ? `:${this.port}` : ''
-      return `http://${this.domain}${port}/workspace`
     }
 
     const port = this.port !== 80 && this.port !== 443 ? `:${this.port}` : ''
