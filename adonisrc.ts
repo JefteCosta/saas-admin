@@ -32,6 +32,9 @@ export default defineConfig({
     () => import('@adonisjs/session/commands'),
     () => import('@adonisjs/inertia/commands'),
     () => import('@adonisjs/bouncer/commands'),
+    () => import('@adonisjs/queue/commands'),
+    () => import('@adonisjs/mail/commands'),
+    () => import('@adonisjs/cache/commands')
   ],
 
   /*
@@ -62,6 +65,12 @@ export default defineConfig({
     () => import('@adonisjs/auth/auth_provider'),
     () => import('#providers/api_provider'),
     () => import('@adonisjs/bouncer/bouncer_provider'),
+    () => import('@adonisjs/queue/queue_provider'),
+    () => import('@adonisjs/mail/mail_provider'),
+    () => import('@adonisjs/lock/lock_provider'),
+    () => import('@adonisjs/drive/drive_provider'),
+    () => import('@adonisjs/cache/cache_provider'),
+    () => import('@adonisjs/redis/redis_provider')
   ],
 
   /*
@@ -76,6 +85,10 @@ export default defineConfig({
     () => import('#start/routes'),
     () => import('#start/kernel'),
     () => import('#start/validator'),
+    {
+      file: () => import('#start/scheduler'),
+      environment: ['web'],
+    }
   ],
 
   /*

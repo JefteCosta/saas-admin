@@ -5,6 +5,7 @@
 
 export const controllers = {
   Features: () => import('#controllers/features_controller'),
+  HealthChecks: () => import('#controllers/health_checks_controller'),
   NewAccount: () => import('#controllers/new_account_controller'),
   Profile: () => import('#controllers/profile_controller'),
   Roles: () => import('#controllers/roles_controller'),
