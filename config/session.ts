@@ -53,6 +53,7 @@ const sessionConfig = defineConfig({
     /**
      * Domain for cookie sharing between subdomains.
      * Prefixed with dot to share across all subdomains.
+     * Dev: use lvh.me (resolves to 127.0.0.1, supports subdomain cookies)
      */
     domain: `.${env.get('APP_DOMAIN', 'localhost')}`,
   },
