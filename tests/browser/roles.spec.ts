@@ -52,9 +52,9 @@ test.group('Browser - CRUD Roles', (group) => {
 
     // Preencher dentro do dialog
     const dialog = page.locator('[role="dialog"]')
-    await dialog.getByPlaceholder('Marketing').fill('Marketing')
-    await dialog.getByPlaceholder('marketing').fill('marketing')
-    await dialog.getByPlaceholder('Acesso ao módulo de marketing').fill('Equipe de marketing')
+    await dialog.locator('input[placeholder="Marketing"]').fill('Marketing')
+    await dialog.locator('input[placeholder="marketing"]').fill('marketing')
+    await dialog.locator('input[placeholder="Acesso ao módulo de marketing"]').fill('Equipe de marketing')
     await dialog.getByRole('button', { name: 'Criar' }).click()
 
     await page.waitForTimeout(2000)
