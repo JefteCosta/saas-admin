@@ -13,7 +13,7 @@ export default class SessionController {
   }
 
   private get useSubdomains() {
-    return this.domain !== 'localhost'
+    return process.env.NODE_ENV !== 'test'
   }
 
   private buildUrl(subdomain: string, path: string = '/') {

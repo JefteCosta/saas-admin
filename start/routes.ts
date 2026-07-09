@@ -14,7 +14,7 @@ import router from '@adonisjs/core/services/router'
 import env from '#start/env'
 
 const domain = env.get('APP_DOMAIN', 'localhost')
-const useSubdomains = domain !== 'localhost'
+const useSubdomains = process.env.NODE_ENV !== 'test'
 
 /*
 |--------------------------------------------------------------------------
