@@ -119,7 +119,9 @@ export default class SessionController {
     // Redirecionar para o domínio principal para destruir sessão lá também
     if (this.useSubdomains) {
       const port = this.port !== 80 && this.port !== 443 ? `:${this.port}` : ''
-      return response.redirect(`http://${this.domain}${port}/logout`)
+      const logoutUrl = `http://${this.domain}${port}/logout`
+      response.header('X-Inertia-Location', logoutUrl)
+      return response.status(409).send('')
     }
 
     return response.redirect('/login')
