@@ -37,6 +37,14 @@ export default class SessionController {
     await auth.use('web').login(user)
 
     const redirectUrl = await this.resolveRedirect(user)
+
+    // Para redirects cross-origin (subdomínio diferente), usar Inertia location
+    // que força um full page reload no browser
+    if (redirectUrl.startsWith('http')) {
+      response.header('X-Inertia-Location', redirectUrl)
+      return response.status(409).send('')
+    }
+
     return response.redirect(redirectUrl)
   }
 
