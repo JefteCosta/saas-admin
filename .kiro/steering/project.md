@@ -16,5 +16,6 @@
     6. `docs/guides/releases.md`
     7. `docs/references/README.md`
     8. `docs/knowledge-base.generated.md`
+    9. `docs/graph/index.generated.md`
 
       Consulte `docs/knowledge-base.generated.md` para descobrir documentos disponíveis.

@@ -13,9 +13,9 @@ test.group('Browser - Autenticação', (group) => {
 
   async function seedBasicData() {
     const role = await Role.firstOrCreate({ slug: 'owner' }, { name: 'Owner' })
-    const mod = await Module.create({ slug: 'plataforma', name: 'Plataforma', icon: 'LayoutDashboard', position: 0 })
-    const grp = await FeatureGroup.create({ slug: 'geral', name: 'Geral', moduleId: mod.id, position: 0 })
-    await Feature.create({ slug: 'home', name: 'Home', icon: 'Home', route: '/', moduleId: mod.id, featureGroupId: grp.id, position: 0 })
+    const mod = await Module.firstOrCreate({ slug: 'plataforma' }, { name: 'Plataforma', icon: 'LayoutDashboard', position: 0 })
+    const grp = await FeatureGroup.firstOrCreate({ slug: 'geral' }, { name: 'Geral', moduleId: mod.id, position: 0 })
+    await Feature.firstOrCreate({ slug: 'home' }, { name: 'Home', icon: 'Home', route: '/', moduleId: mod.id, featureGroupId: grp.id, position: 0 })
     return role
   }
 

@@ -28,6 +28,15 @@
 | [Arquitetura de Banco de Dados](architecture/database.md) | `docs/architecture/database.md` | `96550698f07a` |
 | [Arquitetura Frontend](architecture/frontend.md) | `docs/architecture/frontend.md` | `a5502859f13b` |
 | [Visão Geral da Arquitetura](architecture/overview.md) | `docs/architecture/overview.md` | `c606a1b9c06b` |
+| [Auth Flow — Fluxo de Autenticação](graph/auth-flow.generated.md) | `docs/graph/auth-flow.generated.md` | `cd237e2d5db6` |
+| [Controllers — Diagrama de Classes](graph/controllers.generated.md) | `docs/graph/controllers.generated.md` | `db85ca18285e` |
+| [Frontend — Mapa de Componentes](graph/frontend.generated.md) | `docs/graph/frontend.generated.md` | `bfcf85596c14` |
+| [Graph — Documentação Visual do Projeto](graph/index.generated.md) | `docs/graph/index.generated.md` | `d4d913ecdb06` |
+| [Models — Diagrama ER](graph/models.generated.md) | `docs/graph/models.generated.md` | `8d91d5af20f2` |
+| [Permissions — Mapa de Permissões](graph/permissions.generated.md) | `docs/graph/permissions.generated.md` | `55c0d0a33682` |
+| [Routes — Mapa de Rotas](graph/routes.generated.md) | `docs/graph/routes.generated.md` | `56065d5e9cd1` |
+| [Services & Middleware — Grafo de Dependências](graph/services.generated.md) | `docs/graph/services.generated.md` | `c5a588dd7966` |
+| [Tests — Mapa de Testes](graph/tests.generated.md) | `docs/graph/tests.generated.md` | `049b772a7c27` |
 | [Guia de Commits](guides/commits.md) | `docs/guides/commits.md` | `9c9cecf9f8de` |
 | [Guia de Deploy](guides/deployment.md) | `docs/guides/deployment.md` | `e925bc51beaf` |
 | [Guia de Desenvolvimento](guides/development.md) | `docs/guides/development.md` | `983f29a067f1` |
@@ -41,6 +50,8 @@
 | [Decisões de Planejamento](planning/decisions.md) | `docs/planning/decisions.md` | `348535ea5d84` |
 | [Plano de Estrutura de Documentação Multiagente](planning/documentation-structure-plan.md) | `docs/planning/documentation-structure-plan.md` | `331d073d1abe` |
 | [Plano: Sistema de Features, Roles, Teams e Permissões](planning/features-roles-permissions-plan.md) | `docs/planning/features-roles-permissions-plan.md` | `cf62d8af9734` |
+| [Plano: Avisos de Erro/Sucesso na UI](planning/flash-messages-alerts-plan.md) | `docs/planning/flash-messages-alerts-plan.md` | `c5159b4d35b6` |
+| [Plano: Comando `graph:generate`](planning/graph-rag-plan.md) | `docs/planning/graph-rag-plan.md` | `49e55e908b5c` |
 | [Implementação da Base de Conhecimento](planning/knowledge-base-sync-implementation.md) | `docs/planning/knowledge-base-sync-implementation.md` | `51717616da26` |
 | [Plano de Sincronização da Base de Conhecimento](planning/knowledge-base-sync-plan.md) | `docs/planning/knowledge-base-sync-plan.md` | `cd2e12020a86` |
 | [Metas do Produto](planning/product-goals.md) | `docs/planning/product-goals.md` | `3bc9d71ba7db` |

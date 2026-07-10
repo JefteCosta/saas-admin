@@ -114,7 +114,8 @@ export default class SyncKnowledgeBase extends BaseCommand {
     5. \`docs/guides/commits.md\`
     6. \`docs/guides/releases.md\`
     7. \`docs/references/README.md\`
-    8. \`docs/knowledge-base.generated.md\``
+    8. \`docs/knowledge-base.generated.md\`
+    9. \`docs/graph/index.generated.md\``
 
     const sharedAgentInstructions = (
       agentName: string,
