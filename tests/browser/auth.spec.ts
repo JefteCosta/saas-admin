@@ -12,7 +12,7 @@ test.group('Browser - Autenticação', (group) => {
   group.each.setup(() => testUtils.db().truncate())
 
   async function seedBasicData() {
-    const role = await Role.create({ slug: 'owner', name: 'Owner' })
+    const role = await Role.firstOrCreate({ slug: 'owner' }, { name: 'Owner' })
     const mod = await Module.create({ slug: 'plataforma', name: 'Plataforma', icon: 'LayoutDashboard', position: 0 })
     const grp = await FeatureGroup.create({ slug: 'geral', name: 'Geral', moduleId: mod.id, position: 0 })
     await Feature.create({ slug: 'home', name: 'Home', icon: 'Home', route: '/', moduleId: mod.id, featureGroupId: grp.id, position: 0 })
@@ -42,6 +42,7 @@ test.group('Browser - Autenticação', (group) => {
     await page.locator('button[type="submit"]').click()
     await page.waitForTimeout(1000)
     await page.assertPath('/login')
+    await page.assertTextContains('[role="alert"]', 'E-mail ou senha incorretos')
   })
 
   test('faz logout com sucesso', async ({ visit, assert }) => {

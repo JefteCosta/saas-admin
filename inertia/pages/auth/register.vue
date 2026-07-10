@@ -16,9 +16,12 @@ import {
   FieldSeparator,
 } from '~/components/ui/field'
 import { Input } from '~/components/ui/input'
+import { Alert, AlertDescription } from '~/components/ui/alert'
 import { Form } from '@adonisjs/inertia/vue'
-import { Head } from '@inertiajs/vue3'
-import { ref } from 'vue'
+import { Head, usePage } from '@inertiajs/vue3'
+import { ref, computed } from 'vue'
+import { CircleAlert } from '@lucide/vue'
+
 const props = defineProps<{
   class?: HTMLAttributes['class']
 }>()
@@ -29,6 +32,9 @@ const form = ref({
   passwordConfirmation: '',
   companyName: '',
 })
+
+const page = usePage()
+const flash = computed(() => (page.props.flash as { error?: string; success?: string }) || {})
 </script>
 
 <template>
@@ -42,6 +48,10 @@ const form = ref({
     route="new_account.store"
   >
     <FieldGroup>
+      <Alert v-if="flash.error || Object.keys(errors).length > 0" variant="destructive" class="mb-2">
+        <CircleAlert class="size-4" />
+        <AlertDescription>{{ flash.error || 'Corrija os erros abaixo' }}</AlertDescription>
+      </Alert>
       <div class="flex flex-col items-center gap-1 text-center">
         <h1 class="text-2xl font-bold">Crie sua Conta</h1>
         <p class="text-muted-foreground text-sm text-balance">
@@ -56,7 +66,7 @@ const form = ref({
           name="fullName"
           :data-invalid="errors.fullName ? 'true' : undefined"
         />
-        <div v-if="errors.fullName">{{ errors.fullName }}</div>
+        <div v-if="errors.fullName" class="text-destructive text-sm font-medium">{{ errors.fullName }}</div>
       </Field>
       <Field>
         <FieldLabel for="companyName">Nome da Empresa</FieldLabel>
@@ -68,7 +78,7 @@ const form = ref({
           v-model="form.companyName"
           :data-invalid="errors.companyName ? 'true' : undefined"
         />
-        <div v-if="errors.companyName">{{ errors.companyName }}</div>
+        <div v-if="errors.companyName" class="text-destructive text-sm font-medium">{{ errors.companyName }}</div>
         <FieldDescription>
           O nome da sua empresa. Você poderá editar os dados completos depois.
         </FieldDescription>
@@ -83,7 +93,7 @@ const form = ref({
           v-model="form.email"
           :data-invalid="errors.email ? 'true' : undefined"
         />
-        <div v-if="errors.email">{{ errors.email }}</div>
+        <div v-if="errors.email" class="text-destructive text-sm font-medium">{{ errors.email }}</div>
         <FieldDescription>
           Usaremos este e-mail para entrar em contato com você. Não compartilharemos seu e-mail com
           mais ninguém.
@@ -99,7 +109,7 @@ const form = ref({
           v-model="form.password"
           :data-invalid="errors.password ? 'true' : undefined"
         />
-        <div v-if="errors.password">{{ errors.password }}</div>
+        <div v-if="errors.password" class="text-destructive text-sm font-medium">{{ errors.password }}</div>
         <FieldDescription> Deve ter pelo menos 8 caracteres.</FieldDescription>
       </Field>
       <Field>
@@ -112,7 +122,7 @@ const form = ref({
           v-model="form.passwordConfirmation"
           :data-invalid="errors.passwordConfirmation ? 'true' : undefined"
         />
-        <div v-if="errors.passwordConfirmation">{{ errors.passwordConfirmation }}</div>
+        <div v-if="errors.passwordConfirmation" class="text-destructive text-sm font-medium">{{ errors.passwordConfirmation }}</div>
         <FieldDescription>Por favor, confirme sua senha.</FieldDescription>
       </Field>
       <Field>

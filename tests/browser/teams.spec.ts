@@ -63,5 +63,7 @@ test.group('Browser - CRUD Teams', (group) => {
 
     await page.waitForTimeout(2000)
     await page.assertTextContains('body', 'Desenvolvimento')
+    // Verificar toast de sucesso
+    await page.assertTextContains('body', 'criado com sucesso')
   })
 })

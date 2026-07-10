@@ -59,5 +59,7 @@ test.group('Browser - CRUD Roles', (group) => {
 
     await page.waitForTimeout(2000)
     await page.assertTextContains('body', 'Marketing')
+    // Verificar toast de sucesso
+    await page.assertTextContains('body', 'criada com sucesso')
   })
 })

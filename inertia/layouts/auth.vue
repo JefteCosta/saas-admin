@@ -14,6 +14,7 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from '~/components/ui/empty'
+import { Toaster } from 'vue-sonner'
 </script>
 
 <template>
@@ -50,4 +51,5 @@ import {
       </Empty>
     </div>
   </div>
+  <Toaster position="top-right" :duration="4000" rich-colors />
 </template>
