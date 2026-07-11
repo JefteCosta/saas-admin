@@ -16,6 +16,12 @@ Consulte este documento antes de alterar páginas Inertia, layouts, componentes 
 | `default` | Páginas autenticadas (sidebar + header) |
 | `auth` | Telas de login/signup (centralizado) |
 
+Atualizações recentes relevantes:
+
+- `default` agora inclui `site_footer.vue` global nas páginas autenticadas.
+- `auth` agora possui toggle de tema integrado (light/dark) no topo do painel.
+- Ambos os layouts foram ajustados para tokens semânticos do shadcn-vue.
+
 ## Páginas
 
 | Página | Rota | Descrição |
@@ -24,6 +30,8 @@ Consulte este documento antes de alterar páginas Inertia, layouts, componentes 
 | `profile.vue` | `/profile` | Perfil do usuário com edição de nome |
 | `auth/login.vue` | `/login` | Login |
 | `auth/register.vue` | `/signup` | Signup |
+
+Para visão completa do fluxo de telas e conferência de coerência entre menu e rotas, consulte `docs/architecture/screen-map.md`.
 
 ## Componentes principais
 
