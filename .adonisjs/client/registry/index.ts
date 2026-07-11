@@ -72,6 +72,30 @@ const routes = {
     tokens: [{"old":"/profile","type":0,"val":"profile","end":""}],
     types: placeholder as Registry['profile.update']['types'],
   },
+  'company': {
+    methods: ["GET","HEAD"],
+    pattern: '/company',
+    tokens: [{"old":"/company","type":0,"val":"company","end":""}],
+    types: placeholder as Registry['company']['types'],
+  },
+  'company.edit': {
+    methods: ["GET","HEAD"],
+    pattern: '/company/edit',
+    tokens: [{"old":"/company/edit","type":0,"val":"company","end":""},{"old":"/company/edit","type":0,"val":"edit","end":""}],
+    types: placeholder as Registry['company.edit']['types'],
+  },
+  'company.addresses.list': {
+    methods: ["GET","HEAD"],
+    pattern: '/company/addresses',
+    tokens: [{"old":"/company/addresses","type":0,"val":"company","end":""},{"old":"/company/addresses","type":0,"val":"addresses","end":""}],
+    types: placeholder as Registry['company.addresses.list']['types'],
+  },
+  'company.addresses.create': {
+    methods: ["GET","HEAD"],
+    pattern: '/company/addresses/create',
+    tokens: [{"old":"/company/addresses/create","type":0,"val":"company","end":""},{"old":"/company/addresses/create","type":0,"val":"addresses","end":""},{"old":"/company/addresses/create","type":0,"val":"create","end":""}],
+    types: placeholder as Registry['company.addresses.create']['types'],
+  },
   'users': {
     methods: ["GET","HEAD"],
     pattern: '/users',
@@ -131,6 +155,18 @@ const routes = {
     pattern: '/teams/:id',
     tokens: [{"old":"/teams/:id","type":0,"val":"teams","end":""},{"old":"/teams/:id","type":1,"val":"id","end":""}],
     types: placeholder as Registry['teams.destroy']['types'],
+  },
+  'campaigns': {
+    methods: ["GET","HEAD"],
+    pattern: '/campaigns',
+    tokens: [{"old":"/campaigns","type":0,"val":"campaigns","end":""}],
+    types: placeholder as Registry['campaigns']['types'],
+  },
+  'campaigns.create': {
+    methods: ["GET","HEAD"],
+    pattern: '/campaigns/create',
+    tokens: [{"old":"/campaigns/create","type":0,"val":"campaigns","end":""},{"old":"/campaigns/create","type":0,"val":"create","end":""}],
+    types: placeholder as Registry['campaigns.create']['types'],
   },
   'features': {
     methods: ["GET","HEAD"],

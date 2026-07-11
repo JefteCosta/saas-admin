@@ -139,6 +139,54 @@ export interface Registry {
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/profile_controller').default['update']>>>
     }
   }
+  'company': {
+    methods: ["GET","HEAD"]
+    pattern: '/company'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: unknown
+      errorResponse: unknown
+    }
+  }
+  'company.edit': {
+    methods: ["GET","HEAD"]
+    pattern: '/company/edit'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: unknown
+      errorResponse: unknown
+    }
+  }
+  'company.addresses.list': {
+    methods: ["GET","HEAD"]
+    pattern: '/company/addresses'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: unknown
+      errorResponse: unknown
+    }
+  }
+  'company.addresses.create': {
+    methods: ["GET","HEAD"]
+    pattern: '/company/addresses/create'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: unknown
+      errorResponse: unknown
+    }
+  }
   'users': {
     methods: ["GET","HEAD"]
     pattern: '/users'
@@ -257,6 +305,30 @@ export interface Registry {
       query: {}
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/teams_controller').default['destroy']>>>
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/teams_controller').default['destroy']>>>
+    }
+  }
+  'campaigns': {
+    methods: ["GET","HEAD"]
+    pattern: '/campaigns'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: unknown
+      errorResponse: unknown
+    }
+  }
+  'campaigns.create': {
+    methods: ["GET","HEAD"]
+    pattern: '/campaigns/create'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: unknown
+      errorResponse: unknown
     }
   }
   'features': {

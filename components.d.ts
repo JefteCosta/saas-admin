@@ -11,6 +11,9 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    Alert: typeof import('./inertia/components/ui/alert/Alert.vue')['default']
+    AlertDescription: typeof import('./inertia/components/ui/alert/AlertDescription.vue')['default']
+    AlertTitle: typeof import('./inertia/components/ui/alert/AlertTitle.vue')['default']
     App_sidebar: typeof import('./inertia/components/app_sidebar.vue')['default']
     Avatar: typeof import('./inertia/components/ui/avatar/Avatar.vue')['default']
     AvatarBadge: typeof import('./inertia/components/ui/avatar/AvatarBadge.vue')['default']
@@ -127,8 +130,8 @@ declare module 'vue' {
     SidebarRail: typeof import('./inertia/components/ui/sidebar/SidebarRail.vue')['default']
     SidebarSeparator: typeof import('./inertia/components/ui/sidebar/SidebarSeparator.vue')['default']
     SidebarTrigger: typeof import('./inertia/components/ui/sidebar/SidebarTrigger.vue')['default']
+    Site_footer: typeof import('./inertia/components/site_footer.vue')['default']
     Site_header: typeof import('./inertia/components/site_header.vue')['default']
-    SiteHeader: typeof import('./inertia/components/site_header.vue')['default']
     Skeleton: typeof import('./inertia/components/ui/skeleton/Skeleton.vue')['default']
     Table: typeof import('./inertia/components/ui/table/Table.vue')['default']
     TableBody: typeof import('./inertia/components/ui/table/TableBody.vue')['default']

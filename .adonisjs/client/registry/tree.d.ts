@@ -26,6 +26,13 @@ export interface ApiDefinition {
   profile: typeof routes['profile'] & {
     update: typeof routes['profile.update']
   }
+  company: typeof routes['company'] & {
+    edit: typeof routes['company.edit']
+    addresses: {
+      list: typeof routes['company.addresses.list']
+      create: typeof routes['company.addresses.create']
+    }
+  }
   users: typeof routes['users'] & {
     updateRole: typeof routes['users.updateRole']
   }
@@ -38,6 +45,9 @@ export interface ApiDefinition {
     store: typeof routes['teams.store']
     update: typeof routes['teams.update']
     destroy: typeof routes['teams.destroy']
+  }
+  campaigns: typeof routes['campaigns'] & {
+    create: typeof routes['campaigns.create']
   }
   features: typeof routes['features'] & {
     store: typeof routes['features.store']

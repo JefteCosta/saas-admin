@@ -15,6 +15,10 @@ export type ScannedRoutes = {
     'workspace': { paramsTuple?: []; params?: {} }
     'profile': { paramsTuple?: []; params?: {} }
     'profile.update': { paramsTuple?: []; params?: {} }
+    'company': { paramsTuple?: []; params?: {} }
+    'company.edit': { paramsTuple?: []; params?: {} }
+    'company.addresses.list': { paramsTuple?: []; params?: {} }
+    'company.addresses.create': { paramsTuple?: []; params?: {} }
     'users': { paramsTuple?: []; params?: {} }
     'users.updateRole': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'roles': { paramsTuple?: []; params?: {} }
@@ -25,6 +29,8 @@ export type ScannedRoutes = {
     'teams.store': { paramsTuple?: []; params?: {} }
     'teams.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'teams.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'campaigns': { paramsTuple?: []; params?: {} }
+    'campaigns.create': { paramsTuple?: []; params?: {} }
     'features': { paramsTuple?: []; params?: {} }
     'features.store': { paramsTuple?: []; params?: {} }
     'features.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
@@ -40,9 +46,15 @@ export type ScannedRoutes = {
     'home': { paramsTuple?: []; params?: {} }
     'workspace': { paramsTuple?: []; params?: {} }
     'profile': { paramsTuple?: []; params?: {} }
+    'company': { paramsTuple?: []; params?: {} }
+    'company.edit': { paramsTuple?: []; params?: {} }
+    'company.addresses.list': { paramsTuple?: []; params?: {} }
+    'company.addresses.create': { paramsTuple?: []; params?: {} }
     'users': { paramsTuple?: []; params?: {} }
     'roles': { paramsTuple?: []; params?: {} }
     'teams': { paramsTuple?: []; params?: {} }
+    'campaigns': { paramsTuple?: []; params?: {} }
+    'campaigns.create': { paramsTuple?: []; params?: {} }
     'features': { paramsTuple?: []; params?: {} }
     'settings': { paramsTuple?: []; params?: {} }
   }
@@ -55,9 +67,15 @@ export type ScannedRoutes = {
     'home': { paramsTuple?: []; params?: {} }
     'workspace': { paramsTuple?: []; params?: {} }
     'profile': { paramsTuple?: []; params?: {} }
+    'company': { paramsTuple?: []; params?: {} }
+    'company.edit': { paramsTuple?: []; params?: {} }
+    'company.addresses.list': { paramsTuple?: []; params?: {} }
+    'company.addresses.create': { paramsTuple?: []; params?: {} }
     'users': { paramsTuple?: []; params?: {} }
     'roles': { paramsTuple?: []; params?: {} }
     'teams': { paramsTuple?: []; params?: {} }
+    'campaigns': { paramsTuple?: []; params?: {} }
+    'campaigns.create': { paramsTuple?: []; params?: {} }
     'features': { paramsTuple?: []; params?: {} }
     'settings': { paramsTuple?: []; params?: {} }
   }

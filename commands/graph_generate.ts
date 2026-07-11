@@ -1,11 +1,12 @@
 import { BaseCommand } from '@adonisjs/core/ace'
 import type { CommandOptions } from '@adonisjs/core/types/ace'
 import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs'
-import { dirname, join, relative } from 'node:path'
+import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
-const HEADER = '> Arquivo gerado automaticamente por `node ace graph:generate`. Não edite manualmente.\n'
+const HEADER =
+  '> Arquivo gerado automaticamente por `node ace graph:generate`. Não edite manualmente.\n'
 
 // --- Helpers ---
 
@@ -148,7 +149,8 @@ function scanRoutes(): RouteInfo[] {
   const routes: RouteInfo[] = []
 
   // Extrair rotas com controller
-  const routeRegex = /router\.(get|post|patch|delete|put)\(\s*'([^']+)'\s*,\s*\[controllers\.(\w+)\s*,\s*'(\w+)'\]\s*\)/g
+  const routeRegex =
+    /router\.(get|post|patch|delete|put)\(\s*'([^']+)'\s*,\s*\[controllers\.(\w+)\s*,\s*'(\w+)'\]\s*\)/g
   let m: RegExpExecArray | null
   while ((m = routeRegex.exec(content)) !== null) {
     routes.push({
@@ -163,7 +165,8 @@ function scanRoutes(): RouteInfo[] {
   }
 
   // Extrair renderInertia inline
-  const inertiaRegex = /router\.(get|post)\(\s*'([^']+)'\s*,\s*\([^)]*\)\s*=>\s*(?:\{[^}]*\})?\s*(?:inertia\.)?render(?:Inertia)?\(\s*'([^']+)'/g
+  const inertiaRegex =
+    /router\.(get|post)\(\s*'([^']+)'\s*,\s*\([^)]*\)\s*=>\s*(?:\{[^}]*\})?\s*(?:inertia\.)?render(?:Inertia)?\(\s*'([^']+)'/g
   while ((m = inertiaRegex.exec(content)) !== null) {
     routes.push({
       method: m[1].toUpperCase(),
@@ -191,7 +194,6 @@ function scanRoutes(): RouteInfo[] {
   }
 
   // Extrair .as('name') e associar à última rota
-  const asRegex = /\.as\(\s*'([^']+)'\s*\)/g
   const lines = content.split('\n')
   for (let i = 0; i < lines.length; i++) {
     const asMatch = lines[i].match(/\.as\(\s*'([^']+)'\s*\)/)
@@ -213,8 +215,8 @@ function scanRoutes(): RouteInfo[] {
   }
 
   // Detectar domínios baseado em grupos
-  const adminBlock = content.indexOf(".domain(`admin.")
-  const tenantBlock = content.indexOf(".domain(`:tenant.")
+  const adminBlock = content.indexOf('.domain(`admin.')
+  const tenantBlock = content.indexOf('.domain(`:tenant.')
   if (adminBlock > -1 || tenantBlock > -1) {
     // Simplificação: marcar por contexto baseado no nome da rota
     for (const route of routes) {
@@ -323,7 +325,10 @@ function generateControllersDoc(controllers: ControllerInfo[]): string {
   // Relações com models
   for (const ctrl of controllers) {
     for (const model of ctrl.models) {
-      const modelClass = model.split('_').map((s) => s.charAt(0).toUpperCase() + s.slice(1)).join('')
+      const modelClass = model
+        .split('_')
+        .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
+        .join('')
       mermaid += `  ${ctrl.name} --> ${modelClass} : usa\n`
     }
   }
@@ -537,7 +542,13 @@ interface PermissionInfo {
 }
 
 function scanPermissions(): PermissionInfo {
-  const info: PermissionInfo = { modules: [], groups: [], features: [], roles: [], bouncerRules: [] }
+  const info: PermissionInfo = {
+    modules: [],
+    groups: [],
+    features: [],
+    roles: [],
+    bouncerRules: [],
+  }
 
   // Parse seeder
   const seederPath = 'database/seeders/main_seeder.ts'
@@ -557,7 +568,8 @@ function scanPermissions(): PermissionInfo {
     // Roles
     const roleSection = content.match(/Role\.updateOrCreateMany[^[]*\[([^\]]+)\]/s)
     if (roleSection) {
-      const roleRegex = /\{\s*slug:\s*'([^']+)'\s*,\s*name:\s*'([^']+)'\s*,\s*description:\s*'([^']+)'/g
+      const roleRegex =
+        /\{\s*slug:\s*'([^']+)'\s*,\s*name:\s*'([^']+)'\s*,\s*description:\s*'([^']+)'/g
       while ((m = roleRegex.exec(roleSection[1])) !== null) {
         info.roles.push({ slug: m[1], name: m[2], description: m[3] })
       }
@@ -887,10 +899,22 @@ export default class GraphGenerate extends BaseCommand {
     const sections = [
       { title: 'Models', file: 'docs/graph/models.generated.md', content: modelsDoc },
       { title: 'Routes', file: 'docs/graph/routes.generated.md', content: routesDoc },
-      { title: 'Controllers', file: 'docs/graph/controllers.generated.md', content: controllersDoc },
-      { title: 'Services e Middleware', file: 'docs/graph/services.generated.md', content: servicesDoc },
+      {
+        title: 'Controllers',
+        file: 'docs/graph/controllers.generated.md',
+        content: controllersDoc,
+      },
+      {
+        title: 'Services e Middleware',
+        file: 'docs/graph/services.generated.md',
+        content: servicesDoc,
+      },
       { title: 'Frontend', file: 'docs/graph/frontend.generated.md', content: frontendDoc },
-      { title: 'Permissions', file: 'docs/graph/permissions.generated.md', content: permissionsDoc },
+      {
+        title: 'Permissions',
+        file: 'docs/graph/permissions.generated.md',
+        content: permissionsDoc,
+      },
       { title: 'Auth Flow', file: 'docs/graph/auth-flow.generated.md', content: authFlowDoc },
       { title: 'Tests', file: 'docs/graph/tests.generated.md', content: testsDoc },
     ]
@@ -915,7 +939,9 @@ export default class GraphGenerate extends BaseCommand {
     }
 
     if (!this.parsed.flags.check) {
-      this.logger.success(`Documentação visual gerada (${this.generatedFiles.size} arquivos em docs/graph/)`)
+      this.logger.success(
+        `Documentação visual gerada (${this.generatedFiles.size} arquivos em docs/graph/)`
+      )
       return
     }
 
