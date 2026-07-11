@@ -23,6 +23,7 @@ const props = defineProps<{
     name: string
     email: string
     avatar: string
+    initials: string
   }
 }>()
 
@@ -36,17 +37,17 @@ const { isMobile } = useSidebar()
         <DropdownMenuTrigger as-child>
           <SidebarMenuButton
             size="lg"
-            class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+            class="h-11 rounded-md border border-sidebar-border bg-sidebar-accent/40 text-sidebar-foreground transition-all duration-200 data-[state=open]:bg-sidebar-accent group-data-[collapsible=icon]:size-9 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:p-0"
           >
-            <Avatar class="h-8 w-8 rounded-lg">
-              <AvatarImage :src="user.avatar" :alt="user.name" />
-              <AvatarFallback class="rounded-lg">CN</AvatarFallback>
+            <Avatar class="h-8 w-8 rounded-lg transition-transform duration-200 group-data-[collapsible=icon]:scale-95">
+              <AvatarImage :src="user.avatar || '/images/default-avatar.svg'" :alt="user.name" />
+              <AvatarFallback class="rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">{{ user.initials }}</AvatarFallback>
             </Avatar>
-            <div class="grid flex-1 text-left text-sm leading-tight">
+            <div class="grid flex-1 text-left text-sm leading-tight transition-opacity duration-200 group-data-[collapsible=icon]:hidden">
               <span class="truncate font-medium">{{ user.name }}</span>
-              <span class="truncate text-xs">{{ user.email }}</span>
+              <span class="truncate text-xs text-sidebar-foreground/70">{{ user.email }}</span>
             </div>
-            <ChevronsUpDown class="ml-auto size-4" />
+            <ChevronsUpDown class="ml-auto size-4 group-data-[collapsible=icon]:hidden" />
           </SidebarMenuButton>
         </DropdownMenuTrigger>
         <DropdownMenuContent
@@ -58,8 +59,8 @@ const { isMobile } = useSidebar()
           <DropdownMenuLabel class="p-0 font-normal">
             <div class="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
               <Avatar class="h-8 w-8 rounded-lg">
-                <AvatarImage :src="user.avatar" :alt="user.name" />
-                <AvatarFallback class="rounded-lg">CN</AvatarFallback>
+                <AvatarImage :src="user.avatar || '/images/default-avatar.svg'" :alt="user.name" />
+                <AvatarFallback class="rounded-lg">{{ user.initials }}</AvatarFallback>
               </Avatar>
               <div class="grid flex-1 text-left text-sm leading-tight">
                 <span class="truncate font-semibold">{{ user.name }}</span>
