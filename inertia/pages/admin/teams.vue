@@ -4,10 +4,23 @@ import { ref } from 'vue'
 import { Badge } from '~/components/ui/badge'
 import { Button } from '~/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '~/components/ui/dialog'
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '~/components/ui/dialog'
 import { Field, FieldLabel } from '~/components/ui/field'
 import { Input } from '~/components/ui/input'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '~/components/ui/select'
 
 const props = defineProps<{
   teams: {
@@ -30,16 +43,18 @@ const form = useForm({
 })
 
 function createTeam() {
-  form.transform((data) => ({
-    ...data,
-    roleId: Number(data.roleId),
-  })).post('/teams', {
-    preserveScroll: true,
-    onSuccess: () => {
-      showCreate.value = false
-      form.reset()
-    },
-  })
+  form
+    .transform((data) => ({
+      ...data,
+      roleId: Number(data.roleId),
+    }))
+    .post('/teams', {
+      preserveScroll: true,
+      onSuccess: () => {
+        showCreate.value = false
+        form.reset()
+      },
+    })
 }
 
 function deleteTeam(id: number) {

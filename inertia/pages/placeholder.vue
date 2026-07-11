@@ -17,7 +17,9 @@ const props = defineProps<{
     <Card>
       <CardHeader>
         <CardTitle>Em construção</CardTitle>
-        <CardDescription>{{ featureDescription || 'Esta funcionalidade será implementada em breve.' }}</CardDescription>
+        <CardDescription>{{
+          featureDescription || 'Esta funcionalidade será implementada em breve.'
+        }}</CardDescription>
       </CardHeader>
       <CardContent>
         <p class="text-sm text-muted-foreground">

@@ -3,11 +3,31 @@ import { Head, useForm } from '@inertiajs/vue3'
 import { ref } from 'vue'
 import { Badge } from '~/components/ui/badge'
 import { Button } from '~/components/ui/button'
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '~/components/ui/dialog'
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '~/components/ui/dialog'
 import { Field, FieldLabel } from '~/components/ui/field'
 import { Input } from '~/components/ui/input'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '~/components/ui/table'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '~/components/ui/select'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '~/components/ui/table'
 
 const props = defineProps<{
   features: {
@@ -55,7 +75,7 @@ function createFeature() {
   })
 }
 
-function startEdit(feature: typeof props.features[0]) {
+function startEdit(feature: (typeof props.features)[0]) {
   editingId.value = feature.id
   form.slug = feature.slug
   form.name = feature.name
@@ -169,17 +189,25 @@ function cancelEdit() {
             <TableCell><Input v-model="form.route" class="h-8" /></TableCell>
             <TableCell><Input v-model="form.icon" class="h-8" /></TableCell>
             <TableCell>
-              <Select :model-value="String(form.moduleId)" @update:model-value="(v) => form.moduleId = Number(v)">
+              <Select
+                :model-value="String(form.moduleId)"
+                @update:model-value="(v) => (form.moduleId = Number(v))"
+              >
                 <SelectTrigger class="h-8">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem v-for="m in modules" :key="m.id" :value="String(m.id)">{{ m.name }}</SelectItem>
+                  <SelectItem v-for="m in modules" :key="m.id" :value="String(m.id)">{{
+                    m.name
+                  }}</SelectItem>
                 </SelectContent>
               </Select>
             </TableCell>
             <TableCell>
-              <Select :model-value="form.isActive ? 'true' : 'false'" @update:model-value="(v) => form.isActive = v === 'true'">
+              <Select
+                :model-value="form.isActive ? 'true' : 'false'"
+                @update:model-value="(v) => (form.isActive = v === 'true')"
+              >
                 <SelectTrigger class="h-8 w-24">
                   <SelectValue />
                 </SelectTrigger>

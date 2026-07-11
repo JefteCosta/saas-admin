@@ -4,7 +4,14 @@ import { ref } from 'vue'
 import { Badge } from '~/components/ui/badge'
 import { Button } from '~/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card'
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '~/components/ui/dialog'
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '~/components/ui/dialog'
 import { Field, FieldLabel } from '~/components/ui/field'
 import { Input } from '~/components/ui/input'
 
@@ -41,7 +48,7 @@ function createRole() {
 const editingRole = ref<number | null>(null)
 const selectedFeatures = ref<number[]>([])
 
-function startEdit(role: typeof props.roles[0]) {
+function startEdit(role: (typeof props.roles)[0]) {
   editingRole.value = role.id
   selectedFeatures.value = [...role.featureIds]
 }
@@ -61,10 +68,14 @@ function toggleFeature(featureId: number) {
 }
 
 function saveFeatures(roleId: number) {
-  router.patch(`/roles/${roleId}/features`, { featureIds: selectedFeatures.value }, {
-    preserveScroll: true,
-    onSuccess: () => cancelEdit(),
-  })
+  router.patch(
+    `/roles/${roleId}/features`,
+    { featureIds: selectedFeatures.value },
+    {
+      preserveScroll: true,
+      onSuccess: () => cancelEdit(),
+    }
+  )
 }
 
 function deleteRole(roleId: number) {
@@ -74,12 +85,15 @@ function deleteRole(roleId: number) {
 }
 
 // Agrupar features por grupo
-const featureGroups = props.features.reduce((acc, f) => {
-  const group = f.moduleName || 'Geral'
-  if (!acc[group]) acc[group] = []
-  acc[group].push(f)
-  return acc
-}, {} as Record<string, typeof props.features>)
+const featureGroups = props.features.reduce(
+  (acc, f) => {
+    const group = f.moduleName || 'Geral'
+    if (!acc[group]) acc[group] = []
+    acc[group].push(f)
+    return acc
+  },
+  {} as Record<string, typeof props.features>
+)
 </script>
 
 <template>
@@ -174,7 +188,7 @@ const featureGroups = props.features.reduce((acc, f) => {
         <CardContent v-else-if="role.slug !== 'owner'">
           <div class="flex flex-wrap gap-1">
             <Badge v-for="fId in role.featureIds" :key="fId" variant="secondary">
-              {{ features.find(f => f.id === fId)?.name || fId }}
+              {{ features.find((f) => f.id === fId)?.name || fId }}
             </Badge>
             <span v-if="role.featureIds.length === 0" class="text-sm text-muted-foreground">
               Nenhuma feature atribuída

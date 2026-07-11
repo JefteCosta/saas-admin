@@ -53,13 +53,15 @@ const flash = computed(() => (page.props.flash as { error?: string; success?: st
         <FieldLabel for="email">Email</FieldLabel>
         <Input
           id="email"
+          v-model="form.email"
           type="email"
           name="email"
           autocomplete="username"
-          v-model="form.email"
           :data-invalid="errors.email ? 'true' : undefined"
         />
-        <div v-if="errors.email" class="text-destructive text-sm font-medium">{{ errors.email }}</div>
+        <div v-if="errors.email" class="text-destructive text-sm font-medium">
+          {{ errors.email }}
+        </div>
       </Field>
       <Field>
         <div class="flex items-center">
@@ -70,13 +72,15 @@ const flash = computed(() => (page.props.flash as { error?: string; success?: st
         </div>
         <Input
           id="password"
+          v-model="form.password"
           type="password"
           name="password"
           autocomplete="current-password"
-          v-model="form.password"
           :data-invalid="errors.password ? 'true' : undefined"
         />
-        <div v-if="errors.password" class="text-destructive text-sm font-medium">{{ errors.password }}</div>
+        <div v-if="errors.password" class="text-destructive text-sm font-medium">
+          {{ errors.password }}
+        </div>
       </Field>
       <Field>
         <Button type="submit" class="button" :disabled="processing">Entrar</Button>

@@ -48,7 +48,11 @@ const flash = computed(() => (page.props.flash as { error?: string; success?: st
     route="new_account.store"
   >
     <FieldGroup>
-      <Alert v-if="flash.error || Object.keys(errors).length > 0" variant="destructive" class="mb-2">
+      <Alert
+        v-if="flash.error || Object.keys(errors).length > 0"
+        variant="destructive"
+        class="mb-2"
+      >
         <CircleAlert class="size-4" />
         <AlertDescription>{{ flash.error || 'Corrija os erros abaixo' }}</AlertDescription>
       </Alert>
@@ -66,19 +70,23 @@ const flash = computed(() => (page.props.flash as { error?: string; success?: st
           name="fullName"
           :data-invalid="errors.fullName ? 'true' : undefined"
         />
-        <div v-if="errors.fullName" class="text-destructive text-sm font-medium">{{ errors.fullName }}</div>
+        <div v-if="errors.fullName" class="text-destructive text-sm font-medium">
+          {{ errors.fullName }}
+        </div>
       </Field>
       <Field>
         <FieldLabel for="companyName">Nome da Empresa</FieldLabel>
         <Input
           id="companyName"
+          v-model="form.companyName"
           type="text"
           name="companyName"
           placeholder="Ex: Minha Empresa"
-          v-model="form.companyName"
           :data-invalid="errors.companyName ? 'true' : undefined"
         />
-        <div v-if="errors.companyName" class="text-destructive text-sm font-medium">{{ errors.companyName }}</div>
+        <div v-if="errors.companyName" class="text-destructive text-sm font-medium">
+          {{ errors.companyName }}
+        </div>
         <FieldDescription>
           O nome da sua empresa. Você poderá editar os dados completos depois.
         </FieldDescription>
@@ -87,13 +95,15 @@ const flash = computed(() => (page.props.flash as { error?: string; success?: st
         <FieldLabel for="email">Email</FieldLabel>
         <Input
           id="email"
+          v-model="form.email"
           type="email"
           name="email"
           autocomplete="email"
-          v-model="form.email"
           :data-invalid="errors.email ? 'true' : undefined"
         />
-        <div v-if="errors.email" class="text-destructive text-sm font-medium">{{ errors.email }}</div>
+        <div v-if="errors.email" class="text-destructive text-sm font-medium">
+          {{ errors.email }}
+        </div>
         <FieldDescription>
           Usaremos este e-mail para entrar em contato com você. Não compartilharemos seu e-mail com
           mais ninguém.
@@ -103,26 +113,30 @@ const flash = computed(() => (page.props.flash as { error?: string; success?: st
         <FieldLabel for="password">Senha</FieldLabel>
         <Input
           id="password"
+          v-model="form.password"
           type="password"
           name="password"
           autocomplete="new-password"
-          v-model="form.password"
           :data-invalid="errors.password ? 'true' : undefined"
         />
-        <div v-if="errors.password" class="text-destructive text-sm font-medium">{{ errors.password }}</div>
+        <div v-if="errors.password" class="text-destructive text-sm font-medium">
+          {{ errors.password }}
+        </div>
         <FieldDescription> Deve ter pelo menos 8 caracteres.</FieldDescription>
       </Field>
       <Field>
         <FieldLabel for="confirm-password">Confirme a Senha</FieldLabel>
         <Input
           id="passwordConfirmation"
+          v-model="form.passwordConfirmation"
           type="password"
           name="passwordConfirmation"
           autocomplete="new-password"
-          v-model="form.passwordConfirmation"
           :data-invalid="errors.passwordConfirmation ? 'true' : undefined"
         />
-        <div v-if="errors.passwordConfirmation" class="text-destructive text-sm font-medium">{{ errors.passwordConfirmation }}</div>
+        <div v-if="errors.passwordConfirmation" class="text-destructive text-sm font-medium">
+          {{ errors.passwordConfirmation }}
+        </div>
         <FieldDescription>Por favor, confirme sua senha.</FieldDescription>
       </Field>
       <Field>
