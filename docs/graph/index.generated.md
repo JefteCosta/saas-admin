@@ -134,6 +134,8 @@ erDiagram
     string fullName
     string email
     string password
+    string avatarUrl
+    string coverUrl
     number roleId
     DateTime createdAt
     DateTime updatedAt
@@ -169,7 +171,7 @@ erDiagram
 | Plan | plans | id, slug, name, description, price, isActive, createdAt, updatedAt |  |
 | Role | roles | id, slug, name, description, isDefault, companyId, createdAt, updatedAt | belongsTo → Company |
 | Team | teams | id, name, slug, roleId, companyId, createdAt, updatedAt | belongsTo → Company, belongsTo → Role |
-| User | users | id, fullName, email, password, roleId, createdAt, updatedAt | belongsTo → Role |
+| User | users | id, fullName, email, password, avatarUrl, coverUrl, roleId, createdAt, updatedAt | belongsTo → Role |
 
 
 ---
@@ -198,11 +200,11 @@ flowchart LR
     users_updateRole["PATCH users/:id/role"]
     roles["GET roles"]
     roles_store["POST roles"]
-    roles_updateFeatures["PATCH roles/:id/features"]
     roles_destroy["DELETE roles/:id"]
     teams["GET teams"]
     teams_store["POST teams"]
     teams_update["PATCH teams/:id"]
+    teams_destroy["DELETE teams/:id"]
   end
   subgraph admin
     admin_profile["GET profile"]
@@ -211,7 +213,6 @@ flowchart LR
     admin_users_updateRole["PATCH users/:id/role"]
     admin_roles["GET roles"]
     admin_roles_store["POST roles"]
-    admin_roles_updateFeatures["PATCH roles/:id/features"]
     admin_roles_destroy["DELETE roles/:id"]
     admin_teams["GET teams"]
     admin_teams_store["POST teams"]
@@ -221,29 +222,20 @@ flowchart LR
     admin_features_store["POST features"]
     admin_features_update["PATCH features/:id"]
     admin_logout["POST logout"]
-    admin_campaigns["GET campaigns"]
-    admin_campaigns_create["GET campaigns/create"]
-    admin_settings["GET settings"]
     admin_home["GET /"]
   end
   subgraph tenant
     tenant_profile["GET profile"]
     tenant_profile_update["PATCH profile"]
     tenant_users["GET users"]
-    tenant_users_updateRole["PATCH users/:id/role"]
     tenant_roles["GET roles"]
     tenant_roles_store["POST roles"]
-    tenant_roles_updateFeatures["PATCH roles/:id/features"]
     tenant_roles_destroy["DELETE roles/:id"]
     tenant_teams["GET teams"]
     tenant_teams_store["POST teams"]
     tenant_teams_update["PATCH teams/:id"]
     tenant_teams_destroy["DELETE teams/:id"]
     tenant_logout["POST logout"]
-    tenant_company["GET company"]
-    tenant_campaigns["GET campaigns"]
-    tenant_campaigns_create["GET campaigns/create"]
-    tenant_settings["GET settings"]
     tenant_home["GET /"]
   end
 ```
@@ -266,7 +258,6 @@ flowchart LR
 | PATCH | users/:id/role | Users | updateRole | admin.users.updateRole | admin |
 | GET | roles | Roles | index | admin.roles | admin |
 | POST | roles | Roles | store | admin.roles.store | admin |
-| PATCH | roles/:id/features | Roles | updateFeatures | admin.roles.updateFeatures | admin |
 | DELETE | roles/:id | Roles | destroy | admin.roles.destroy | admin |
 | GET | teams | Teams | index | admin.teams | admin |
 | POST | teams | Teams | store | admin.teams.store | admin |
@@ -279,10 +270,8 @@ flowchart LR
 | GET | profile | Profile | show | tenant.profile | tenant |
 | PATCH | profile | Profile | update | tenant.profile.update | tenant |
 | GET | users | Users | index | tenant.users | tenant |
-| PATCH | users/:id/role | Users | updateRole | tenant.users.updateRole | tenant |
 | GET | roles | Roles | index | tenant.roles | tenant |
 | POST | roles | Roles | store | tenant.roles.store | tenant |
-| PATCH | roles/:id/features | Roles | updateFeatures | tenant.roles.updateFeatures | tenant |
 | DELETE | roles/:id | Roles | destroy | tenant.roles.destroy | tenant |
 | GET | teams | Teams | index | tenant.teams | tenant |
 | POST | teams | Teams | store | tenant.teams.store | tenant |
@@ -296,7 +285,6 @@ flowchart LR
 | PATCH | users/:id/role | Users | updateRole | users.updateRole | localhost |
 | GET | roles | Roles | index | roles | localhost |
 | POST | roles | Roles | store | roles.store | localhost |
-| PATCH | roles/:id/features | Roles | updateFeatures | roles.updateFeatures | localhost |
 | DELETE | roles/:id | Roles | destroy | roles.destroy | localhost |
 | GET | teams | Teams | index | teams | localhost |
 | POST | teams | Teams | store | teams.store | localhost |
@@ -306,21 +294,6 @@ flowchart LR
 | POST | features | Features | store | features.store | localhost |
 | PATCH | features/:id | Features | update | features.update | localhost |
 | POST | logout | Session | destroy | logout | localhost |
-| GET | /workspace | Session | workspace | workspace.fallback | localhost |
-| GET | campaigns | inline | renderInertia('placeholder') | admin.campaigns | admin |
-| GET | campaigns/create | inline | renderInertia('placeholder') | admin.campaigns.create | admin |
-| GET | settings | inline | renderInertia('placeholder') | admin.settings | admin |
-| GET | company | inline | renderInertia('placeholder') | tenant.company | tenant |
-| GET | campaigns | inline | renderInertia('placeholder') | tenant.campaigns | tenant |
-| GET | campaigns/create | inline | renderInertia('placeholder') | tenant.campaigns.create | tenant |
-| GET | settings | inline | renderInertia('placeholder') | tenant.settings | tenant |
-| GET | company | inline | renderInertia('placeholder') | company | localhost |
-| GET | company/edit | inline | renderInertia('placeholder') | company.edit | localhost |
-| GET | company/addresses | inline | renderInertia('placeholder') | company.addresses.list | localhost |
-| GET | company/addresses/create | inline | renderInertia('placeholder') | company.addresses.create | localhost |
-| GET | campaigns | inline | renderInertia('placeholder') | campaigns | localhost |
-| GET | campaigns/create | inline | renderInertia('placeholder') | campaigns.create | localhost |
-| GET | settings | inline | renderInertia('placeholder') | settings | localhost |
 | GET | / | inline | renderInertia('home') | admin.home | admin |
 | GET | / | inline | renderInertia('home') | tenant.home | tenant |
 | GET | / | inline | renderInertia('home') | home | localhost |
@@ -402,7 +375,7 @@ classDiagram
 | FeaturesController | index, store, update | feature, feature_group, module | admin/features | - |
 | HealthChecksController | live, ready | - | - | - |
 | NewAccountController | create, store | user, role, company, plan | auth/register | error: Configuração inicial incompleta. Execute os seeders para criar as permissões. |
-| ProfileController | show, update | - | profile | success: Perfil atualizado com sucesso. |
+| ProfileController | show, update | - | profile | error: Arquivo de avatar inválido. Use JPG, PNG ou WEBP até 2MB.; error: Arquivo de capa inválido. Use JPG, PNG ou WEBP até 4MB.; success: Perfil atualizado com sucesso. |
 | RolesController | index, store, updateFeatures, destroy | role, feature | admin/roles | error: A role owner tem acesso irrestrito e não precisa de permissões.; error: Não é possível remover roles do sistema.; success: Role removida. |
 | SessionController | create, store, callback, workspace, destroy, destroyGlobal | user, company | auth/login, workspace | error: E-mail ou senha incorretos |
 | TeamsController | index, store, update, destroy | team, role, user | admin/teams | success: Time removido. |
@@ -435,7 +408,6 @@ flowchart TB
   SilentAuthMiddleware{{SilentAuthMiddleware}}
   AuthTokenService --> AuthTokenService
   FeatureService --> FeatureService
-  LimitService --> CompanyContextMiddleware
   SlugService --> CompanyContextMiddleware
   CompanyContextMiddleware --> CompanyContextMiddleware
   MenuMiddleware --> FeatureService
@@ -446,9 +418,9 @@ flowchart TB
 
 | Nome | Tipo | Imports | Métodos |
 | --- | --- | --- | --- |
-| AuthTokenService | service | #models/auth_token, #models/user | generate, validate, cleanup |
-| FeatureService | service | #models/feature, #models/module, #models/user | getUserFeatures, getUserMenu, userCanAccess, loadUserRoleSlug |
-| LimitService | service | #models/company, #models/module | check, canCreateUser, canCreateTeam |
+| AuthTokenService | service | #models/auth_token | generate, validate, cleanup |
+| FeatureService | service | #models/feature, #models/module | getUserFeatures, getUserMenu, userCanAccess, loadUserRoleSlug |
+| LimitService | service | #models/module | check, canCreateUser, canCreateTeam |
 | SlugService | service | #models/company | slugify, generateCompanySlug |
 | AuthMiddleware | middleware | - | handle |
 | CompanyContextMiddleware | middleware | #models/company | handle |
@@ -495,6 +467,7 @@ flowchart TB
     C_nav_main["nav_main"]
     C_nav_projects["nav_projects"]
     C_nav_user["nav_user"]
+    C_site_footer["site_footer"]
     C_site_header["site_header"]
     C_team_switcher["team_switcher"]
   end
@@ -517,9 +490,10 @@ flowchart TB
 | profile | page | inertia/pages/profile.vue | - | usePage, useForm | - |
 | workspace | page | inertia/pages/workspace.vue | - | - | Auth |
 | app_sidebar | component | inertia/components/app_sidebar.vue | - | usePage | - |
-| nav_main | component | inertia/components/nav_main.vue | moduleTitle, moduleIcon, groups | usePage | - |
+| nav_main | component | inertia/components/nav_main.vue | moduleTitle, moduleIcon, moduleIconClass, groups | usePage | - |
 | nav_projects | component | inertia/components/nav_projects.vue | - | - | - |
 | nav_user | component | inertia/components/nav_user.vue | - | - | - |
+| site_footer | component | inertia/components/site_footer.vue | - | - | - |
 | site_header | component | inertia/components/site_header.vue | - | usePage, router | - |
 | team_switcher | component | inertia/components/team_switcher.vue | - | - | - |
 | auth | layout | inertia/layouts/auth.vue | - | - | - |

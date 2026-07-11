@@ -116,6 +116,8 @@ erDiagram
     string fullName
     string email
     string password
+    string avatarUrl
+    string coverUrl
     number roleId
     DateTime createdAt
     DateTime updatedAt
@@ -151,4 +153,4 @@ erDiagram
 | Plan | plans | id, slug, name, description, price, isActive, createdAt, updatedAt |  |
 | Role | roles | id, slug, name, description, isDefault, companyId, createdAt, updatedAt | belongsTo → Company |
 | Team | teams | id, name, slug, roleId, companyId, createdAt, updatedAt | belongsTo → Company, belongsTo → Role |
-| User | users | id, fullName, email, password, roleId, createdAt, updatedAt | belongsTo → Role |
+| User | users | id, fullName, email, password, avatarUrl, coverUrl, roleId, createdAt, updatedAt | belongsTo → Role |

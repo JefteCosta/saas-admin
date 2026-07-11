@@ -29,6 +29,7 @@ flowchart TB
     C_nav_main["nav_main"]
     C_nav_projects["nav_projects"]
     C_nav_user["nav_user"]
+    C_site_footer["site_footer"]
     C_site_header["site_header"]
     C_team_switcher["team_switcher"]
   end
@@ -51,9 +52,10 @@ flowchart TB
 | profile | page | inertia/pages/profile.vue | - | usePage, useForm | - |
 | workspace | page | inertia/pages/workspace.vue | - | - | Auth |
 | app_sidebar | component | inertia/components/app_sidebar.vue | - | usePage | - |
-| nav_main | component | inertia/components/nav_main.vue | moduleTitle, moduleIcon, groups | usePage | - |
+| nav_main | component | inertia/components/nav_main.vue | moduleTitle, moduleIcon, moduleIconClass, groups | usePage | - |
 | nav_projects | component | inertia/components/nav_projects.vue | - | - | - |
 | nav_user | component | inertia/components/nav_user.vue | - | - | - |
+| site_footer | component | inertia/components/site_footer.vue | - | - | - |
 | site_header | component | inertia/components/site_header.vue | - | usePage, router | - |
 | team_switcher | component | inertia/components/team_switcher.vue | - | - | - |
 | auth | layout | inertia/layouts/auth.vue | - | - | - |

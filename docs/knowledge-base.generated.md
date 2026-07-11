@@ -26,16 +26,17 @@
 | [Notas do Agente Kiro](agents/kiro.md) | `docs/agents/kiro.md` | `1a421ce0d2de` |
 | [Arquitetura Backend](architecture/backend.md) | `docs/architecture/backend.md` | `6c8d8089688a` |
 | [Arquitetura de Banco de Dados](architecture/database.md) | `docs/architecture/database.md` | `96550698f07a` |
-| [Arquitetura Frontend](architecture/frontend.md) | `docs/architecture/frontend.md` | `a5502859f13b` |
+| [Arquitetura Frontend](architecture/frontend.md) | `docs/architecture/frontend.md` | `f9d76bd7b25b` |
 | [Visão Geral da Arquitetura](architecture/overview.md) | `docs/architecture/overview.md` | `c606a1b9c06b` |
+| [Mapa de Telas](architecture/screen-map.md) | `docs/architecture/screen-map.md` | `50c6a2d1e53e` |
 | [Auth Flow — Fluxo de Autenticação](graph/auth-flow.generated.md) | `docs/graph/auth-flow.generated.md` | `cd237e2d5db6` |
 | [Controllers — Diagrama de Classes](graph/controllers.generated.md) | `docs/graph/controllers.generated.md` | `db85ca18285e` |
 | [Frontend — Mapa de Componentes](graph/frontend.generated.md) | `docs/graph/frontend.generated.md` | `bfcf85596c14` |
-| [Graph — Documentação Visual do Projeto](graph/index.generated.md) | `docs/graph/index.generated.md` | `d4d913ecdb06` |
+| [Graph — Documentação Visual do Projeto](graph/index.generated.md) | `docs/graph/index.generated.md` | `160308b1c282` |
 | [Models — Diagrama ER](graph/models.generated.md) | `docs/graph/models.generated.md` | `8d91d5af20f2` |
 | [Permissions — Mapa de Permissões](graph/permissions.generated.md) | `docs/graph/permissions.generated.md` | `55c0d0a33682` |
-| [Routes — Mapa de Rotas](graph/routes.generated.md) | `docs/graph/routes.generated.md` | `56065d5e9cd1` |
-| [Services & Middleware — Grafo de Dependências](graph/services.generated.md) | `docs/graph/services.generated.md` | `c5a588dd7966` |
+| [Routes — Mapa de Rotas](graph/routes.generated.md) | `docs/graph/routes.generated.md` | `29e55fdf2bac` |
+| [Services & Middleware — Grafo de Dependências](graph/services.generated.md) | `docs/graph/services.generated.md` | `c6f02b874156` |
 | [Tests — Mapa de Testes](graph/tests.generated.md) | `docs/graph/tests.generated.md` | `049b772a7c27` |
 | [Guia de Commits](guides/commits.md) | `docs/guides/commits.md` | `9c9cecf9f8de` |
 | [Guia de Deploy](guides/deployment.md) | `docs/guides/deployment.md` | `e925bc51beaf` |
@@ -55,6 +56,7 @@
 | [Implementação da Base de Conhecimento](planning/knowledge-base-sync-implementation.md) | `docs/planning/knowledge-base-sync-implementation.md` | `51717616da26` |
 | [Plano de Sincronização da Base de Conhecimento](planning/knowledge-base-sync-plan.md) | `docs/planning/knowledge-base-sync-plan.md` | `cd2e12020a86` |
 | [Metas do Produto](planning/product-goals.md) | `docs/planning/product-goals.md` | `3bc9d71ba7db` |
+| [Log de Implementação Recente (2026-07)](planning/recent-implementation-log-2026-07.md) | `docs/planning/recent-implementation-log-2026-07.md` | `66a2d4ffe932` |
 | [Roadmap](planning/roadmap.md) | `docs/planning/roadmap.md` | `e287e71c138c` |
 | [Plano de Implementação da Fundação SaaS](planning/saas-foundation-implementation-plan.md) | `docs/planning/saas-foundation-implementation-plan.md` | `95c55db931c5` |
 | [Plano de Testes da UI shadcn-vue](planning/shadcn-vue-ui-tests-plan.md) | `docs/planning/shadcn-vue-ui-tests-plan.md` | `971346e48e9d` |

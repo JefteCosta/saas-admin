@@ -22,7 +22,6 @@ flowchart TB
   SilentAuthMiddleware{{SilentAuthMiddleware}}
   AuthTokenService --> AuthTokenService
   FeatureService --> FeatureService
-  LimitService --> CompanyContextMiddleware
   SlugService --> CompanyContextMiddleware
   CompanyContextMiddleware --> CompanyContextMiddleware
   MenuMiddleware --> FeatureService
@@ -33,9 +32,9 @@ flowchart TB
 
 | Nome | Tipo | Imports | Métodos |
 | --- | --- | --- | --- |
-| AuthTokenService | service | #models/auth_token, #models/user | generate, validate, cleanup |
-| FeatureService | service | #models/feature, #models/module, #models/user | getUserFeatures, getUserMenu, userCanAccess, loadUserRoleSlug |
-| LimitService | service | #models/company, #models/module | check, canCreateUser, canCreateTeam |
+| AuthTokenService | service | #models/auth_token | generate, validate, cleanup |
+| FeatureService | service | #models/feature, #models/module | getUserFeatures, getUserMenu, userCanAccess, loadUserRoleSlug |
+| LimitService | service | #models/module | check, canCreateUser, canCreateTeam |
 | SlugService | service | #models/company | slugify, generateCompanySlug |
 | AuthMiddleware | middleware | - | handle |
 | CompanyContextMiddleware | middleware | #models/company | handle |
