@@ -22,7 +22,7 @@ const mailConfig = defineConfig({
    * the brand name to be used within the emails
    */
   globals: {
-    brandName: 'Acme'
+    brandName: 'Acme',
   },
 
   /**
@@ -30,11 +30,11 @@ const mailConfig = defineConfig({
    * each using a different transport or same transport with different
    * options.
    */
-  mailers: { 
+  mailers: {
     smtp: transports.smtp({
       host: env.get('SMTP_HOST'),
       port: env.get('SMTP_PORT'),
-			/**
+      /**
        * Uncomment the auth block if your SMTP
        * server needs authentication
        */
@@ -44,18 +44,15 @@ const mailConfig = defineConfig({
         pass: env.get('SMTP_PASSWORD'),
       }, */
     }),
-		 
+
     ses: transports.ses({
       apiVersion: '2010-12-01',
       region: env.get('AWS_REGION'),
       credentials: {
-        accessKeyId: env.get('AWS_ACCESS_KEY_ID'),
-        secretAccessKey: env.get('AWS_SECRET_ACCESS_KEY'),
+        accessKeyId: env.get('AWS_ACCESS_KEY_ID')!,
+        secretAccessKey: env.get('AWS_SECRET_ACCESS_KEY')!,
       },
-      sendingRate: 10,
-      maxConnections: 5,
     }),
-		     
   },
 })
 

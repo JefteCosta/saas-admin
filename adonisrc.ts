@@ -34,7 +34,7 @@ export default defineConfig({
     () => import('@adonisjs/bouncer/commands'),
     () => import('@adonisjs/queue/commands'),
     () => import('@adonisjs/mail/commands'),
-    () => import('@adonisjs/cache/commands')
+    () => import('@adonisjs/cache/commands'),
   ],
 
   /*
@@ -70,7 +70,7 @@ export default defineConfig({
     () => import('@adonisjs/lock/lock_provider'),
     () => import('@adonisjs/drive/drive_provider'),
     () => import('@adonisjs/cache/cache_provider'),
-    () => import('@adonisjs/redis/redis_provider')
+    () => import('@adonisjs/redis/redis_provider'),
   ],
 
   /*
@@ -88,7 +88,7 @@ export default defineConfig({
     {
       file: () => import('#start/scheduler'),
       environment: ['web'],
-    }
+    },
   ],
 
   /*
@@ -148,7 +148,6 @@ export default defineConfig({
       }),
       indexPages({ framework: 'vue3' }),
       generateRegistry(),
-      indexPolicies(),
       indexPolicies(),
     ],
     buildStarting: [() => import('@adonisjs/vite/build_hook')],
