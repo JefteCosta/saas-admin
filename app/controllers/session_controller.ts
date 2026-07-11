@@ -14,7 +14,7 @@ export default class SessionController {
   }
 
   private get useSubdomains() {
-    return process.env.NODE_ENV !== 'test'
+    return this.domain !== 'localhost'
   }
 
   private buildUrl(subdomain: string, path: string = '/') {
@@ -98,8 +98,8 @@ export default class SessionController {
 
     const saasCompany = await Company.findBy('slug', 'admin')
     const isInSaas = saasCompany
-      ? await saasCompany.related('members').query().where('user_id', user.id).first()
-        || saasCompany.ownerUserId === user.id
+      ? (await saasCompany.related('members').query().where('user_id', user.id).first()) ||
+        saasCompany.ownerUserId === user.id
       : false
 
     const ownedCompanies = await Company.query().where('owner_user_id', user.id)
@@ -109,8 +109,9 @@ export default class SessionController {
       ...ownedCompanies
         .filter((c) => c.slug !== 'admin')
         .map((c) => ({ id: c.id, name: c.name, slug: c.slug })),
-      ...companies
-        .filter((c) => c.slug !== 'admin' && !ownedCompanies.find((oc) => oc.id === c.id))
+      ...companies.filter(
+        (c) => c.slug !== 'admin' && !ownedCompanies.find((oc) => oc.id === c.id)
+      ),
     ]
 
     return inertia.render('workspace', {
@@ -151,18 +152,27 @@ export default class SessionController {
     // Verificar se pertence à company SaaS Admin
     const saasCompany = await Company.findBy('slug', 'admin')
     if (saasCompany) {
-      const isSaasMember = await saasCompany.related('members').query().where('user_id', user.id).first()
+      const isSaasMember = await saasCompany
+        .related('members')
+        .query()
+        .where('user_id', user.id)
+        .first()
       if (isSaasMember || saasCompany.ownerUserId === user.id) {
         return this.buildUrl('admin')
       }
     }
 
     // Buscar companies do user
-    const ownedCompanies = await Company.query().where('owner_user_id', user.id).where('slug', '!=', 'admin')
+    const ownedCompanies = await Company.query()
+      .where('owner_user_id', user.id)
+      .where('slug', '!=', 'admin')
     await user.load('companies')
     const memberCompanies = user.companies.filter((c) => c.slug !== 'admin')
 
-    const allCompanies = [...ownedCompanies, ...memberCompanies.filter((c) => !ownedCompanies.find((oc) => oc.id === c.id))]
+    const allCompanies = [
+      ...ownedCompanies,
+      ...memberCompanies.filter((c) => !ownedCompanies.find((oc) => oc.id === c.id)),
+    ]
 
     if (allCompanies.length === 1) {
       return this.buildUrl(allCompanies[0].slug)

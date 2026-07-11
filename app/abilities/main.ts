@@ -1,4 +1,4 @@
-import User from '#models/user'
+import type User from '#models/user'
 import { Bouncer } from '@adonisjs/bouncer'
 import FeatureService from '#services/feature_service'
 

@@ -5,7 +5,10 @@ import type { HttpContext } from '@adonisjs/core/http'
 export default class RolesController {
   async index({ inertia }: HttpContext) {
     const roles = await Role.query().preload('features').orderBy('name')
-    const features = await Feature.query().where('is_active', true).preload('module').orderBy('position')
+    const features = await Feature.query()
+      .where('is_active', true)
+      .preload('module')
+      .orderBy('position')
 
     return inertia.render('admin/roles', {
       roles: roles.map((r) => ({
@@ -15,7 +18,12 @@ export default class RolesController {
         description: r.description,
         featureIds: r.features.map((f) => f.id),
       })),
-      features: features.map((f) => ({ id: f.id, slug: f.slug, name: f.name, moduleName: f.module?.name || 'Geral' })),
+      features: features.map((f) => ({
+        id: f.id,
+        slug: f.slug,
+        name: f.name,
+        moduleName: f.module?.name || 'Geral',
+      })),
     })
   }
 

@@ -1,7 +1,7 @@
 import { randomBytes } from 'node:crypto'
 import { DateTime } from 'luxon'
 import AuthToken from '#models/auth_token'
-import User from '#models/user'
+import type User from '#models/user'
 
 export default class AuthTokenService {
   /**
@@ -47,8 +47,6 @@ export default class AuthTokenService {
    * Limpa tokens expirados (housekeeping).
    */
   static async cleanup(): Promise<void> {
-    await AuthToken.query()
-      .where('expires_at', '<', DateTime.now().toSQL()!)
-      .delete()
+    await AuthToken.query().where('expires_at', '<', DateTime.now().toSQL()!).delete()
   }
 }

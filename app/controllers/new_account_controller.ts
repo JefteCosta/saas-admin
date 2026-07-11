@@ -8,23 +8,43 @@ import type { HttpContext } from '@adonisjs/core/http'
 import env from '#start/env'
 
 export default class NewAccountController {
+  private get domain() {
+    return env.get('APP_DOMAIN', 'localhost')
+  }
+
+  private get port() {
+    return env.get('PORT', 3333)
+  }
+
+  private get useSubdomains() {
+    return this.domain !== 'localhost'
+  }
+
   async create({ inertia }: HttpContext) {
     return inertia.render('auth/register', {})
   }
 
-  async store({ request, response, auth }: HttpContext) {
+  async store({ request, response, auth, session }: HttpContext) {
     const payload = await request.validateUsing(signupValidator)
 
     // Buscar role admin e plano starter (padrão)
     const adminRole = await Role.findBy('slug', 'admin')
     const starterPlan = await Plan.findBy('slug', 'starter')
 
+    if (!adminRole) {
+      session.flash(
+        'error',
+        'Configuração inicial incompleta. Execute os seeders para criar as permissões.'
+      )
+      return response.redirect().back()
+    }
+
     // Criar usuário
     const user = await User.create({
       fullName: payload.fullName,
       email: payload.email,
       password: payload.password,
-      roleId: adminRole?.id ?? null,
+      roleId: adminRole.id,
     })
 
     // Gerar slug único para a company
@@ -43,10 +63,14 @@ export default class NewAccountController {
 
     await auth.use('web').login(user)
 
-    // Redirecionar para o subdomínio da company
-    const domain = env.get('APP_DOMAIN', 'localhost')
-    const port = env.get('PORT', 3333)
-    const portStr = port !== 80 && port !== 443 ? `:${port}` : ''
-    return response.redirect(`http://${slug}.${domain}${portStr}/`)
+    if (!this.useSubdomains) {
+      return response.redirect('/')
+    }
+
+    const portStr = this.port !== 80 && this.port !== 443 ? `:${this.port}` : ''
+    const redirectUrl = `http://${slug}.${this.domain}${portStr}/`
+
+    response.header('X-Inertia-Location', redirectUrl)
+    return response.status(409).send('')
   }
 }

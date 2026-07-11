@@ -1,4 +1,4 @@
-import Company from '#models/company'
+import type Company from '#models/company'
 
 declare module '@adonisjs/core/http' {
   export interface HttpContext {

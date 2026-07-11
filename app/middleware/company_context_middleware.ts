@@ -8,6 +8,7 @@ import Company from '#models/company'
  */
 export default class CompanyContextMiddleware {
   async handle(ctx: HttpContext, next: NextFn) {
+    const context = ctx as HttpContext & { company?: Company; companyMembership?: unknown }
     const tenant = ctx.params.tenant || ctx.subdomains.tenant
 
     if (!tenant) {
@@ -31,8 +32,8 @@ export default class CompanyContextMiddleware {
     }
 
     // Setar no contexto
-    ctx.company = company
-    ctx.companyMembership = isMember
+    context.company = company
+    context.companyMembership = isMember
 
     return next()
   }

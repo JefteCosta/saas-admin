@@ -3,7 +3,7 @@ import type { HttpContext } from '@adonisjs/core/http'
 
 export default class HealthChecksController {
   async live({ response }: HttpContext) {
-    return response.ok()
+    return response.ok({ status: 'ok' })
   }
 
   async ready({ response }: HttpContext) {

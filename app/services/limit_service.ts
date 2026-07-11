@@ -1,4 +1,4 @@
-import Company from '#models/company'
+import type Company from '#models/company'
 import Module from '#models/module'
 import db from '@adonisjs/lucid/services/db'
 

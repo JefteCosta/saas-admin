@@ -8,6 +8,7 @@ import Company from '#models/company'
  */
 export default class SaasAdminMiddleware {
   async handle(ctx: HttpContext, next: NextFn) {
+    const context = ctx as HttpContext & { company?: Company }
     const user = ctx.auth.user!
 
     // Buscar a company SaaS Admin (slug: 'admin')
@@ -25,7 +26,7 @@ export default class SaasAdminMiddleware {
     }
 
     // Setar company SaaS no contexto
-    ctx.company = saasCompany
+    context.company = saasCompany
 
     return next()
   }

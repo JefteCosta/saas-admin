@@ -1,6 +1,6 @@
 import Feature from '#models/feature'
 import Module from '#models/module'
-import User from '#models/user'
+import type User from '#models/user'
 
 export interface MenuItem {
   slug: string
@@ -125,7 +125,12 @@ export default class FeatureService {
   private groupFeaturesByModule(features: Feature[]): MenuModule[] {
     const moduleMap = new Map<
       number,
-      { name: string; icon: string | null; position: number; groups: Map<string, { position: number; items: MenuItem[] }> }
+      {
+        name: string
+        icon: string | null
+        position: number
+        groups: Map<string, { position: number; items: MenuItem[] }>
+      }
     >()
 
     for (const feature of features) {
