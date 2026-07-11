@@ -5,6 +5,7 @@ import User from '#models/user'
 import Module from '#models/module'
 import FeatureGroup from '#models/feature_group'
 import Plan from '#models/plan'
+import Company from '#models/company'
 
 export default class MainSeeder extends BaseSeeder {
   async run() {
@@ -12,11 +13,16 @@ export default class MainSeeder extends BaseSeeder {
     const plans = await Plan.updateOrCreateMany('slug', [
       { slug: 'starter', name: 'Starter', description: 'Plano básico', price: 100 },
       { slug: 'business', name: 'Business', description: 'Plano completo', price: 200 },
-      { slug: 'unlimited', name: 'Unlimited', description: 'Plano ilimitado (SaaS Admin)', price: null },
+      {
+        slug: 'unlimited',
+        name: 'Unlimited',
+        description: 'Plano ilimitado (SaaS Admin)',
+        price: null,
+      },
     ])
     const starterPlan = plans.find((p) => p.slug === 'starter')!
     const businessPlan = plans.find((p) => p.slug === 'business')!
-    const unlimitedPlan = plans.find((p) => p.slug === 'unlimited')!
+    const unlimited = plans.find((p) => p.slug === 'unlimited')!
 
     // 2. Criar módulos
     const modules = await Module.updateOrCreateMany('slug', [
@@ -46,7 +52,7 @@ export default class MainSeeder extends BaseSeeder {
       [mod('configuracoes').id]: { limits: null },
     })
 
-    await unlimitedPlan.related('modules').sync({
+    await unlimited.related('modules').sync({
       [mod('plataforma').id]: { limits: null },
       [mod('pessoas').id]: { limits: null },
       [mod('empresa').id]: { limits: null },
@@ -72,44 +78,223 @@ export default class MainSeeder extends BaseSeeder {
     // 5. Criar features
     const features = await Feature.updateOrCreateMany('slug', [
       // Plataforma > Geral
-      { slug: 'home', name: 'Home', icon: 'Home', route: '/', moduleId: mod('plataforma').id, featureGroupId: grp('geral').id, position: 0, isMenuItem: true, isActive: true },
-      { slug: 'profile', name: 'Perfil', icon: 'User', route: '/profile', moduleId: mod('plataforma').id, featureGroupId: grp('geral').id, position: 1, isMenuItem: true, isActive: true },
+      {
+        slug: 'home',
+        name: 'Home',
+        icon: 'Home',
+        route: '/',
+        moduleId: mod('plataforma').id,
+        featureGroupId: grp('geral').id,
+        position: 0,
+        isMenuItem: true,
+        isActive: true,
+      },
+      {
+        slug: 'profile',
+        name: 'Perfil',
+        icon: 'User',
+        route: '/profile',
+        moduleId: mod('plataforma').id,
+        featureGroupId: grp('geral').id,
+        position: 1,
+        isMenuItem: true,
+        isActive: true,
+      },
 
       // Pessoas > Usuários
-      { slug: 'users.list', name: 'Usuários', icon: 'Users', route: '/users', moduleId: mod('pessoas').id, featureGroupId: grp('usuarios').id, position: 0, isMenuItem: true, isActive: true },
-      { slug: 'users.create', name: 'Criar Usuário', icon: 'UserPlus', route: '/users/create', moduleId: mod('pessoas').id, featureGroupId: grp('usuarios').id, position: 1, isMenuItem: false, isActive: true },
+      {
+        slug: 'users.list',
+        name: 'Usuários',
+        icon: 'Users',
+        route: '/users',
+        moduleId: mod('pessoas').id,
+        featureGroupId: grp('usuarios').id,
+        position: 0,
+        isMenuItem: true,
+        isActive: true,
+      },
+      {
+        slug: 'users.create',
+        name: 'Criar Usuário',
+        icon: 'UserPlus',
+        route: '/users/create',
+        moduleId: mod('pessoas').id,
+        featureGroupId: grp('usuarios').id,
+        position: 1,
+        isMenuItem: false,
+        isActive: true,
+      },
 
       // Pessoas > Times
-      { slug: 'teams.list', name: 'Times', icon: 'UsersRound', route: '/teams', moduleId: mod('pessoas').id, featureGroupId: grp('times').id, position: 0, isMenuItem: true, isActive: true },
-      { slug: 'teams.create', name: 'Criar Time', icon: 'Plus', route: '/teams/create', moduleId: mod('pessoas').id, featureGroupId: grp('times').id, position: 1, isMenuItem: false, isActive: true },
+      {
+        slug: 'teams.list',
+        name: 'Times',
+        icon: 'UsersRound',
+        route: '/teams',
+        moduleId: mod('pessoas').id,
+        featureGroupId: grp('times').id,
+        position: 0,
+        isMenuItem: true,
+        isActive: true,
+      },
+      {
+        slug: 'teams.create',
+        name: 'Criar Time',
+        icon: 'Plus',
+        route: '/teams/create',
+        moduleId: mod('pessoas').id,
+        featureGroupId: grp('times').id,
+        position: 1,
+        isMenuItem: false,
+        isActive: true,
+      },
 
       // Empresa > Dados
-      { slug: 'company.view', name: 'Dados da Empresa', icon: 'Building2', route: '/company', moduleId: mod('empresa').id, featureGroupId: grp('dados-empresa').id, position: 0, isMenuItem: true, isActive: true },
-      { slug: 'company.edit', name: 'Editar Empresa', icon: 'Pencil', route: '/company/edit', moduleId: mod('empresa').id, featureGroupId: grp('dados-empresa').id, position: 1, isMenuItem: false, isActive: true },
+      {
+        slug: 'company.view',
+        name: 'Dados da Empresa',
+        icon: 'Building2',
+        route: '/company',
+        moduleId: mod('empresa').id,
+        featureGroupId: grp('dados-empresa').id,
+        position: 0,
+        isMenuItem: true,
+        isActive: true,
+      },
+      {
+        slug: 'company.edit',
+        name: 'Editar Empresa',
+        icon: 'Pencil',
+        route: '/company/edit',
+        moduleId: mod('empresa').id,
+        featureGroupId: grp('dados-empresa').id,
+        position: 1,
+        isMenuItem: false,
+        isActive: true,
+      },
 
       // Empresa > Endereços
-      { slug: 'company.addresses.list', name: 'Endereços', icon: 'MapPin', route: '/company/addresses', moduleId: mod('empresa').id, featureGroupId: grp('enderecos').id, position: 0, isMenuItem: true, isActive: true },
-      { slug: 'company.addresses.create', name: 'Novo Endereço', icon: 'Plus', route: '/company/addresses/create', moduleId: mod('empresa').id, featureGroupId: grp('enderecos').id, position: 1, isMenuItem: false, isActive: true },
+      {
+        slug: 'company.addresses.list',
+        name: 'Endereços',
+        icon: 'MapPin',
+        route: '/company/addresses',
+        moduleId: mod('empresa').id,
+        featureGroupId: grp('enderecos').id,
+        position: 0,
+        isMenuItem: true,
+        isActive: true,
+      },
+      {
+        slug: 'company.addresses.create',
+        name: 'Novo Endereço',
+        icon: 'Plus',
+        route: '/company/addresses/create',
+        moduleId: mod('empresa').id,
+        featureGroupId: grp('enderecos').id,
+        position: 1,
+        isMenuItem: false,
+        isActive: true,
+      },
 
       // Marketing > Campanhas
-      { slug: 'campaigns.list', name: 'Campanhas', icon: 'Megaphone', route: '/campaigns', moduleId: mod('marketing').id, featureGroupId: grp('campanhas').id, position: 0, isMenuItem: true, isActive: true },
-      { slug: 'campaigns.create', name: 'Criar Campanha', icon: 'Plus', route: '/campaigns/create', moduleId: mod('marketing').id, featureGroupId: grp('campanhas').id, position: 1, isMenuItem: false, isActive: true },
+      {
+        slug: 'campaigns.list',
+        name: 'Campanhas',
+        icon: 'Megaphone',
+        route: '/campaigns',
+        moduleId: mod('marketing').id,
+        featureGroupId: grp('campanhas').id,
+        position: 0,
+        isMenuItem: true,
+        isActive: true,
+      },
+      {
+        slug: 'campaigns.create',
+        name: 'Criar Campanha',
+        icon: 'Plus',
+        route: '/campaigns/create',
+        moduleId: mod('marketing').id,
+        featureGroupId: grp('campanhas').id,
+        position: 1,
+        isMenuItem: false,
+        isActive: true,
+      },
 
       // Configurações > Papéis
-      { slug: 'roles.list', name: 'Papéis', icon: 'Shield', route: '/roles', moduleId: mod('configuracoes').id, featureGroupId: grp('papeis').id, position: 0, isMenuItem: true, isActive: true },
-      { slug: 'roles.create', name: 'Criar Papel', icon: 'Plus', route: '/roles/create', moduleId: mod('configuracoes').id, featureGroupId: grp('papeis').id, position: 1, isMenuItem: false, isActive: true },
+      {
+        slug: 'roles.list',
+        name: 'Papéis',
+        icon: 'Shield',
+        route: '/roles',
+        moduleId: mod('configuracoes').id,
+        featureGroupId: grp('papeis').id,
+        position: 0,
+        isMenuItem: true,
+        isActive: true,
+      },
+      {
+        slug: 'roles.create',
+        name: 'Criar Papel',
+        icon: 'Plus',
+        route: '/roles/create',
+        moduleId: mod('configuracoes').id,
+        featureGroupId: grp('papeis').id,
+        position: 1,
+        isMenuItem: false,
+        isActive: true,
+      },
 
       // SaaS > Admin
-      { slug: 'features.list', name: 'Features', icon: 'Layers', route: '/features', moduleId: mod('saas').id, featureGroupId: grp('admin-saas').id, position: 0, isMenuItem: true, isActive: true },
-      { slug: 'features.create', name: 'Criar Feature', icon: 'Plus', route: '/features/create', moduleId: mod('saas').id, featureGroupId: grp('admin-saas').id, position: 1, isMenuItem: false, isActive: true },
-      { slug: 'features.edit', name: 'Editar Feature', icon: 'Pencil', route: '/features/:id/edit', moduleId: mod('saas').id, featureGroupId: grp('admin-saas').id, position: 2, isMenuItem: false, isActive: true },
+      {
+        slug: 'features.list',
+        name: 'Features',
+        icon: 'Layers',
+        route: '/features',
+        moduleId: mod('saas').id,
+        featureGroupId: grp('admin-saas').id,
+        position: 0,
+        isMenuItem: true,
+        isActive: true,
+      },
+      {
+        slug: 'features.create',
+        name: 'Criar Feature',
+        icon: 'Plus',
+        route: '/features/create',
+        moduleId: mod('saas').id,
+        featureGroupId: grp('admin-saas').id,
+        position: 1,
+        isMenuItem: false,
+        isActive: true,
+      },
+      {
+        slug: 'features.edit',
+        name: 'Editar Feature',
+        icon: 'Pencil',
+        route: '/features/:id/edit',
+        moduleId: mod('saas').id,
+        featureGroupId: grp('admin-saas').id,
+        position: 2,
+        isMenuItem: false,
+        isActive: true,
+      },
     ])
 
     // 6. Criar roles (globais do SaaS por enquanto)
     const roles = await Role.updateOrCreateMany('slug', [
       { slug: 'owner', name: 'Owner', description: 'Super admin do SaaS. Acesso irrestrito.' },
-      { slug: 'admin', name: 'Administrador', description: 'Proprietário de company. Acesso total dentro do plano.' },
-      { slug: 'member', name: 'Membro', description: 'Acesso às features da sua role e teams.', isDefault: true },
+      {
+        slug: 'admin',
+        name: 'Administrador',
+        description: 'Proprietário de company. Acesso total dentro do plano.',
+      },
+      {
+        slug: 'member',
+        name: 'Membro',
+        description: 'Acesso às features da sua role e teams.',
+        isDefault: true,
+      },
       { slug: 'viewer', name: 'Visualizador', description: 'Apenas leitura.' },
     ])
 
@@ -118,7 +303,9 @@ export default class MainSeeder extends BaseSeeder {
     const ownerRole = roles.find((r) => r.slug === 'owner')!
 
     // Admin: todas features exceto SaaS
-    const adminFeatures = features.filter((f) => !['features.create', 'features.edit'].includes(f.slug))
+    const adminFeatures = features.filter(
+      (f) => !['features.create', 'features.edit'].includes(f.slug)
+    )
     await adminRole.related('features').sync(adminFeatures.map((f) => f.id))
 
     // Member: apenas plataforma
@@ -137,19 +324,23 @@ export default class MainSeeder extends BaseSeeder {
     )
 
     // 8. Criar company SaaS Admin
-    const Company = (await import('#models/company')).default
-    const saasCompany = await Company.updateOrCreate(
+    const saasCompanyPromise = Company.updateOrCreate(
       { slug: 'admin' },
       {
         slug: 'admin',
         name: 'SaaS Admin',
-        planId: unlimitedPlan.id,
+        planId: unlimited.id,
         ownerUserId: owner.id,
       }
     )
+    const saasCompany = await saasCompanyPromise
 
     // Adicionar owner como membro da company SaaS Admin
-    const existingMember = await saasCompany.related('members').query().where('user_id', owner.id).first()
+    const existingMember = await saasCompany
+      .related('members')
+      .query()
+      .where('user_id', owner.id)
+      .first()
     if (!existingMember) {
       await saasCompany.related('members').attach({ [owner.id]: { role_id: null } })
     }

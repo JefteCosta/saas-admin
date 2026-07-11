@@ -13,8 +13,20 @@ export default class extends BaseSchema {
       table.string('state_registration').nullable()
       table.string('phone').nullable()
       table.string('logo_url').nullable()
-      table.integer('plan_id').unsigned().nullable().references('id').inTable('plans').onDelete('SET NULL')
-      table.integer('owner_user_id').unsigned().notNullable().references('id').inTable('users').onDelete('CASCADE')
+      table
+        .integer('plan_id')
+        .unsigned()
+        .nullable()
+        .references('id')
+        .inTable('plans')
+        .onDelete('SET NULL')
+      table
+        .integer('owner_user_id')
+        .unsigned()
+        .notNullable()
+        .references('id')
+        .inTable('users')
+        .onDelete('CASCADE')
       table.boolean('is_active').defaultTo(true)
 
       table.timestamp('created_at').notNullable()

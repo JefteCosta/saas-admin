@@ -5,8 +5,20 @@ export default class extends BaseSchema {
 
   async up() {
     this.schema.alterTable(this.tableName, (table) => {
-      table.integer('module_id').unsigned().nullable().references('id').inTable('modules').onDelete('SET NULL')
-      table.integer('feature_group_id').unsigned().nullable().references('id').inTable('feature_groups').onDelete('SET NULL')
+      table
+        .integer('module_id')
+        .unsigned()
+        .nullable()
+        .references('id')
+        .inTable('modules')
+        .onDelete('SET NULL')
+      table
+        .integer('feature_group_id')
+        .unsigned()
+        .nullable()
+        .references('id')
+        .inTable('feature_groups')
+        .onDelete('SET NULL')
       table.dropColumn('group')
     })
   }
