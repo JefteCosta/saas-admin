@@ -12,19 +12,60 @@ test.group('Browser - Perfil', (group) => {
 
   async function seedAndLogin(page: any) {
     const role = await Role.create({ slug: 'owner', name: 'Owner' })
-    const mod = await Module.create({ slug: 'plataforma', name: 'Plataforma', icon: 'LayoutDashboard', position: 0 })
-    const grp = await FeatureGroup.create({ slug: 'geral', name: 'Geral', moduleId: mod.id, position: 0 })
-    await Feature.create({ slug: 'home', name: 'Home', icon: 'Home', route: '/', moduleId: mod.id, featureGroupId: grp.id, position: 0, isMenuItem: true, isActive: true })
-    await Feature.create({ slug: 'profile', name: 'Perfil', icon: 'User', route: '/profile', moduleId: mod.id, featureGroupId: grp.id, position: 1, isMenuItem: true, isActive: true })
+    const mod = await Module.create({
+      slug: 'plataforma',
+      name: 'Plataforma',
+      icon: 'LayoutDashboard',
+      position: 0,
+    })
+    const grp = await FeatureGroup.create({
+      slug: 'geral',
+      name: 'Geral',
+      moduleId: mod.id,
+      position: 0,
+    })
+    await Feature.create({
+      slug: 'home',
+      name: 'Home',
+      icon: 'Home',
+      route: '/',
+      moduleId: mod.id,
+      featureGroupId: grp.id,
+      position: 0,
+      isMenuItem: true,
+      isActive: true,
+    })
+    await Feature.create({
+      slug: 'profile',
+      name: 'Perfil',
+      icon: 'User',
+      route: '/profile',
+      moduleId: mod.id,
+      featureGroupId: grp.id,
+      position: 1,
+      isMenuItem: true,
+      isActive: true,
+    })
 
-    const user = await User.create({ email: 'profile@test.com', password: 'secret123', fullName: 'Profile Test', roleId: role.id })
-    const company = await Company.create({ slug: 'admin', name: 'SaaS Admin', ownerUserId: user.id })
+    const user = await User.create({
+      email: 'profile@test.com',
+      password: 'secret123',
+      fullName: 'Profile Test',
+      roleId: role.id,
+    })
+    const company = await Company.create({
+      slug: 'admin',
+      name: 'SaaS Admin',
+      ownerUserId: user.id,
+    })
     await company.related('members').attach({ [user.id]: { role_id: null } })
 
     await page.getByLabel('Email').fill('profile@test.com')
     await page.getByLabel('Senha').fill('secret123')
     await page.locator('button[type="submit"]').click()
-    await page.waitForURL((url: URL) => url.pathname === '/' && !url.search.includes('token'), { timeout: 10000 })
+    await page.waitForURL((url: URL) => url.pathname === '/' && !url.search.includes('token'), {
+      timeout: 10000,
+    })
   }
 
   test('exibe dados do perfil', async ({ visit }) => {

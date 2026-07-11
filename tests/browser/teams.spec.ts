@@ -12,22 +12,73 @@ test.group('Browser - CRUD Teams', (group) => {
 
   async function seedAndLogin(page: any) {
     const role = await Role.create({ slug: 'owner', name: 'Owner' })
-    const mod = await Module.create({ slug: 'plataforma', name: 'Plataforma', icon: 'LayoutDashboard', position: 0 })
-    const grp = await FeatureGroup.create({ slug: 'geral', name: 'Geral', moduleId: mod.id, position: 0 })
-    await Feature.create({ slug: 'home', name: 'Home', icon: 'Home', route: '/', moduleId: mod.id, featureGroupId: grp.id, position: 0, isMenuItem: true, isActive: true })
+    const mod = await Module.create({
+      slug: 'plataforma',
+      name: 'Plataforma',
+      icon: 'LayoutDashboard',
+      position: 0,
+    })
+    const grp = await FeatureGroup.create({
+      slug: 'geral',
+      name: 'Geral',
+      moduleId: mod.id,
+      position: 0,
+    })
+    await Feature.create({
+      slug: 'home',
+      name: 'Home',
+      icon: 'Home',
+      route: '/',
+      moduleId: mod.id,
+      featureGroupId: grp.id,
+      position: 0,
+      isMenuItem: true,
+      isActive: true,
+    })
 
-    const pessoasMod = await Module.create({ slug: 'pessoas', name: 'Pessoas', icon: 'Users', position: 10 })
-    const timesGrp = await FeatureGroup.create({ slug: 'times', name: 'Times', moduleId: pessoasMod.id, position: 1 })
-    await Feature.create({ slug: 'teams.list', name: 'Times', icon: 'UsersRound', route: '/teams', moduleId: pessoasMod.id, featureGroupId: timesGrp.id, position: 0, isMenuItem: true, isActive: true })
+    const pessoasMod = await Module.create({
+      slug: 'pessoas',
+      name: 'Pessoas',
+      icon: 'Users',
+      position: 10,
+    })
+    const timesGrp = await FeatureGroup.create({
+      slug: 'times',
+      name: 'Times',
+      moduleId: pessoasMod.id,
+      position: 1,
+    })
+    await Feature.create({
+      slug: 'teams.list',
+      name: 'Times',
+      icon: 'UsersRound',
+      route: '/teams',
+      moduleId: pessoasMod.id,
+      featureGroupId: timesGrp.id,
+      position: 0,
+      isMenuItem: true,
+      isActive: true,
+    })
 
-    const user = await User.create({ email: 'teams@test.com', password: 'secret123', fullName: 'Teams Test', roleId: role.id })
-    const company = await Company.create({ slug: 'admin', name: 'SaaS Admin', ownerUserId: user.id })
+    const user = await User.create({
+      email: 'teams@test.com',
+      password: 'secret123',
+      fullName: 'Teams Test',
+      roleId: role.id,
+    })
+    const company = await Company.create({
+      slug: 'admin',
+      name: 'SaaS Admin',
+      ownerUserId: user.id,
+    })
     await company.related('members').attach({ [user.id]: { role_id: null } })
 
     await page.getByLabel('Email').fill('teams@test.com')
     await page.getByLabel('Senha').fill('secret123')
     await page.locator('button[type="submit"]').click()
-    await page.waitForURL((url: URL) => url.pathname === '/' && !url.search.includes('token'), { timeout: 10000 })
+    await page.waitForURL((url: URL) => url.pathname === '/' && !url.search.includes('token'), {
+      timeout: 10000,
+    })
   }
 
   test('exibe mensagem quando não há times', async ({ visit }) => {

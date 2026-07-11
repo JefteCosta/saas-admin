@@ -12,22 +12,73 @@ test.group('Browser - CRUD Roles', (group) => {
 
   async function seedAndLogin(page: any) {
     const role = await Role.create({ slug: 'owner', name: 'Owner' })
-    const mod = await Module.create({ slug: 'plataforma', name: 'Plataforma', icon: 'LayoutDashboard', position: 0 })
-    const grp = await FeatureGroup.create({ slug: 'geral', name: 'Geral', moduleId: mod.id, position: 0 })
-    await Feature.create({ slug: 'home', name: 'Home', icon: 'Home', route: '/', moduleId: mod.id, featureGroupId: grp.id, position: 0, isMenuItem: true, isActive: true })
+    const mod = await Module.create({
+      slug: 'plataforma',
+      name: 'Plataforma',
+      icon: 'LayoutDashboard',
+      position: 0,
+    })
+    const grp = await FeatureGroup.create({
+      slug: 'geral',
+      name: 'Geral',
+      moduleId: mod.id,
+      position: 0,
+    })
+    await Feature.create({
+      slug: 'home',
+      name: 'Home',
+      icon: 'Home',
+      route: '/',
+      moduleId: mod.id,
+      featureGroupId: grp.id,
+      position: 0,
+      isMenuItem: true,
+      isActive: true,
+    })
 
-    const configMod = await Module.create({ slug: 'configuracoes', name: 'Configurações', icon: 'Settings', position: 40 })
-    const configGrp = await FeatureGroup.create({ slug: 'papeis', name: 'Papéis', moduleId: configMod.id, position: 0 })
-    await Feature.create({ slug: 'roles.list', name: 'Papéis', icon: 'Shield', route: '/roles', moduleId: configMod.id, featureGroupId: configGrp.id, position: 0, isMenuItem: true, isActive: true })
+    const configMod = await Module.create({
+      slug: 'configuracoes',
+      name: 'Configurações',
+      icon: 'Settings',
+      position: 40,
+    })
+    const configGrp = await FeatureGroup.create({
+      slug: 'papeis',
+      name: 'Papéis',
+      moduleId: configMod.id,
+      position: 0,
+    })
+    await Feature.create({
+      slug: 'roles.list',
+      name: 'Papéis',
+      icon: 'Shield',
+      route: '/roles',
+      moduleId: configMod.id,
+      featureGroupId: configGrp.id,
+      position: 0,
+      isMenuItem: true,
+      isActive: true,
+    })
 
-    const user = await User.create({ email: 'roles@test.com', password: 'secret123', fullName: 'Roles Test', roleId: role.id })
-    const company = await Company.create({ slug: 'admin', name: 'SaaS Admin', ownerUserId: user.id })
+    const user = await User.create({
+      email: 'roles@test.com',
+      password: 'secret123',
+      fullName: 'Roles Test',
+      roleId: role.id,
+    })
+    const company = await Company.create({
+      slug: 'admin',
+      name: 'SaaS Admin',
+      ownerUserId: user.id,
+    })
     await company.related('members').attach({ [user.id]: { role_id: null } })
 
     await page.getByLabel('Email').fill('roles@test.com')
     await page.getByLabel('Senha').fill('secret123')
     await page.locator('button[type="submit"]').click()
-    await page.waitForURL((url: URL) => url.pathname === '/' && !url.search.includes('token'), { timeout: 10000 })
+    await page.waitForURL((url: URL) => url.pathname === '/' && !url.search.includes('token'), {
+      timeout: 10000,
+    })
   }
 
   test('lista roles existentes', async ({ visit }) => {
@@ -54,7 +105,9 @@ test.group('Browser - CRUD Roles', (group) => {
     const dialog = page.locator('[role="dialog"]')
     await dialog.locator('input[placeholder="Marketing"]').fill('Marketing')
     await dialog.locator('input[placeholder="marketing"]').fill('marketing')
-    await dialog.locator('input[placeholder="Acesso ao módulo de marketing"]').fill('Equipe de marketing')
+    await dialog
+      .locator('input[placeholder="Acesso ao módulo de marketing"]')
+      .fill('Equipe de marketing')
     await dialog.getByRole('button', { name: 'Criar' }).click()
 
     await page.waitForTimeout(2000)

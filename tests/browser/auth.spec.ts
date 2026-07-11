@@ -13,16 +13,41 @@ test.group('Browser - Autenticação', (group) => {
 
   async function seedBasicData() {
     const role = await Role.firstOrCreate({ slug: 'owner' }, { name: 'Owner' })
-    const mod = await Module.firstOrCreate({ slug: 'plataforma' }, { name: 'Plataforma', icon: 'LayoutDashboard', position: 0 })
-    const grp = await FeatureGroup.firstOrCreate({ slug: 'geral' }, { name: 'Geral', moduleId: mod.id, position: 0 })
-    await Feature.firstOrCreate({ slug: 'home' }, { name: 'Home', icon: 'Home', route: '/', moduleId: mod.id, featureGroupId: grp.id, position: 0 })
+    const mod = await Module.firstOrCreate(
+      { slug: 'plataforma' },
+      { name: 'Plataforma', icon: 'LayoutDashboard', position: 0 }
+    )
+    const grp = await FeatureGroup.firstOrCreate(
+      { slug: 'geral' },
+      { name: 'Geral', moduleId: mod.id, position: 0 }
+    )
+    await Feature.firstOrCreate(
+      { slug: 'home' },
+      {
+        name: 'Home',
+        icon: 'Home',
+        route: '/',
+        moduleId: mod.id,
+        featureGroupId: grp.id,
+        position: 0,
+      }
+    )
     return role
   }
 
   test('faz login com credenciais válidas', async ({ visit, assert }) => {
     const role = await seedBasicData()
-    const user = await User.create({ email: 'login@test.com', password: 'secret123', fullName: 'Login Test', roleId: role.id })
-    const company = await Company.create({ slug: 'admin', name: 'SaaS Admin', ownerUserId: user.id })
+    const user = await User.create({
+      email: 'login@test.com',
+      password: 'secret123',
+      fullName: 'Login Test',
+      roleId: role.id,
+    })
+    const company = await Company.create({
+      slug: 'admin',
+      name: 'SaaS Admin',
+      ownerUserId: user.id,
+    })
     await company.related('members').attach({ [user.id]: { role_id: null } })
 
     const page = await visit('/login')
@@ -31,7 +56,9 @@ test.group('Browser - Autenticação', (group) => {
     await page.locator('button[type="submit"]').click()
 
     // Aguardar fluxo token → callback → home
-    await page.waitForURL((url: URL) => url.pathname === '/' && !url.search.includes('token'), { timeout: 10000 })
+    await page.waitForURL((url: URL) => url.pathname === '/' && !url.search.includes('token'), {
+      timeout: 10000,
+    })
     assert.notInclude(page.url(), '/login')
   })
 
@@ -47,15 +74,26 @@ test.group('Browser - Autenticação', (group) => {
 
   test('faz logout com sucesso', async ({ visit, assert }) => {
     const role = await seedBasicData()
-    const user = await User.create({ email: 'logout@test.com', password: 'secret123', fullName: 'Logout Test', roleId: role.id })
-    const company = await Company.create({ slug: 'admin', name: 'SaaS Admin', ownerUserId: user.id })
+    const user = await User.create({
+      email: 'logout@test.com',
+      password: 'secret123',
+      fullName: 'Logout Test',
+      roleId: role.id,
+    })
+    const company = await Company.create({
+      slug: 'admin',
+      name: 'SaaS Admin',
+      ownerUserId: user.id,
+    })
     await company.related('members').attach({ [user.id]: { role_id: null } })
 
     const page = await visit('/login')
     await page.getByLabel('Email').fill('logout@test.com')
     await page.getByLabel('Senha').fill('secret123')
     await page.locator('button[type="submit"]').click()
-    await page.waitForURL((url: URL) => url.pathname === '/' && !url.search.includes('token'), { timeout: 10000 })
+    await page.waitForURL((url: URL) => url.pathname === '/' && !url.search.includes('token'), {
+      timeout: 10000,
+    })
 
     // Abrir dropdown do usuário e clicar Sair
     await page.locator('header button').last().click()
@@ -82,8 +120,10 @@ test.group('Browser - Autenticação', (group) => {
     // Verificar que o user e company foram criados no banco
     const user = await User.findBy('email', 'signup@test.com')
     assert.isNotNull(user)
-    const Company = (await import('#models/company')).default
-    const company = await Company.findBy('owner_user_id', user!.id)
+    const userId = user!.id
+    const companyModule = await import('#models/company')
+    const CompanyModel = companyModule.default
+    const company = await CompanyModel.findBy('owner_user_id', userId)
     assert.isNotNull(company)
     assert.equal(company!.name, 'Empresa Teste')
   })
