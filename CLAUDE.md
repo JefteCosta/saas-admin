@@ -14,4 +14,6 @@
 
     Instruções específicas deste agente ficam em `docs/agents/claude.md`.
 
+    Quando houver subtarefas independentes, use os agentes de `.claude/agents/` conforme `docs/agents/multi-agent.md`.
+
     Siga a convenção de commits descrita em `docs/guides/commits.md`.

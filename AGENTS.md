@@ -14,4 +14,7 @@
 
          Consulte `docs/agents/index.md` para instruções compartilhadas entre agentes.
 
+         Quando a tarefa tiver subtarefas independentes, delegue-as conforme
+         `docs/agents/multi-agent.md`. Não delegue edições concorrentes nos mesmos arquivos.
+
          Siga a convenção de commits descrita em `docs/guides/commits.md`.

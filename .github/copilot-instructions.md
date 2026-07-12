@@ -20,3 +20,6 @@
       - Consulte `docs/references/README.md` para referências AdonisJS e Lucid.
       - Siga os padrões existentes de AdonisJS, Vue, Inertia e Vite.
       - Siga a convenção de commits em `docs/guides/commits.md`.
+      - Para trabalho especializado, use os perfis em `.github/agents/` e siga
+        `docs/agents/multi-agent.md`.
+      - Preserve mudanças locais existentes e não atribua o mesmo arquivo a agentes diferentes.

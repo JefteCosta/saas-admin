@@ -1,3 +1,6 @@
+[features]
+multi_agent = true
+
 [mcp_servers.shadcnVue]
 command = "npx"
 args = [

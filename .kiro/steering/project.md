@@ -19,3 +19,6 @@
     9. `docs/graph/index.generated.md`
 
       Consulte `docs/knowledge-base.generated.md` para descobrir documentos disponíveis.
+
+      Para frentes independentes, delegue aos agentes de `.kiro/agents/` seguindo
+      `docs/agents/multi-agent.md`. Não permita edições concorrentes nos mesmos arquivos.
