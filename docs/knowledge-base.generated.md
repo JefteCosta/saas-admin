@@ -19,21 +19,23 @@
 
     | Documento | Caminho | Hash |
     | --- | --- | --- |
-    | [Notas do Agente Claude](agents/claude.md) | `docs/agents/claude.md` | `b79b11721eaa` |
+    | [Notas do Agente Claude](agents/claude.md) | `docs/agents/claude.md` | `985eef11ee50` |
 | [Notas do Agente Codex](agents/codex.md) | `docs/agents/codex.md` | `b684ae311f93` |
+| [Notas do GitHub Copilot](agents/copilot.md) | `docs/agents/copilot.md` | `c2cf3dfadc83` |
 | [Notas do Agente Gemini](agents/gemini.md) | `docs/agents/gemini.md` | `4ac664d547aa` |
-| [Guia de Agentes](agents/index.md) | `docs/agents/index.md` | `d5ce6769a8a6` |
-| [Notas do Agente Kiro](agents/kiro.md) | `docs/agents/kiro.md` | `1a421ce0d2de` |
+| [Guia de Agentes](agents/index.md) | `docs/agents/index.md` | `3b1b8e91c1f0` |
+| [Notas do Agente Kiro](agents/kiro.md) | `docs/agents/kiro.md` | `fade0c419416` |
+| [Guia de Trabalho Multiagente](agents/multi-agent.md) | `docs/agents/multi-agent.md` | `a7042f9952d4` |
 | [Arquitetura Backend](architecture/backend.md) | `docs/architecture/backend.md` | `6c8d8089688a` |
 | [Arquitetura de Banco de Dados](architecture/database.md) | `docs/architecture/database.md` | `96550698f07a` |
 | [Arquitetura Frontend](architecture/frontend.md) | `docs/architecture/frontend.md` | `f9d76bd7b25b` |
 | [Visão Geral da Arquitetura](architecture/overview.md) | `docs/architecture/overview.md` | `c606a1b9c06b` |
 | [Mapa de Telas](architecture/screen-map.md) | `docs/architecture/screen-map.md` | `50c6a2d1e53e` |
 | [Auth Flow — Fluxo de Autenticação](graph/auth-flow.generated.md) | `docs/graph/auth-flow.generated.md` | `cd237e2d5db6` |
-| [Controllers — Diagrama de Classes](graph/controllers.generated.md) | `docs/graph/controllers.generated.md` | `db85ca18285e` |
-| [Frontend — Mapa de Componentes](graph/frontend.generated.md) | `docs/graph/frontend.generated.md` | `bfcf85596c14` |
-| [Graph — Documentação Visual do Projeto](graph/index.generated.md) | `docs/graph/index.generated.md` | `160308b1c282` |
-| [Models — Diagrama ER](graph/models.generated.md) | `docs/graph/models.generated.md` | `8d91d5af20f2` |
+| [Controllers — Diagrama de Classes](graph/controllers.generated.md) | `docs/graph/controllers.generated.md` | `045ccfadc23a` |
+| [Frontend — Mapa de Componentes](graph/frontend.generated.md) | `docs/graph/frontend.generated.md` | `c888d5cc0148` |
+| [Graph — Documentação Visual do Projeto](graph/index.generated.md) | `docs/graph/index.generated.md` | `5c56f0a10453` |
+| [Models — Diagrama ER](graph/models.generated.md) | `docs/graph/models.generated.md` | `7f486d5eba15` |
 | [Permissions — Mapa de Permissões](graph/permissions.generated.md) | `docs/graph/permissions.generated.md` | `55c0d0a33682` |
 | [Routes — Mapa de Rotas](graph/routes.generated.md) | `docs/graph/routes.generated.md` | `29e55fdf2bac` |
 | [Services & Middleware — Grafo de Dependências](graph/services.generated.md) | `docs/graph/services.generated.md` | `c6f02b874156` |

@@ -128,7 +128,12 @@ export default class SyncKnowledgeBase extends BaseCommand {
 
     Instruções específicas deste agente ficam em \`${specificPath}\`.
 
-    Siga a convenção de commits descrita em \`docs/guides/commits.md\`.
+    ${
+      agentName === 'Claude'
+        ? 'Quando houver subtarefas independentes, use os agentes de `.claude/agents/` conforme `docs/agents/multi-agent.md`.\n\n    '
+        : ''
+    }Siga a convenção de commits descrita em \`docs/guides/commits.md\`.
+
     `
 
     const projectKnowledgeSkill = `---
@@ -162,6 +167,9 @@ export default class SyncKnowledgeBase extends BaseCommand {
 
          Consulte \`docs/agents/index.md\` para instruções compartilhadas entre agentes.
 
+         Quando a tarefa tiver subtarefas independentes, delegue-as conforme
+         \`docs/agents/multi-agent.md\`. Não delegue edições concorrentes nos mesmos arquivos.
+
          Siga a convenção de commits descrita em \`docs/guides/commits.md\`.
       `
     )
@@ -184,7 +192,10 @@ export default class SyncKnowledgeBase extends BaseCommand {
       - A fonte canônica de contexto é \`docs/\`.
       - Consulte \`docs/references/README.md\` para referências AdonisJS e Lucid.
       - Siga os padrões existentes de AdonisJS, Vue, Inertia e Vite.
-      - Siga a convenção de commits em \`docs/guides/commits.md\`.`
+      - Siga a convenção de commits em \`docs/guides/commits.md\`.
+      - Para trabalho especializado, use os perfis em \`.github/agents/\` e siga
+        \`docs/agents/multi-agent.md\`.
+      - Preserve mudanças locais existentes e não atribua o mesmo arquivo a agentes diferentes.`
     )
 
     this.setFile(
@@ -217,6 +228,9 @@ export default class SyncKnowledgeBase extends BaseCommand {
 
       Instruções específicas do Kiro ficam em \`../docs/agents/kiro.md\` e \`.kiro/steering/\`.
 
+      Para tarefas com frentes independentes, use os agentes de \`.kiro/agents/\` conforme
+      \`../docs/agents/multi-agent.md\`.
+
       Siga a convenção de commits descrita em \`../docs/guides/commits.md\`.
       `
     )
@@ -236,6 +250,9 @@ export default class SyncKnowledgeBase extends BaseCommand {
       ${agentReadingOrder}
 
       Consulte \`docs/knowledge-base.generated.md\` para descobrir documentos disponíveis.
+
+      Para frentes independentes, delegue aos agentes de \`.kiro/agents/\` seguindo
+      \`docs/agents/multi-agent.md\`. Não permita edições concorrentes nos mesmos arquivos.
       `
     )
 

@@ -8,3 +8,5 @@ Consulte este documento quando precisar de comportamento ou expectativas especí
 - Use `.kiro/steering/` para contexto persistente do Kiro.
 - Mantenha steering files curtos e roteados para `docs/`.
 - Use `docs/knowledge-base.generated.md` como índice para localizar documentação antes de agir.
+- Use `.kiro/agents/project-coordinator.md` para tarefas com frentes independentes e os agentes
+  especializados conforme `docs/agents/multi-agent.md`.

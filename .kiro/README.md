@@ -14,4 +14,7 @@
 
       Instruções específicas do Kiro ficam em `../docs/agents/kiro.md` e `.kiro/steering/`.
 
+      Para tarefas com frentes independentes, use os agentes de `.kiro/agents/` conforme
+      `../docs/agents/multi-agent.md`.
+
       Siga a convenção de commits descrita em `../docs/guides/commits.md`.

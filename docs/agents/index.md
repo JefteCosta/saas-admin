@@ -19,3 +19,11 @@ Consulte este documento quando um agente de IA precisar entender como usar a doc
 - Coloque conhecimento compartilhado em `docs/`.
 - Não duplique instruções longas entre `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, Copilot ou Kiro.
 - Ao adicionar conhecimento durável, escolha a seção mais específica em `docs/`.
+
+## Trabalho multiagente
+
+O Codex deste repositório permite delegar subtarefas independentes a subagentes. Consulte o
+[guia de trabalho multiagente](multi-agent.md) antes de dividir uma tarefa.
+
+Os perfis específicos de cada ferramenta estão nas notas do [Codex](codex.md),
+[Claude](claude.md), [Kiro](kiro.md), [Gemini](gemini.md) e [GitHub Copilot](copilot.md).
