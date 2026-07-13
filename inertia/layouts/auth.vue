@@ -147,10 +147,11 @@ const { theme, toggleTheme } = useTheme()
 
 .auth-hero-blob {
   position: absolute;
-  left: -10%;
+  left: 50%;
   bottom: -16%;
   height: 78%;
   width: 96%;
+  transform: translateX(-50%);
   border-radius: 52% 48% 0 0;
   background: linear-gradient(160deg, rgba(130, 166, 255, 0.35), rgba(98, 214, 255, 0.28));
 }
