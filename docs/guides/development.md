@@ -38,5 +38,6 @@ node ace docs:sync --check
 - Prefira convenções existentes do projeto.
 - Mantenha mudanças restritas ao comportamento solicitado.
 - Leia `docs/architecture/overview.md` antes de alterar estrutura.
+- Leia `docs/guides/multi-tenant-local-operations.md` para setup e validação local por subdomínio.
 - Leia `docs/guides/testing.md` antes de adicionar ou alterar testes.
 - Leia `docs/guides/commits.md` antes de commitar.

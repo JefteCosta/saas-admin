@@ -2,6 +2,31 @@
 
 Consulte este documento antes de implementar o sistema de multi-tenancy com empresas, planos e routing por subdomínio.
 
+## Status do documento
+
+Classificação: **referência histórica de planejamento com roadmap ativo** (não canônica para comportamento em runtime).
+
+Este arquivo mistura arquitetura já implementada com etapas de evolução do produto.
+
+Na prática:
+
+- a segmentação entre domínio principal, `admin.<domínio>` e `:tenant.<domínio>` já faz parte do código atual;
+- signup com criação de company, workspace switcher e middlewares de contexto também já existem;
+- o documento continua útil para entender a direção de plans, modules, feature groups e limites;
+- a referência canônica para autenticação, autorização e contexto multi-tenant em produção está em [docs/architecture/auth-and-authorization.md](../architecture/auth-and-authorization.md).
+
+Ao usar este plano, diferencie sempre o que já está ativo no código do que ainda representa evolução arquitetural ou funcional.
+
+Fonte canônica do comportamento atual: [docs/architecture/auth-and-authorization.md](../architecture/auth-and-authorization.md) e [docs/architecture/backend.md](../architecture/backend.md).
+
+## Limites de uso deste plano
+
+Use este arquivo para entender direção de produto e modelagem alvo de plans/modules/limits.
+
+- para fluxo de autenticação e sessão, priorize a documentação de arquitetura;
+- para autorização efetiva e montagem de menu, confirme no código antes de implementar mudanças;
+- para operações locais e testes de subdomínio, use o guia operacional em [docs/guides/multi-tenant-local-operations.md](../guides/multi-tenant-local-operations.md).
+
 ## Visão Geral
 
 ```

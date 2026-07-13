@@ -12,18 +12,20 @@ Este repositório mantém o conhecimento durável do projeto em `docs/`. Arquivo
 
 1. [Visão geral do projeto](project/overview.md)
 2. [Visão geral da arquitetura](architecture/overview.md)
-3. [Guia de desenvolvimento](guides/development.md)
-4. [Guia de commits](guides/commits.md)
-5. [Guia de releases e versionamento](guides/releases.md)
-6. [Referências técnicas](references/README.md)
-7. [Guia de agentes](agents/index.md)
-8. [Base de conhecimento gerada](knowledge-base.generated.md)
+3. [Autenticação e autorização](architecture/auth-and-authorization.md)
+4. [Guia de desenvolvimento](guides/development.md)
+5. [Guia operacional multi-tenant local](guides/multi-tenant-local-operations.md)
+6. [Guia de commits](guides/commits.md)
+7. [Guia de releases e versionamento](guides/releases.md)
+8. [Referências técnicas](references/README.md)
+9. [Guia de agentes](agents/index.md)
+10. [Base de conhecimento gerada](knowledge-base.generated.md)
 
 ## Seções
 
 - [project](project/): contexto de produto, objetivos, termos de domínio e glossário.
 - [planning](planning/): roadmap, backlog e decisões de planejamento.
-- [architecture](architecture/): arquitetura técnica, frontend, backend e banco de dados.
+- [architecture](architecture/): arquitetura técnica, autenticação, autorização, frontend, backend e banco de dados.
 - [guides](guides/): guias operacionais de desenvolvimento, testes, commits, releases e deploy.
 - [references](references/): documentação externa usada como referência técnica.
 - [agents](agents/): instruções específicas para agentes de IA.

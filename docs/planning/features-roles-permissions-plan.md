@@ -2,6 +2,31 @@
 
 Consulte este documento antes de implementar o sistema de features e controle de acesso.
 
+## Status do documento
+
+Classificação: **referência histórica de planejamento** (não canônica para comportamento em runtime).
+
+Este arquivo registra o desenho base do sistema de roles, teams e features, mas não é mais a fonte canônica do comportamento atual de autenticação e autorização.
+
+Pontos importantes de defasagem:
+
+- o modelo atual já usa companies por subdomínio e contexto de tenant;
+- a modelagem de `Feature` evoluiu para `module_id` e `feature_group_id`;
+- o fluxo de autenticação atual inclui signup com company, login com `resolveRedirect`, callback cross-domain por token e workspace switcher;
+- a documentação vigente desses fluxos está em [docs/architecture/auth-and-authorization.md](../architecture/auth-and-authorization.md).
+
+Use este plano como histórico de decisão e referência de evolução. Para comportamento em produção, consulte a documentação em `docs/architecture/` e confirme no código.
+
+## Limites de uso deste plano
+
+Os blocos abaixo devem ser lidos como proposta original e não como contrato de implementação vigente.
+
+- exemplos com `features.group` (string) representam o schema anterior;
+- exemplos de rotas e middleware mostram a ideia inicial e podem divergir do roteamento atual por subdomínio;
+- a regra de autorização canônica é a ability atual em `app/abilities/main.ts`, descrita em [docs/architecture/auth-and-authorization.md](../architecture/auth-and-authorization.md).
+
+Para mudanças novas, sempre comece por `docs/architecture/` e trate este arquivo como contexto histórico.
+
 ## Objetivo
 
 Criar um sistema onde:
