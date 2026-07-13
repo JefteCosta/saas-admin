@@ -26,10 +26,11 @@
 | [Guia de Agentes](agents/index.md) | `docs/agents/index.md` | `3b1b8e91c1f0` |
 | [Notas do Agente Kiro](agents/kiro.md) | `docs/agents/kiro.md` | `fade0c419416` |
 | [Guia de Trabalho Multiagente](agents/multi-agent.md) | `docs/agents/multi-agent.md` | `a7042f9952d4` |
-| [Arquitetura Backend](architecture/backend.md) | `docs/architecture/backend.md` | `6c8d8089688a` |
+| [Autenticação e Autorização](architecture/auth-and-authorization.md) | `docs/architecture/auth-and-authorization.md` | `a45058410ccf` |
+| [Arquitetura Backend](architecture/backend.md) | `docs/architecture/backend.md` | `81dc80b5a8d0` |
 | [Arquitetura de Banco de Dados](architecture/database.md) | `docs/architecture/database.md` | `96550698f07a` |
 | [Arquitetura Frontend](architecture/frontend.md) | `docs/architecture/frontend.md` | `f9d76bd7b25b` |
-| [Visão Geral da Arquitetura](architecture/overview.md) | `docs/architecture/overview.md` | `c606a1b9c06b` |
+| [Visão Geral da Arquitetura](architecture/overview.md) | `docs/architecture/overview.md` | `88e1301488e4` |
 | [Mapa de Telas](architecture/screen-map.md) | `docs/architecture/screen-map.md` | `50c6a2d1e53e` |
 | [Auth Flow — Fluxo de Autenticação](graph/auth-flow.generated.md) | `docs/graph/auth-flow.generated.md` | `cd237e2d5db6` |
 | [Controllers — Diagrama de Classes](graph/controllers.generated.md) | `docs/graph/controllers.generated.md` | `045ccfadc23a` |
@@ -42,17 +43,18 @@
 | [Tests — Mapa de Testes](graph/tests.generated.md) | `docs/graph/tests.generated.md` | `049b772a7c27` |
 | [Guia de Commits](guides/commits.md) | `docs/guides/commits.md` | `9c9cecf9f8de` |
 | [Guia de Deploy](guides/deployment.md) | `docs/guides/deployment.md` | `e925bc51beaf` |
-| [Guia de Desenvolvimento](guides/development.md) | `docs/guides/development.md` | `983f29a067f1` |
+| [Guia de Desenvolvimento](guides/development.md) | `docs/guides/development.md` | `0c4c1ccad666` |
+| [Guia Operacional Multi-tenant (Local)](guides/multi-tenant-local-operations.md) | `docs/guides/multi-tenant-local-operations.md` | `42125691ee82` |
 | [Comandos do Node Ace](guides/node-ace.md) | `docs/guides/node-ace.md` | `e161ec64f05a` |
 | [Guia de Releases e Versionamento](guides/releases.md) | `docs/guides/releases.md` | `bc144759f48d` |
 | [shadcn-vue](guides/shadcn-vue.md) | `docs/guides/shadcn-vue.md` | `3c2ddcc79853` |
 | [Guia de Testes](guides/testing.md) | `docs/guides/testing.md` | `dfaa7b8979e6` |
 | [Backlog](planning/backlog.md) | `docs/planning/backlog.md` | `c05b45afa062` |
 | [Plano: Testes de Browser (E2E)](planning/browser-tests-plan.md) | `docs/planning/browser-tests-plan.md` | `1e67ba29aac1` |
-| [Plano: Companies, Planos, Módulos e Subdomínios](planning/companies-modules-limits-plan.md) | `docs/planning/companies-modules-limits-plan.md` | `5aa35f98028f` |
+| [Plano: Companies, Planos, Módulos e Subdomínios](planning/companies-modules-limits-plan.md) | `docs/planning/companies-modules-limits-plan.md` | `e2b65703591f` |
 | [Decisões de Planejamento](planning/decisions.md) | `docs/planning/decisions.md` | `348535ea5d84` |
 | [Plano de Estrutura de Documentação Multiagente](planning/documentation-structure-plan.md) | `docs/planning/documentation-structure-plan.md` | `331d073d1abe` |
-| [Plano: Sistema de Features, Roles, Teams e Permissões](planning/features-roles-permissions-plan.md) | `docs/planning/features-roles-permissions-plan.md` | `cf62d8af9734` |
+| [Plano: Sistema de Features, Roles, Teams e Permissões](planning/features-roles-permissions-plan.md) | `docs/planning/features-roles-permissions-plan.md` | `52bc506f929f` |
 | [Plano: Avisos de Erro/Sucesso na UI](planning/flash-messages-alerts-plan.md) | `docs/planning/flash-messages-alerts-plan.md` | `c5159b4d35b6` |
 | [Plano: Comando `graph:generate`](planning/graph-rag-plan.md) | `docs/planning/graph-rag-plan.md` | `49e55e908b5c` |
 | [Implementação da Base de Conhecimento](planning/knowledge-base-sync-implementation.md) | `docs/planning/knowledge-base-sync-implementation.md` | `51717616da26` |
@@ -65,7 +67,8 @@
 | [Glossário](project/glossary.md) | `docs/project/glossary.md` | `6b295e6f58c6` |
 | [Visão Geral do Projeto](project/overview.md) | `docs/project/overview.md` | `f9f7b006f3a9` |
 | [Contexto de Produto](project/product-context.md) | `docs/project/product-context.md` | `aecb7a2036c5` |
-| [Documentação](README.md) | `docs/README.md` | `060a0990ff90` |
+| [Documentação](README.md) | `docs/README.md` | `0a8db932488a` |
+| [Especificação de referência — Billing SaaS AnyAtende](reference/billing-anyatende-specification.md) | `docs/reference/billing-anyatende-specification.md` | `dd1d7594f578` |
 | [Command arguments](references/adonisjs/guides/ace/args.md) | `docs/references/adonisjs/guides/ace/args.md` | `207e954a3eef` |
 | [Creating commands](references/adonisjs/guides/ace/creating_commands.md) | `docs/references/adonisjs/guides/ace/creating_commands.md` | `84ccd3e002dd` |
 | [Command flags](references/adonisjs/guides/ace/flags.md) | `docs/references/adonisjs/guides/ace/flags.md` | `c93188707615` |
